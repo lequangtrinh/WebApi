@@ -26,7 +26,7 @@ namespace ApiText.Models
             string js = CONVERJS.convert(rs);
             return js;
         }
-        public static string Insert_Login(Login lg)
+        public string Insert_Login(Login lg)
         {
             ResponseResult rs = new ResponseResult();
             if(string.IsNullOrEmpty(lg.username))
@@ -55,7 +55,7 @@ namespace ApiText.Models
             }
             return CONVERJS.convert(rs);
         }
-        public static string Update_Login(Login lg)
+        public string Update_Login(Login lg)
         {
             ResponseResult rs = new ResponseResult();
             if (string.IsNullOrEmpty(lg.username))
@@ -84,7 +84,7 @@ namespace ApiText.Models
             }
             return CONVERJS.convert(rs);
         }
-        public static string Update_LoginPassNew(Login lg)
+        public string Update_LoginPassNew(Login lg)
         {
             ResponseResult rs = new ResponseResult();
             if (string.IsNullOrEmpty(lg.username))
@@ -118,7 +118,7 @@ namespace ApiText.Models
             }
             return CONVERJS.convert(rs);
         }
-        public static string Delete_Login(int id)
+        public string Delete_Login(int id)
         {
             ResponseResult rs = new ResponseResult();
                 var res = data.DeleteLogin(id);
