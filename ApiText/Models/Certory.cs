@@ -7,6 +7,7 @@ namespace ApiText.Models
 {
     public class Certory
     {
+        public int id { get; set; }
         public string masp { get; set; }
         public string tensp { get; set; }
         public DateTime ngaytao { get; set; }

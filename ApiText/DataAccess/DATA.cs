@@ -46,6 +46,21 @@ namespace ApiText.DataAccess
                 throw e;
             }
         }
+         public ResponseResult CkeckEmp_id_Category(int id)
+        {
+            try
+            {
+                var lp = new List<SqlParameter>
+                {
+                    new SqlParameter("@EMP_ID",id),
+                };
+                return LIB.CONNECT.CONNECT.ExecuteSP<ResponseResult>("ProductCkeckempidCatetory", lp);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         public DOLOGIN DoLogin(string username, string password)
         {
             var lp = new List<SqlParameter>
@@ -177,6 +192,63 @@ namespace ApiText.DataAccess
             catch (Exception ex)
             {
                 throw ex;
+            }
+        }
+        public ResponseResult InsertProcuder(int emp_id, string masp, string tensp)
+        {
+            try
+            {
+                var lp = new List<SqlParameter>
+                {
+                    new SqlParameter("@id","0"),
+                    new SqlParameter("@emp_id",emp_id),
+                    new SqlParameter("@masp",masp),
+                    new SqlParameter("@tensp",tensp),
+                    new SqlParameter("@type","insert"),
+                };
+                return LIB.CONNECT.CONNECT.ExecuteSP<ResponseResult>("PRODUCTExecute", lp);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public ResponseResult UpdateProcuder(Procuder pro)
+        {
+            try
+            {
+                var lp = new List<SqlParameter>
+                {
+                    new SqlParameter("@id",pro.id),
+                    new SqlParameter("@emp_id",pro.emp_id),
+                    new SqlParameter("@masp",pro.masp),
+                    new SqlParameter("@tensp",pro.tensp),
+                    new SqlParameter("@type","update"),
+                };
+                return LIB.CONNECT.CONNECT.ExecuteSP<ResponseResult>("PRODUCTExecute", lp);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        public ResponseResult DeleteProcuder(int id)
+        {
+            try
+            {
+                var lp = new List<SqlParameter>
+                {
+                    new SqlParameter("@id",id),
+                    new SqlParameter("@emp_id","0"),
+                    new SqlParameter("@masp","null"),
+                    new SqlParameter("@tensp","null"),
+                    new SqlParameter("@type","delete"),
+                };
+                return LIB.CONNECT.CONNECT.ExecuteSP<ResponseResult>("PRODUCTExecute", lp);
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
     }
