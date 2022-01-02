@@ -18,7 +18,7 @@ namespace ApiText.Controllers
     public class CatoryController : Controller
     {
         DATA data = new DATA();
-
+        ResultStatus status = new ResultStatus();
         [HttpGet]
         public IActionResult GetCertoryAll(string key)
         {
@@ -63,9 +63,9 @@ namespace ApiText.Controllers
         }
 
         [HttpPut]
-        public IActionResult PutCeatory([FromBody]string id,string masp,string tensp)
+        public IActionResult PutCeatory([FromBody]Certory cr)
         {
-            var result = data.UpdateCertory(Int32.Parse(id),masp,tensp);
+            var result = status.Update_Catory(cr);
             try
             {
 
@@ -77,9 +77,9 @@ namespace ApiText.Controllers
             }
         }
         [HttpDelete]
-        public IActionResult DelectCertory(string id)
+        public IActionResult DelectCertory(int id)
         {
-            var result = data.DeleteCertory(Int32.Parse(id));
+            var result = status.Delete_Certory(id);
             try
             {
 

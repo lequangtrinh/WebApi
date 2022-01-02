@@ -50,28 +50,36 @@ namespace ApiText.Controllers
         [HttpPost]
         public IActionResult CreateLogin([FromBody] Login lg)
         {
-            var result = data.InsertLogGin(lg.username, lg.password);
-            return Ok(result);
+            var result = status.Insert_Login(lg);
+            try
+            {
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         [HttpDelete]
         public IActionResult DeleteLogin(int id)
         {
-            var result = data.DeleteLogin(id);
+            var result = status.Delete_Login(id);
             try
             {
-                return Ok();
+                return Ok(result);
             }
             catch
             {
-                return BadRequest();
+                return BadRequest(result);
             }
         }
 
         [HttpPut]
-        public IActionResult updateLogin([FromBody] int id, string username, string pass)
+        public IActionResult updateLogin([FromBody] Login lg)
         {
-            var result = data.UpdateLogin(id, username, pass);
+            var result = status.Update_Login(lg);
             try
             {
                 return Ok(result);
@@ -83,9 +91,9 @@ namespace ApiText.Controllers
         }
 
         [HttpPut("UpdatePass")]
-        public IActionResult updateLoginPass([FromBody] int id, string username, string pass,string passnew)
+        public IActionResult updateLoginPass([FromBody] Login lg)
         {
-            var result = data.UpdateLoginPassNew(id, username, pass,passnew);
+            var result = status.Update_LoginPassNew(lg);
             try
             {
                 return Ok(result);
