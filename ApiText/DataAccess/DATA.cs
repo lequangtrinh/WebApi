@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using static ApiText.Models.Login;
+using static ApiText.Models.Procuder;
 
 namespace ApiText.DataAccess
 {
@@ -88,16 +89,13 @@ namespace ApiText.DataAccess
                 throw ex;
             }
         }
-        public ResponseResult UpdateLoginPassNew(int id, string uname, string pass,string passnew)
+        public ResponseResult UpdateLoginPassNew(int id)
         {
             try
             {
                 var lp = new List<SqlParameter>
                 {
                     new SqlParameter("@id",id),
-                    new SqlParameter("@username",uname),
-                    new SqlParameter("@pass",pass),
-                    new SqlParameter("@passnew",passnew),
                 };
                 return LIB.CONNECT.CONNECT.ExecuteSP<ResponseResult>("UpdateLoginPass", lp);
             }
@@ -188,6 +186,22 @@ namespace ApiText.DataAccess
                     new SqlParameter("@StatementType","update"),
                 };
                 return LIB.CONNECT.CONNECT.ExecuteSP<ResponseResult>("CategoryExecute", lp);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public List<Procuder> GetProcLoad(int id, string key)
+        {
+            try
+            {
+                var lp = new List<SqlParameter>
+                    {
+                        new SqlParameter("@id",id),
+                         new SqlParameter("@key",key),
+                    };
+                return LIB.CONNECT.CONNECT.ExecuteSPList<Procuder>("ProcductLoad", lp);
             }
             catch (Exception ex)
             {

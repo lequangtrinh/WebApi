@@ -58,18 +58,6 @@ namespace ApiText.Models
         public string Update_Login(Login lg)
         {
             ResponseResult rs = new ResponseResult();
-            if (string.IsNullOrEmpty(lg.username))
-            {
-                rs.Returncode = ResponseCodeRes.Failed.GetHashCode();
-                rs.ReturnMessage = "Tên tài khoản không được để trống";
-            }
-            else if (string.IsNullOrEmpty(lg.password))
-            {
-                rs.Returncode = ResponseCodeRes.Failed.GetHashCode();
-                rs.ReturnMessage = "Vui lòng nhập mật khẩu";
-            }
-            else
-            {
                 var res = data.UpdateLogin(lg.id,lg.username, lg.password);
                 if (res.ResponseCode != 0)
                 {
@@ -81,30 +69,12 @@ namespace ApiText.Models
                     rs.Returncode = ResponseCodeRes.Failed.GetHashCode();
                     rs.ReturnMessage = "Update Tài Khoản thất bại";
                 }
-            }
             return CONVERJS.convert(rs);
         }
         public string Update_LoginPassNew(Login lg)
         {
             ResponseResult rs = new ResponseResult();
-            if (string.IsNullOrEmpty(lg.username))
-            {
-                rs.Returncode = ResponseCodeRes.Failed.GetHashCode();
-                rs.ReturnMessage = "Tên tài khoản không được để trống";
-            }
-            else if (string.IsNullOrEmpty(lg.password))
-            {
-                rs.Returncode = ResponseCodeRes.Failed.GetHashCode();
-                rs.ReturnMessage = "Vui lòng nhập mật khẩu";
-            }
-            else if (string.IsNullOrEmpty(lg.passnew))
-            {
-                rs.Returncode = ResponseCodeRes.Failed.GetHashCode();
-                rs.ReturnMessage = "Vui lòng nhập mật khẩu mới";
-            }
-            else
-            {
-                var res = data.UpdateLoginPassNew(lg.id, lg.username, lg.password,lg.passnew) ;
+                var res = data.UpdateLoginPassNew(lg.id) ;
                 if (res.ResponseCode != 0)
                 {
                     rs.Returncode = ResponseCodeRes.Success.GetHashCode();
@@ -114,7 +84,7 @@ namespace ApiText.Models
                 {
                     rs.Returncode = ResponseCodeRes.Failed.GetHashCode();
                     rs.ReturnMessage = "Đổi mật khẩu Tài Khoản thất bại";
-                }
+
             }
             return CONVERJS.convert(rs);
         }

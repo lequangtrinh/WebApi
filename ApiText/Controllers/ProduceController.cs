@@ -16,6 +16,34 @@ namespace ApiText.Controllers
     {
          DATA data = new DATA();
         ResultStatus status = new ResultStatus();
+        [HttpGet]
+        public IActionResult LoadProcAll(string key)
+        {
+            var result = data.GetProcLoad(0, key);
+            try
+            {
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+        [HttpGet("{id}")]
+        public IActionResult LoadProcID(int id, string key)
+        {
+            var result = data.GetProcLoad(id, key);
+            try
+            {
+
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
         [HttpPost]
         public IActionResult CreateProcuder([FromBody] Procuder pro)
         {

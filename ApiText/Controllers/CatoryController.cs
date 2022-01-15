@@ -50,7 +50,7 @@ namespace ApiText.Controllers
         [HttpPost]
         public IActionResult PostCertory([FromBody]Certory ce)
         {
-            var result = data.InsertCertory(ce.masp,ce.tensp);
+            var result = status.Insert_Catory(ce);
             try
             {
 

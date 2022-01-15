@@ -13,11 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="View\" />
+    <ProjectReference Include="..\LIB.CONNECT\LIB.CONNECT.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LIB.CONNECT\LIB.CONNECT.csproj" />
+    <Folder Include="View\" />
   </ItemGroup>
 
 </Project>
