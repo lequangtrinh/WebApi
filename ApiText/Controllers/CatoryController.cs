@@ -18,7 +18,7 @@ namespace ApiText.Controllers
     public class CatoryController : Controller
     {
         DATA data = new DATA();
-        ResultStatus status = new ResultStatus();
+
         [HttpGet]
         public IActionResult GetCertoryAll(string key)
         {
