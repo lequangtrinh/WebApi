@@ -1,0 +1,445 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<div class="container-fluid py-3 px-0">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="d-lg-flex">
+                        <div class="w-50 col-auto my-auto">
+                            <div class="h-100">
+                                <h6 data-languagestatic="cal_revenue" class="mb-0">Role User</h6>
+                                <p data-languagestatic="" class="text-sm mb-0">Some text of detail sub</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-2">
+                    <div class="row px-1 form3" id="formEmailOption">
+                        <div class="field col-12 p-1 row" id="setting_revenue_list" data-languagedyn="calculation_revenue">
+                        </div>
+                    </div>
+                </div>
+                <div class="fixed-botombutton pe-3 pb-3">
+                    <div class="action_Save">
+                        <div class="text-danger text-gradient text-sm font-weight-bold" data-languagedyn="textShowMessage" id="textShowMessage"></div>
+                        <div class="action_Save-Content">
+                            <button data-languagestatic="button_ok" id="SettingRoleSave" type="button" class="btn bg-gradient-primary mt-2 me-2 _tab_control_" data-tab="edit_tab_customer" onclick="event.preventDefault(); SettingRoleExcute()">Save</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+     var dataTree = [];
+      
+    var MasterDataMenu=[
+          {
+              "Name":"Dashboards"
+              ,"Img":""
+              ,"checked":1
+              ,"ChildNode":[
+                  {"Name":"EditUser"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":"@Url.Action("EditUser","Home")"
+                    ,"checked":1
+                  }
+                  ,{"Name":"Role"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":"@Url.Action("EditUser","Home")"
+                    ,"checked":1
+                  }
+                  ,{"Name":"Smart Home"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":"@Url.Action("EditUser","Home")"
+                    ,"checked":1
+                  }
+                  ,{"Name":"Virtual Reality"
+                    ,"ChildNode":[]
+                    ,"checked":1
+                    ,"Img":""
+                    ,"Url":"@Url.Action("EditUser","Home")"
+                  }
+                  ,{"Name":"CRM"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":"@Url.Action("EditUser","Home")"
+                    ,"checked":1
+                  }
+              ]
+          },
+          {
+              "Name":"Pages"
+              ,"Img":""
+              ,"checked":1
+              ,"ChildNode":[
+                  {"Name":"Teams"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"All Projects"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"Users"
+                  ,"Url":""
+                  ,"checked":1
+                    ,"ChildNode":[{
+                        "Name":"Reports"
+                        ,"ChildNode":[]
+                        ,"Url":""
+                        ,"checked":1
+                    },
+                    {
+                        "Name":"New User"
+                        ,"ChildNode":[]
+                        ,"Url":""
+                        ,"checked":1
+                    }]
+                  }
+                  ,{"Name":"Account"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"Settings"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"Billing"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"Invoice"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"Security"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"Projects"
+                    ,"ChildNode":[
+                        {
+                        "Name":"General"
+                        ,"ChildNode":[]
+                        ,"Url":"@Url.Action("RoleUser","Home")"
+                        ,"checked":1
+                        },
+                        {
+                            "Name":"New User"
+                            ,"ChildNode":[]
+                            ,"Url":"@Url.Action("RoleUser","Home")"
+                            ,"checked":1
+                        }
+                        ,
+                        {
+                            "Name":"New Project"
+                            ,"ChildNode":[]
+                            ,"Url":"@Url.Action("RoleUser","Home")"
+                            ,"checked":1
+                        },
+                        {
+                            "Name":"Trinh020"
+                            ,"ChildNode":[]
+                            ,"Url":"@Url.Action("RoleUser","Home")"
+                            ,"checked":1
+                        }
+                      ]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"Pricing Page"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"Messages"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"RTL"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                   ,{"Name":"Widgets"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"Charts"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"Sweet Alerts"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+                  ,{"Name":"Notifications"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                    ,"checked":1
+                  }
+              ]
+          },
+          {
+              "Name":"Applications"
+              ,"Img":""
+              ,"checked":1
+              ,"ChildNode":[
+                  {
+                      "Name":"Kanban"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                      ,"checked":1
+                  }
+                  ,{
+                      "Name":"Wizard"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                      ,"checked":1
+                  }
+                  ,{
+                      "Name":"DataTables"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                      ,"checked":1
+                  }
+                  ,{
+                      "Name":"Calendar"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                      ,"checked":1
+                  }
+                  ,{
+                      "Name":"Analytics"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                      ,"checked":1
+                  }
+              ]
+          },
+          {
+              "Name":"Ecommerce"
+              ,"Img":""
+              ,"checked":1
+              ,"ChildNode":[
+              ]
+          }
+          ,{
+              "Name":"Authentication"
+              ,"Img":""
+              ,"checked":1
+              ,"ChildNode":[
+                  {
+                      "Name":"Overview"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                      ,"checked":1
+                  }
+                  ,{
+                      "Name":"Products"
+                      ,"ChildNode":[
+                          {
+                            "Name":"New Product"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                            ,"checked":1
+                          }
+                          ,{
+                            "Name":"Edit Product"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                            ,"checked":1
+                          }
+                          ,{
+                            "Name":"Product Page"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                            ,"checked":1
+                          }
+                      ]
+                      ,"Img":""
+                      ,"Url":""
+                      ,"checked":1
+                  }
+                  ,{
+                      "Name":"Orders"
+                      ,"ChildNode":[
+                         {
+                            "Name":"Order List"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                            ,"checked":1
+                          }
+                          ,{
+                            "Name":"Order Details"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                            ,"checked":1
+                          }
+                          ,{
+                            "Name":"Order Trinh"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                            ,"checked":1
+                          }
+                      ]
+                      ,"Img":""
+                      ,"Url":""
+                      ,"checked":1
+                  }
+                  ,{
+                      "Name":"Referral"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                      ,"checked":1
+                  }
+              ]
+          }
+          ,{
+              "Name":"Basic"
+              ,"Img":""
+              ,"ChildNode":[]
+              ,"checked":1
+          }
+          ,{
+              "Name":"Changelog"
+              ,"Img":""
+              ,"ChildNode":[]
+              ,"checked":1
+          }]
+    $(document).ready(function () {
+         let stringContent = '';
+        if(MasterDataMenu.length>0)
+        {
+            for(let i=0;i<MasterDataMenu.length;i++){
+                let item=MasterDataMenu[i];
+                dataTree.push(MasterDataMenu[i].Name);
+                        let tr =
+                        '<div class="col-sm-6 mt-3">'
+                        + '<div class="col-12">'
+                        + '<div class="bg-gray-100 border-radius-lg">'
+                        + '<div class="p-3">'
+                        +'<div class="d-lg-flex">'
+                        +'<div class="w-100 col-auto my-auto">'
+                            +'<div class="h-100">'
+                        + '<h6 data-languagestatic="cal_revenue" class="mb-0">' + item.Name + '</h6>'
+                            +'<p data-languagestatic="" class="text-sm mb-0">Some text of detail sub</p>'
+                            +'</div>'
+                            +'</div>'
+                            +'</div>'
+                            +'</div>'
+                            +'<div class="pt-2 p-3 ms-1 row">';
+                tr = tr+Render_Child_Role_User(item.ChildNode,item.Name) +'</div></div></div></div>';
+                 //tr = tr +'</div></div></div></div>';
+                stringContent=stringContent+tr;
+            }
+        }
+         document.getElementById("setting_revenue_list").innerHTML = stringContent;
+    });
+    function Render_Child_Role_User(data,Name){
+        var res='';
+        for (let j = 0; j <data.length; j++) {
+                        let item1 = data[j];
+                        //dataTreeChild.push(data[j].Name);
+                        res = res + '<div class="form-check col-sm-4 form-switch">'
+                            + '<input title="' + item1.Name + '" id=ParentChild_'+Name+' class="form-check-input checkbox_item" id="' + item1.Name + '" type="checkbox" name="' + item1.Name + '" ' + ((item1.checked == 1) ? "checked" : "") + '/>'
+                            + '<label class="custom-control-label bg-gradient-light" for="' + item1.Name + '">' + item1.Name + '</label>'
+                            + '</div>'
+                            +Render_Child_Role_User(item1.ChildNode,item1.Name);
+                    }
+        return res;
+    }
+    function SettingRoleExcute(){
+         let dataChoose = [];
+         let item;
+         let itemChildNode=[];
+        var x = document.getElementsByClassName("checkbox_item");
+        if (x != null && x != undefined) {   
+            for (i = 0; i < x.length; i++) {
+                if (x[i].checked == true) {
+                    itemChildNode.push({"Name": x[i].title
+                                        ,"checked": 1
+                                        ,"Img":""
+                                        ,"Url":""
+                                        ,"id":x[i].id});
+                  
+                }
+            }
+        for(let j=0;j< MasterDataMenu.length;j++){
+            console.log(MasterDataMenu[j].ChildNode.length)
+              //dataChoose.push(ExeDataChildNode(MasterDataMenu[j].ChildNode,itemChildNode));
+              dataChoose.push({"Name": MasterDataMenu[j].Name
+                        ,"checked": 1
+                        ,"ChildNode": ExeDataChildNode(MasterDataMenu[j].ChildNode,itemChildNode)
+                        ,"Img":""
+                        ,"Url":""
+                      });
+        }
+         //dataChoose=ExeDataChildNode(MasterDataMenu,itemChildNode);
+        console.log(dataChoose);
+    }
+   }
+   function ExeDataChildNode(dataParent,dataChild){
+       console.log(dataParent.length);
+       var res=[];
+       if(dataParent.length>0){
+           for(let j=0;j<dataParent.length;j++){
+                let id="ParentChild_"+dataParent[j].Name;
+                  res.push({"Name": dataParent[j].Name
+                        ,"checked": 1
+                        ,"ChildNode": dataChild.filter(x=>x.id==id)
+                        ,"Img":""
+                        ,"Url":""
+                      });
+                  // ExeDataChildNode(dataParent[j].ChildNode,dataChild)   
+            }
+        }
+        return res;
+   }
+
+</script>

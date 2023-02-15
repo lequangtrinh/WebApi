@@ -1,0 +1,313 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <script src="./js/Common/initialize_setting.js</script>
+    <link rel="icon" type="image/x-icon" href="/Assets/img/l">
+    <meta charset="UTF-8">
+    <script src="/Assests/library/jquery-2.1.4.min.js" type="text/javascript"></script>
+    <script src="/js/Preload/preload.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @*<script src="/assests/dist/LoginTemplate/vendor/jquery/jquery-3.2.1.min.js"></script>*@
+    <script src="/Assests/js/ajax.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+    <link href="/Assets/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="/Assets/css/nucleo-svg.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+    <link href="/Assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link id="pagestyle" href="/Assets/css/soft-ui-dashboard.css?v=1.0.4" rel="stylesheet" />
+    <style>
+        .sercu {
+            -webkit-text-security: disc;
+        }
+
+        #loader {
+            position: absolute;
+            left: 15px;
+            display: none;
+        }
+
+        input.active {
+            background-image: linear-gradient( 310deg, #7928ca12 0%, #ff008021 100%);
+        }
+
+        input.disabled {
+            background-image: linear-gradient( 310deg, #e9ecef 0%, #ffffff 100%);
+            pointer-events: none;
+            cursor: none;
+        }
+
+        button.disabed {
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <main class="main-content main-content-bg mt-0">
+        <section>
+            <div class="page-header min-vh-75">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column">
+                            <div class="card card-plain mt-8">
+                                <div class="row px-xl-5 px-sm-4">
+                                    <div class="col-3 ms-auto px-1 flagsLogin" id="LoginFaceBook">
+                                        <a class="btn btn-outline-light w-200 active" href="javascript:;" style="margin-left:-15px">
+                                            <svg width="24px" height="32px" viewBox="0 0 64 64" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <g transform="translate(3.000000, 3.000000)" fill-rule="nonzero">
+                                                        <circle fill="#3C5A9A" cx="29.5091719" cy="29.4927506" r="29.4882047"></circle>
+                                                        <path d="M39.0974944,9.05587273 L32.5651312,9.05587273 C28.6886088,9.05587273 24.3768224,10.6862851 24.3768224,16.3054653 C24.395747,18.2634019 24.3768224,20.1385313 24.3768224,22.2488655 L19.8922122,22.2488655 L19.8922122,29.3852113 L24.5156022,29.3852113 L24.5156022,49.9295284 L33.0113092,49.9295284 L33.0113092,29.2496356 L38.6187742,29.2496356 L39.1261316,22.2288395 L32.8649196,22.2288395 C32.8649196,22.2288395 32.8789377,19.1056932 32.8649196,18.1987181 C32.8649196,15.9781412 35.1755132,16.1053059 35.3144932,16.1053059 C36.4140178,16.1053059 38.5518876,16.1085101 39.1006986,16.1053059 L39.1006986,9.05587273 L39.0974944,9.05587273 L39.0974944,9.05587273 Z" fill="#FFFFFF"></path>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div class="col-3 me-auto px-1 flagsLogin" id="LoginGoogle">
+                                        <a class="btn btn-outline-light w-200 active" href="javascript:;">
+                                            <svg width="24px" height="32px" viewBox="0 0 64 64" version="1.1">
+                                                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                    <g transform="translate(3.000000, 2.000000)" fill-rule="nonzero">
+                                                        <path d="M57.8123233,30.1515267 C57.8123233,27.7263183 57.6155321,25.9565533 57.1896408,24.1212666 L29.4960833,24.1212666 L29.4960833,35.0674653 L45.7515771,35.0674653 C45.4239683,37.7877475 43.6542033,41.8844383 39.7213169,44.6372555 L39.6661883,45.0037254 L48.4223791,51.7870338 L49.0290201,51.8475849 C54.6004021,46.7020943 57.8123233,39.1313952 57.8123233,30.1515267" fill="#4285F4"></path>
+                                                        <path d="M29.4960833,58.9921667 C37.4599129,58.9921667 44.1456164,56.3701671 49.0290201,51.8475849 L39.7213169,44.6372555 C37.2305867,46.3742596 33.887622,47.5868638 29.4960833,47.5868638 C21.6960582,47.5868638 15.0758763,42.4415991 12.7159637,35.3297782 L12.3700541,35.3591501 L3.26524241,42.4054492 L3.14617358,42.736447 C7.9965904,52.3717589 17.959737,58.9921667 29.4960833,58.9921667" fill="#34A853"></path>
+                                                        <path d="M12.7159637,35.3297782 C12.0932812,33.4944915 11.7329116,31.5279353 11.7329116,29.4960833 C11.7329116,27.4640054 12.0932812,25.4976752 12.6832029,23.6623884 L12.6667095,23.2715173 L3.44779955,16.1120237 L3.14617358,16.2554937 C1.14708246,20.2539019 0,24.7439491 0,29.4960833 C0,34.2482175 1.14708246,38.7380388 3.14617358,42.736447 L12.7159637,35.3297782" fill="#FBBC05"></path>
+                                                        <path d="M29.4960833,11.4050769 C35.0347044,11.4050769 38.7707997,13.7975244 40.9011602,15.7968415 L49.2255853,7.66898166 C44.1130815,2.91684746 37.4599129,0 29.4960833,0 C17.959737,0 7.9965904,6.62018183 3.14617358,16.2554937 L12.6832029,23.6623884 C15.0758763,16.5505675 21.6960582,11.4050769 29.4960833,11.4050769" fill="#EB4335"></path>
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="card-header pb-0 text-start">
+                                    <h4 class="font-weight-bolder text-primary text-gradient">Welcome back</h4>
+                                    <p class="mb-0 text-sm text-dark">Enter your username and password to login</p>
+                                </div>
+                                <div class="card-body">
+                                    <form role="form" class="text-start">
+                                        <label>UserName</label>
+                                        <div class="mb-3">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-user-alt"></i>
+                                                    </span>
+                                                    <input id="username" type="text" class="inforlogin ps-2 form-control" placeholder="eg .username">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <label>Password</label>
+                                        <div class="mb-3">
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-eye-slash show_pass_icon"></i>
+                                                    </span>
+                                                    <input id="password" type="text" class="inforlogin ps-2  sercu form-control" placeholder="eg .password">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
+                                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                                        </div>
+                                        <div class="text-center flagsLogin">
+                                            <button id="loginbtn" type="button" class="btn bg-gradient-dark w-100 mt-4 mb-0 position-relative" onclick="event.preventDefault();return ClickLogin()">
+                                                <div id="loader" class="spinner-border spinner-border-sm"></div>
+                                                LOGIN
+                                            </button>
+                                        </div>
+
+                                    </form>
+                                    <div id="textMessage" name="Content" style="text-align: center;height: 52px;padding-top: 24px;color: #dc3545;"></div>
+                                    <div class="card-footer text-center pt-0 px-sm-4 px-1">
+                                        <p class=" mx-auto">
+                                            Already have an account?
+                                            <a class="text-primary text-gradient font-weight-bold">Sign in</a>
+                                        </p>
+                                        <p class="mb-4 mx-auto cursor-pointer" id="LoginResetPass">
+                                            <a href="#" class="pe-none bg-gradient-info text-gradient font-weight-bold">Quên mật khẩu?</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="globe" class="col-xl-5 col-md-6 h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
+                            <div class="h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
+                               <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLvndt98irt6Hj1CsAvhjLVAh6jte4K8q0Pw&usqp=CAU" alt="pattern-lines" style="width:100% ;height:100%">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer py-5">
+        <div class="container">
+        </div>
+    </footer>
+</body>
+<script type="text/javascript">
+    var userId=localStorage.getItem("userID");
+    $(document).ready(function () {
+        document.getElementById('LoginGoogle').addEventListener("click", ClickLoginGoogle);
+        showTextPassWord();
+        if(userId !=null){
+            Login_ValidateToken();
+        }
+        //else LoginResetPassClick();
+        $('.inforlogin').on('keyup', function (e) {
+            var code = e.key;
+            if (code === "Enter") {
+                e.preventDefault();
+            }
+        });
+
+    });
+    // login oathor2 google
+    function ClickLoginGoogle(){
+        loginGoogle();
+    }
+    function ClickLogin () {
+        if($('#username').val() !=null && $('#password').val() !=null){
+            $('#loader').show();
+           Login_LoadInforUser();
+        }
+        else{
+            if ($('#username').val() == '') $('#username').addClass('active').removeClass('disabled');
+                if ($('#password').val() == '') $('#password').addClass('active').removeClass('disabled');
+                $('#loginbtn').removeClass('disabed');
+
+        }
+    };
+
+    function loginGoogle(){
+        var url="";
+          AjaxApi(url = "/api/Author/loginGoogle"
+            ,data= JSON.stringify({})
+            ,async = false
+            , error = function () { notiError_SW() }
+            , success = function (result) {
+            }
+            , before = function (e) {
+                url=e.responseText;
+                window.open(url,"SingleSecondaryWindowName");
+             }
+        );
+    };
+    function Login_ValidateToken(){
+        $('#username').removeClass('active').addClass('disabled');
+            $('#password').removeClass('active').addClass('disabled');
+            $('#loginbtn').addClass('disabed');
+            $('#loader').show();
+          AjaxApi(url = "/api/Author/ValidateToken"
+            ,data= JSON.stringify({})
+            ,async = true
+            , error = function () { notiError_SW() }
+            , success = function (result) {
+                console.log(result)
+            }
+            , before = function (e) {
+                console.log(e.responseText)
+                if(e.responseText!=""){
+                        window.location.href="@Url.Action("DashBoards", "Home")"+window.btoa(userId);
+                    }
+                    else{
+                        validateLogin()
+                    }
+             }
+        );
+    };
+    function validateLogin(){
+         $('#username').addClass('active').removeClass('disabled');
+            $('#password').addClass('active').removeClass('disabled');
+            $('#loginbtn').removeClass('disabed');
+            $('#loader').hide();
+    };
+    function showTextPassWord(){
+                $(".show_pass_icon").unbind().on("click", function () {
+                let obj = $(this).parent().next();
+                if (obj != undefined) {
+                    if (obj.hasClass('sercu')) {
+                        obj.removeClass('sercu');
+                        $(this).addClass('fa-eye');
+                        $(this).removeClass('fa-eye-slash');
+
+                    }
+                    else {
+                        obj.addClass('sercu')
+                        $(this).removeClass('fa-eye');
+                        $(this).addClass('fa-eye-slash');
+                    }
+                }
+            })
+    }
+    function Login_LoadInforUser () {
+        AjaxApi(url = "/api/Author/login"
+            ,data= JSON.stringify({
+                menu: "1",
+                IDMenu: "1",
+                flags: "0",
+                userID: $('#username').val(),
+                PassWord:$('#password').val(),
+                PassWordNew: "123"
+            })
+            ,async = true
+            , error = function () { notiError_SW() }
+            , success = function (result) {
+                console.log(result)
+                if (result != "[]") {
+                  localStorage.setItem("X-Mater-Data","trinh");
+                  localStorage.setItem("X-UserID",$('#username').val());
+                  notiSuccess();
+                  window.location.href="@Url.Action("DashBoards", "Home")?id="+window.btoa($('#username').val());
+                }
+            }
+            , before = function (e) {
+                console.log(e.responseText)
+                        $('#loader').show();
+             });
+    };
+    function Login_RegisUser(){
+         AjaxApi(url = "/api/Author/RegisUser"
+            ,data= JSON.stringify({
+                menu: "1",
+                IDMenu: "1",
+                flags: "1",
+                userID: $('#username').val(),
+                PassWord:$('#password').val(),
+                PassWordNew: "123"
+            })
+            ,async = true
+            , error = function () { notiError_SW() }
+            , success = function (result) {
+                if (result != "[]") {
+                    notiSuccess();
+                   window.location.href="@Url.Action("DashBoards", "Home")?id="+$('#username').val();
+                }
+            }
+            , before = function (e) {
+
+             }
+        );
+    };
+    function LoginResetPassClick(){
+        document.querySelector("#LoginResetPass").addEventListener("click",e=>{
+            PopUpDetail();
+        });
+    };
+    // show popup
+    function PopUpDetail(){
+           $("#DetailModal_Content").html('');
+           $("#DetailModal_Content").load("@Url.Action("RestPassWord","Login")");
+           $('#DetailModal').modal('show');
+            return false;
+        }
+</script>
+</html>

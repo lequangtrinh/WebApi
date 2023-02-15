@@ -1,0 +1,115 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+}
+<div class="container-fluid py-3 px-0">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0">
+                    <div class="d-lg-flex">
+                        <div class="w-50 col-auto my-auto">
+                            <div class="h-100">
+                                <h6 data-languagestatic="user_header" class="mb-0">Thông Tin User</h6>
+                                <p data-languagestatic="" class="text-sm mb-0">Some text of detail sub</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-3 pt-2">
+                    <div class="row px-1 form3" id="formSingIn">
+                        <div class="col-12 col-md-8 mt-3 pe-3 flex-grow-1">
+                            <div class="card-body p-0">
+                                <div class="field col-12 col-sm-6 p-1">
+                                    <label data-languagestatic="name">Tên Nhân Viên</label>
+                                    <input id="signInName" name="name" type="text" placeholder="3 characters, first addition, no editing" class="form-control" />
+                                </div>
+                                <div class="field col-12 col-sm-6 p-1">
+                                    <label data-languagestatic="password">Mật Khẩu</label>
+                                    <input id="signInPass" type="text" name="" placeholder="Website" class="form-control" />
+                                </div>
+                                <div class="field col-12 col-sm-6 p-1">
+                                    <label data-languagestatic="phone">HotLine</label>
+                                    <input id="signInHotline" name="" type="text" placeholder="1-3 characters, Only contains letters and numbers" class="form-control" />
+                                </div>
+                                <div class="field col-12 col-sm-6 p-1">
+                                    <label data-languagestatic="Email">Email</label>
+                                    <input id="signInEmail" type="text" name="" placeholder="Email" class="form-control" />
+                                </div>
+                                <div class="field col-12 p-1">
+                                    <label data-languagestatic="address">Địa Chỉ</label>
+                                    <textarea id="signInAddress" name="CompanyAddress" type="text" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4 mt-3 pt-3 ps-2 ">
+                            <div id="divAvatar" class="row ps-3">
+                                <div class="field col-12 col-sm-7 p-1">
+                                    <div class="position-relative border-dashed border-1 border-secondary border-radius-md" style="width:220px;height:220px">
+                                        <img id="softwareSmallLogo" class="border border-radius-md imgbigSmall" alt="team-2" style="width:220px;height:220px"><div class="upload-btn-wrapper d-block mt-3">
+                                            <a href="javascript:;" class="btn btn-sm btn-icon-only bg-gradient-light position-absolute bottom-0 end-0 mb-n2 me-n2">
+                                                <i class="fa fa-pen top-0"></i>
+                                                <input class="position-absolute opacity-0 cursor-pointer" name="path[]" style="margin-left: -12px;" id="signInAvatar" type="file" required />
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fixed-botombutton mt-3 pe-3 pb-3">
+                    <div class="action_Save">
+                        <div class="text-danger text-gradient text-sm font-weight-bold" data-languagedyn="textShowMessage" id="textShowMessage"></div>
+                        <div class="action_Save-Content">
+                            <button data-languagestatic="button_ok" id="SignInSave" form="formCompany" type="button" class="btn bg-gradient-primary mt-2 me-2 _tab_control_" data-tab="edit_tab_customer" onclick="event.preventDefault(); SignIn_Excute()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script text="text/javascript">
+    $(document).ready(function () {
+        document.querySelector('#signInAvatar').addEventListener("change", e => {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                document.getElementById("softwareSmallLogo").src = event.target.result;
+                 LoadImg(event.target.result);
+            };
+             reader.readAsDataURL(document.getElementById("signInAvatar").files[0]);
+        });
+    });
+    function LoadImg(value){
+      var img=$("#signInAvatar").val().substring($("#signInAvatar").val().lastIndexOf("\\")+1);
+        AjaxApi(url = "/api/Author/UpdateInfoUser"
+         ,data= JSON.stringify({
+             pathImage:value
+             ,Image:img
+         })
+         ,async = true
+         , error = function () { notiError_SW() }
+         , success = function (result) {
+            //$("#softwareSmallLogo").attr("src",$("#signInAvatar").val());
+         }
+         , before = function (e) {
+             console.log(e.responseText);
+             if(e.responseText=="1"){
+                     //window.location.href="@Url.Action("DashBoards","Home")";
+                 }
+          }
+     );
+    }
+
+    function SignIn_Excute(){
+        $('#formSingIn').form('validate form');
+        if ($('#formSingIn').form('is valid')) {
+             return true;
+        };
+         return false;
+    }
+</script>
+<script src="./Assets/js/custom-validation.js"></script>

@@ -1,0 +1,45 @@
+{
+                "UserID":"00001",
+                "UserIDTo":"00002",
+                "DateTime":"",
+                "ValuesMessages":[{
+                    "Messages":"",
+                    "UserID":"00001",
+                    "DateTime":"",
+                    "Value":"Trinh Test Messages"
+                    }
+                    ,
+                    {
+                    "Messages":"",
+                    "UserID":"00001",
+                    "DateTime":"",
+                    "Value":"Trinh Test Messages1"
+                    },
+                    {
+                    "Messages":"",
+                    "UserID":"00002",
+                    "DateTime":"",
+                    "Value":"Friends Test Messages"
+                    }
+                    ,{
+                    "Messages":"",
+                    "UserID":"00001",
+                    "DateTime":"",
+                    "Value":"Trinh Test Messages2"
+                    }
+                    ,{
+                    "Messages":"",
+                    "UserID":"00002",
+                    "DateTime":"",
+                    "Value":"Friends Test Messages1"}
+                    ,{
+                    "Messages":"",
+                    "UserID":"00002",
+                    "DateTime":"",
+                    "Value":"bruce-mars.jpg"}
+                    ,{
+                    "Messages":"",
+                    "UserID":"00001",
+                    "DateTime":"",
+                    "Value":"avatar.png"}]
+                }

@@ -1,0 +1,455 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid px-0">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header p-3 pb-0">
+                    <div class="d-lg-flex">
+                        <div class="w-50 col-auto my-auto">
+                            <div class="h-100">
+                                <h6 data-languagestatic="carrer_detail_header" class="mb-0">Chi Tiết Nghề Nghiệp</h6>
+                                <p data-languagestatic="" class="text-sm mb-0">Some text of detail sub</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body p-3 pt-2">
+                    <div class="row px-1 form3" id="form_Career">
+                        <div class="field col-12 p-1">
+                            <label data-languagestatic="name">Nghề Nghiệp</label>
+                            <input id="CareerJob" class="form-control" name="username" type="text" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="fixed-botombutton">
+                <div class="action_Save">
+                    <div class="text-danger text-gradient text-sm font-weight-bold" data-languagedyn="textShowMessage" id="textShowMessage"></div>
+                    <div class="action_Save-Content">
+                        <button data-languagestatic="button_cancel" class="btn btn-secondary" form="form_Career" onclick="event.preventDefault();CloseModal()">Cancel</button>
+                        <button data-languagestatic="button_cancel" class="btn bg-gradient-primary mt-2 me-2 _tab_control_" form="form_Career" onclick="event.preventDefault();ExecuteText()">Save</button>
+                        <button data-languagestatic="button_ok" form="form_Career" type="button" class="btn bg-gradient-primary mt-2 me-2 _tab_control_" data-tab="edit_tab_career" onclick="event.preventDefault();PopUpDetail()">PopUp</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./Assets/js/custom-validation.js"></script>
+<script type="text/javascript">
+    var MasterDataMenu = [
+          {
+              "Name":"Dashboards"
+              ,"Img":"",
+              "child":[
+                  {"Name":"EditUser"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":"@Url.Action("User","Home")"
+                  }
+                  ,{"Name":"Role"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":"@Url.Action("RoleUser","Home")"
+                  }
+                  ,{"Name":"EditRole"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":"@Url.Action("EditRole","Mater")"
+                  }
+                  ,{"Name":"Virtual Reality"
+                    ,"ChildNode":[]
+                  }
+                  ,{"Name":"CRM"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":"@Url.Action("EditUser","Home")"
+                  }
+              ]
+          },
+          {
+              "Name":"Pages"
+              ,"Img":"",
+              "child":[
+                  {"Name":"Chats"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":"@Url.Action("Chat","ChatBots")"
+                  }
+                  ,{"Name":"Teams"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"All Projects"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"Users"
+                    ,"ChildNode":[{
+                        "Name":"Reports"
+                        ,"ChildNode":[]
+                        ,"Url":""
+                    },
+                    {
+                        "Name":"New User"
+                        ,"ChildNode":[]
+                        ,"Url":""
+                    }
+                    ]
+                  }
+                  ,{"Name":"Account"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"Settings"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"Billing"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"Invoice"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"Security"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"Projects"
+                    ,"ChildNode":[
+                        {
+                        "Name":"General"
+                        ,"ChildNode":[]
+                        ,"Url":"@Url.Action("RoleUser","Home")"
+                        },
+                        {
+                            "Name":"New User"
+                            ,"ChildNode":[]
+                            ,"Url":"@Url.Action("RoleUser","Home")"
+                        }
+                        ,
+                        {
+                            "Name":"New Project"
+                            ,"ChildNode":[]
+                            ,"Url":"@Url.Action("RoleUser","Home")"
+                        },
+                        {
+                            "Name":"Trinh020"
+                            ,"ChildNode":[]
+                            ,"Url":"@Url.Action("RoleUser","Home")"
+                        }
+                      ]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"Pricing Page"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                  }
+                  ,{"Name":"Messages"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"RTL"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                   ,{"Name":"Widgets"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"Charts"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"Sweet Alerts"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+                  ,{"Name":"Notifications"
+                    ,"ChildNode":[]
+                    ,"Img":""
+                    ,"Url":""
+                  }
+              ]
+          },
+          {
+              "Name":"Applications"
+              ,"Img":""
+              ,"child":[
+                  {
+                      "Name":"Kanban"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+                  ,{
+                      "Name":"Wizard"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+                  ,{
+                      "Name":"DataTables"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+                  ,{
+                      "Name":"Calendar"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+                  ,{
+                      "Name":"Analytics"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+              ]
+          },
+          {
+              "Name":"Ecommerce"
+              ,"Img":""
+              ,"child":[
+              ]
+          }
+          ,{
+              "Name":"Authentication"
+              ,"Img":""
+              ,"child":[
+                  {
+                      "Name":"Overview"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+                  ,{
+                      "Name":"Products"
+                      ,"ChildNode":[
+                          {
+                            "Name":"New Product"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                          }
+                          ,{
+                            "Name":"Edit Product"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                          }
+                          ,{
+                            "Name":"Product Page"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                          }
+                      ]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+                  ,{
+                      "Name":"Orders"
+                      ,"ChildNode":[
+                         {
+                            "Name":"Order List"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                          }
+                          ,{
+                            "Name":"Order Details"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                          }
+                          ,{
+                            "Name":"Order Trinh"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                          }
+                      ]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+                  ,{
+                      "Name":"Referral"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+              ]
+          }
+          ,{
+              "Name":"Basic"
+              ,"Img":""
+              ,"child":[]
+          }
+          ,{
+              "Name":"Changelog"
+              ,"Img":""
+              ,"child":[]
+          }]
+    const iconNavbarSidenav = document.getElementById('iconNavbarSidenav');
+    const iconSidenav = document.getElementById('iconSidenav');
+    const sidenav = document.getElementById('sidenav-main');
+    let body = document.getElementsByTagName('body')[0];
+    let className = 'g-sidenav-pinned';
+    $(document).ready(function (){
+        ShowMenuMater();
+        CloseMneuMater();
+       LoadMenuMater("sidenav-collapse-main");
+        $("#Layout_EditUser").addClass('active');
+         $("#Dashboards").addClass('show');
+        var ele=document.querySelectorAll('.settingCollapse');
+        ele.forEach((node) => {
+            node.addEventListener("click", e => {
+            removeActive(ele);
+            if($("#"+e.target.children[1].innerText).hasClass("show")){
+                $("#"+e.target.children[1].innerText).removeClass("show");
+                document.getElementById(e.target.id).setAttribute("aria-expanded", false);
+                console.log(e.target.querySelector('div'))
+                e.target.querySelector('div').classList.remove("bg-gradient-light");
+            }
+            else{
+                document.getElementById(e.target.id).setAttribute("aria-expanded", true);
+                $("#"+e.target.children[1].innerText).addClass("show");
+                e.target.querySelector('div').classList.add("bg-gradient-light");
+            }
+            })
+        });
+        var element=document.querySelectorAll('.Settingitem__item');
+            element.forEach((node) => {
+            node.addEventListener("click", e => {
+            removeActive(element);
+            $("#"+"Layout_"+e.target.children[1].innerText).addClass("show");
+            document.getElementById(e.target.id).classList.add('active');
+            $("#MainRenderBody").html('');
+            $("#MainRenderBody").load("@Url.Action("LoadFriendChat","Messages")");
+            })
+        });
+    });
+    ////
+    function ExecuteText(){
+        console.log($('#form_Career'));
+         $('#form_Career').form('validate form');
+         if ($('#accountDetail').form('is valid')) {
+         }
+    }
+    ///
+    function LoadMenuMater(id){
+        let stringContent = '';
+        for(let i=0;i<MasterDataMenu.length;i++){
+            let item=MasterDataMenu[i];
+            let tr ='<li class="nav-item settingCollapse">'
+                    +'<a data-bs-toggle="collapse" id="'+item.Name+'collapse" class="nav-link" aria-controls='+item.Name+' role="button" aria-expanded="false">'
+                    +'<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2">'
+                    +'<svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">'
+                    +'<title>shop </title>'
+                    +'<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">'
+                    +'<g transform="translate(-1716.000000, -439.000000)" fill="#FFFFFF" fill-rule="nonzero">'
+                    +'<g transform="translate(1716.000000, 291.000000)">'
+                    +'<g transform="translate(0.000000, 148.000000)">'
+                    +'<path class="color-background" d="M46.7199583,10.7414583 L40.8449583,0.949791667 C40.4909749,0.360605034 39.8540131,0 39.1666667,0 L7.83333333,0 C7.1459869,0 6.50902508,0.360605034 6.15504167,0.949791667 L0.280041667,10.7414583 C0.0969176761,11.0460037 -1.23209662e-05,11.3946378 -1.23209662e-05,11.75 C-0.00758042603,16.0663731 3.48367543,19.5725301 7.80004167,19.5833333 L7.81570833,19.5833333 C9.75003686,19.5882688 11.6168794,18.8726691 13.0522917,17.5760417 C16.0171492,20.2556967 20.5292675,20.2556967 23.494125,17.5760417 C26.4604562,20.2616016 30.9794188,20.2616016 33.94575,17.5760417 C36.2421905,19.6477597 39.5441143,20.1708521 42.3684437,18.9103691 C45.1927731,17.649886 47.0084685,14.8428276 47.0000295,11.75 C47.0000295,11.3946378 46.9030823,11.0460037 46.7199583,10.7414583 Z" opacity="0.598981585"></path>'
+                    +'<path class="color-background" d="M39.198,22.4912623 C37.3776246,22.4928106 35.5817531,22.0149171 33.951625,21.0951667 L33.92225,21.1107282 C31.1430221,22.6838032 27.9255001,22.9318916 24.9844167,21.7998837 C24.4750389,21.605469 23.9777983,21.3722567 23.4960833,21.1018359 L23.4745417,21.1129513 C20.6961809,22.6871153 17.4786145,22.9344611 14.5386667,21.7998837 C14.029926,21.6054643 13.533337,21.3722507 13.0522917,21.1018359 C11.4250962,22.0190609 9.63246555,22.4947009 7.81570833,22.4912623 C7.16510551,22.4842162 6.51607673,22.4173045 5.875,22.2911849 L5.875,44.7220845 C5.875,45.9498589 6.7517757,46.9451667 7.83333333,46.9451667 L19.5833333,46.9451667 L19.5833333,33.6066734 L27.4166667,33.6066734 L27.4166667,46.9451667 L39.1666667,46.9451667 C40.2482243,46.9451667 41.125,45.9498589 41.125,44.7220845 L41.125,22.2822926 C40.4887822,22.4116582 39.8442868,22.4815492 39.198,22.4912623 Z"></path>'
+                    +'</g>'
+                    +'</g>'
+                    +'</g>'
+                    +'</g>'
+                    +'</svg>'
+                    +'</div>'
+                    +'<span class="nav-link-text ms-1">'+item.Name
+                    +'</span>'
+                    +'</a>'
+                    + LoadChildMasterMenu(item.child,item.Name)
+                    +'</li>';
+          stringContent=stringContent+tr;
+        }
+         document.getElementById(id).innerHTML = stringContent;
+    }
+    function LoadChildMasterMenu(dataChild,id){
+        let resulf  = '';
+        if(dataChild.length >0){
+            let tr ='<div class="collapse" id='+id+'>'
+                     +'<ul class="nav ms-4 ps-3">'
+            for(let i=0;i<dataChild.length;i++){
+                 let coll='';
+                 if(dataChild[i].ChildNode.length>0){
+                     coll='data-bs-toggle="collapse"'
+                 }
+                var item=dataChild[i];
+                tr += '<li class="nav-item Settingitem__item cursor-pointer">'
+                    +'<a class="nav-link"'+coll+' id="Layout_'+item.Name+'">'
+                    +'<span class="sidenav-mini-icon"> D </span>'
+                    +'<span class="sidenav-normal">'+item.Name+'</span>'
+                    +'</a>'
+                    +LoadChildMasterMenu(dataChild[i].ChildNode,item.Name)
+                    +'</li>'
+            }
+            resulf=resulf+tr+'</ul>'+'</div>';
+        }
+        return resulf;
+    }
+    function removeActive(element){
+        element.forEach((node) => {
+            if(node.children[0].classList.contains('active')){
+                node.children[0].classList.remove('active');
+            };
+        });
+    };
+    function ShowMenuMater(){
+        if (iconNavbarSidenav) {
+            iconNavbarSidenav.addEventListener("click", toggleSidenav);
+        }
+    }
+    function CloseMneuMater(){
+        if (iconSidenav) {
+            iconSidenav.addEventListener("click", toggleSidenav);
+        }
+    }
+    function PopUpDetail(){
+            $("#DetailModal_Content").html('');
+            $("#DetailModal_Content").load("@Url.Action("ChangePass","Home")");
+            $('#DetailModal').modal('show');
+            return false;
+    }
+    function toggleSidenav() {
+        if (body.classList.contains(className)) {
+        body.classList.remove(className);
+        setTimeout(function() {
+            sidenav.classList.remove('bg-white');
+        }, 100);
+        sidenav.classList.remove('bg-transparent');
+
+        } else {
+        body.classList.add(className);
+        sidenav.classList.add('bg-white');
+        sidenav.classList.remove('bg-transparent');
+        iconSidenav.classList.remove('d-none');
+        }
+    }
+</script>
+
+<style>
+    .navbar-vertical .navbar-nav .nav-link[data-bs-toggle=collapse][aria-expanded=true]:after {
+        color: #3a416f;
+        transform: rotate(180deg);
+    }
+
+</style>

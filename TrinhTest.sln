@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrinhTest", "TrinhTest\TrinhTest.csproj", "{F522867B-3850-4C8C-BF75-778990A941D2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DF65B063-5A11-4F96-9589-94100C5D48BA} = {DF65B063-5A11-4F96-9589-94100C5D48BA}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibTrinh", "LibTrinh\LibTrinh.csproj", "{DF65B063-5A11-4F96-9589-94100C5D48BA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F522867B-3850-4C8C-BF75-778990A941D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F522867B-3850-4C8C-BF75-778990A941D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F522867B-3850-4C8C-BF75-778990A941D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F522867B-3850-4C8C-BF75-778990A941D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF65B063-5A11-4F96-9589-94100C5D48BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF65B063-5A11-4F96-9589-94100C5D48BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF65B063-5A11-4F96-9589-94100C5D48BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF65B063-5A11-4F96-9589-94100C5D48BA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7CD16105-3150-44EA-B924-516EC0B41EAB}
+	EndGlobalSection
+EndGlobal
