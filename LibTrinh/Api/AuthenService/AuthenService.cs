@@ -37,7 +37,7 @@ namespace LibTrinh.Common.Api.AuthenService
         /// </summary>
         /// <param name="pUserLoginInf"></param>
         /// <returns></returns>
-        public async Task<string> LoginAsync(CFaUserInfoDTO pUserLoginInf)
+        public async Task<CFaTokenLoginDTO> LoginAsync(CFaUserInfoDTO pUserLoginInf)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace LibTrinh.Common.Api.AuthenService
                         }
                     case "1":
                         {
-                            return LoginGoolgeAsync();
+                            return  LoginGoolgeAsync();
                             //return await LoginGoolgeAsync(pUserLoginInf);
                             break;
                         }
@@ -73,11 +73,12 @@ namespace LibTrinh.Common.Api.AuthenService
         /// <param name="pUserLoginInf"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<string> LoginUserAsync(CFaUserInfoDTO pUserLoginInf)
+        public async Task<CFaTokenLoginDTO> LoginUserAsync(CFaUserInfoDTO pUserLoginInf)
         {
             try
             {
                 UserDTO userDto = new UserDTO();
+                CFaTokenLoginDTO token = new CFaTokenLoginDTO();
                 CFaUserDTO cFaUserDTO = new CFaUserDTO();
                 using (var uow = await _context.CreateAsync())
                 {
@@ -97,16 +98,16 @@ namespace LibTrinh.Common.Api.AuthenService
                     {
                         return null;
                     }
-                    _generatedToken = _tokenService.BuildToken(_config["JWT:Key"].ToString()
-                                  , _config["JWT:Issuer"].ToString(), userDto);
-
+                    _generatedToken = _tokenService.BuildToken(userDto, _config["JWT:Issuer"].ToString());
+                    token.token = _generatedToken;
+                    token.PublicKey=_tokenService.ReadKeyToken(userDto.UserID,Constant.Constant.PUBLICKEY).ToString();
                     //DataTable dt = new DataTable();
                     //dt = await uow.ExecuteDataTable("[YYY_sp_LoadDashboard]", CommandType.StoredProcedure,
                     //    "@UserID", SqlDbType.NVarChar, "00001"
                     //);
                     //var res = _mapper.Map<CFaUserDTO>(object);
                     uow.Commit();
-                    return _generatedToken;
+                    return token;
                 }
             }
             catch (Exception ex)
@@ -124,10 +125,11 @@ namespace LibTrinh.Common.Api.AuthenService
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
         //public async Task<string> LoginGoolgeAsync(CFaUserInfoDTO pUserLoginInf)
-        public string LoginGoolgeAsync()
+        public CFaTokenLoginDTO LoginGoolgeAsync()
         {
             try
             {
+                CFaTokenLoginDTO TokenLogin = new CFaTokenLoginDTO();
                 StringBuilder sbUri = new StringBuilder(Constant.Constant.OauthUri);
                 sbUri.Append("client_id=" + Constant.Constant.ClientId);
                 sbUri.Append("&redirect_uri=" + Constant.Constant.RedirectUri);
@@ -139,8 +141,8 @@ namespace LibTrinh.Common.Api.AuthenService
                 //sbUri.Append("&state=" + extraParam);
                 sbUri.Append("&state=" + "");
                 sbUri.Append("&approval_prompt=" + "force");
-
-                return sbUri.ToString();
+                TokenLogin.Url = sbUri.ToString();
+                return TokenLogin;
             }
             catch (Exception ex)
             {
@@ -202,14 +204,14 @@ namespace LibTrinh.Common.Api.AuthenService
         /// ValidateToken
         /// </summary>
         /// <param name="token"></param>
-        public async Task<string> ValidateToken(string token, string userId)
+        public async Task<string> ValidateToken(string token, string userId, string publicKey)
         {
             try
             {
                 UserDTO userDto = new UserDTO();
                 using (var uow = await _context.CreateAsync())
                 {
-                    if (_tokenService.IsTokenValid(token))
+                    if (_tokenService.IsTokenValid(token, _config["JWT:Issuer"].ToString(), publicKey))
                     {
                         // refersh token
                         var CheckUser = await uow.ExecuteDataTable("[YYY_sp_CheckLoginUser]", CommandType.StoredProcedure,
@@ -222,8 +224,7 @@ namespace LibTrinh.Common.Api.AuthenService
                             userDto.IP = "123.123.123";
                             userDto.Role = row["Role"].ToString();
                         }
-                        _generatedToken = _tokenService.BuildToken(_config["JWT:Key"].ToString()
-                                      , _config["JWT:Issuer"].ToString(), userDto);
+                        _generatedToken = _tokenService.BuildToken(userDto, _config["JWT:Issuer"].ToString());
                     }
                     #region validate token google,FaceBook
                     //-----------------------google---------------------------------------

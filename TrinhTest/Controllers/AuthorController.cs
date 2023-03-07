@@ -41,7 +41,8 @@ namespace TrinhTest.Controllers
             var res = await _AuthenService.LoginAsync(objUser);
             if (res != null)
             {
-                Response.Cookies.Append("X-Access-Token", res, new CookieOptions() { HttpOnly = false, SameSite = SameSiteMode.Strict });
+                Response.Cookies.Append("X-Access-Token", res.token, new CookieOptions() { HttpOnly = false, SameSite = SameSiteMode.Strict });
+                Response.Cookies.Append("X-Public-Key", res.PublicKey, new CookieOptions() { HttpOnly = false, SameSite = SameSiteMode.Strict });
                 Response.Cookies.Append("X-UserID", objUser.userID);
             }
 
@@ -55,8 +56,9 @@ namespace TrinhTest.Controllers
         [HttpPost]
         public string LoginGoogle()
         {
+            var res =  _AuthenService.LoginGoolgeAsync();
             //string email = Request.Form["email"].FirstOrDefault();
-            return RedirectPermanent(_AuthenService.LoginGoolgeAsync()).Url;
+            return RedirectPermanent(res.Url).Url;
         }
 
 
@@ -91,9 +93,10 @@ namespace TrinhTest.Controllers
 
             var token = Request.Cookies["X-Access-Token"];
             var UserID = Request.Cookies["X-UserID"];
+            var publicKey = Request.Cookies["X-Public-Key"];
             if (token != null)
             {
-                var res = await _AuthenService.ValidateToken(token, UserID);
+                var res = await _AuthenService.ValidateToken(token, UserID, publicKey);
                 Response.Cookies.Append("X-Access-Token", res, new CookieOptions() { HttpOnly = false, SameSite = SameSiteMode.Strict });
                 return res.ToString();
             }

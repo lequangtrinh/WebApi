@@ -61,9 +61,9 @@ namespace TrinhTest
                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("Jwt").GetSection("SecretKey").Value)),
                          ValidateIssuer = true,
                          ValidateAudience = true,
-                         ValidateLifetime = false,
+                         ValidateLifetime = true,
                          ValidIssuer = Configuration.GetSection("JWT").GetSection("Issuer").Value,
-                         ValidAudience = "localhost:5000"
+                         ValidAudience = Configuration.GetSection("JWT").GetSection("Issuer").Value
                      };
                      options.Events = new JwtBearerEvents
                      {

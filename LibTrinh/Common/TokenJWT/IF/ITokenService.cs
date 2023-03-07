@@ -1,4 +1,5 @@
 ﻿using LibTrinh.Models;
+using System.Security.Cryptography;
 
 namespace LibTrinh.Common
 {
@@ -14,7 +15,7 @@ namespace LibTrinh.Common
         /// <param name="issuer"></param>
         /// <param name="user"></param>
         /// <returns></returns>
-        string BuildToken(string key, string issuer, UserDTO user);
+        string BuildToken(UserDTO user, string issuer);
 
 
         /// <summary>
@@ -25,6 +26,13 @@ namespace LibTrinh.Common
         /// <param name="token"></param>
         /// <returns></returns>
         //bool IsTokenValid(string key, string issuer, string token);
-        bool IsTokenValid(string token);
+        bool IsTokenValid(string token,string publicKey, string issuer);
+        /// <summary>
+        /// ReadKeyToken
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="nameKey"></param>
+        /// <returns></returns>
+        RSA ReadKeyToken(string userID, string nameKey);
     }
 }

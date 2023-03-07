@@ -6,6 +6,8 @@
     public class Constant
     {
         public const int Token_Required_Time = 60;
+        public const string PRIVATEKEY = "privateKey";
+        public const string PUBLICKEY = "publicKey";
         #region google
 
         public static string ApplicationName = "Google Api DotNetCore Web Client";

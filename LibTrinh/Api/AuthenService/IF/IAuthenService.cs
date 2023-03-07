@@ -14,7 +14,7 @@ namespace LibTrinh
         /// </summary>
         /// <param name="pUserLoginInf"></param>
         /// <returns></returns>
-        Task<string> LoginAsync(CFaUserInfoDTO pUserLoginInf);
+        Task<CFaTokenLoginDTO> LoginAsync(CFaUserInfoDTO pUserLoginInf);
 
         /// <summary>
         /// LoginGoolgeAsync
@@ -22,7 +22,7 @@ namespace LibTrinh
         /// <param name="pUserLoginInf"></param>
         /// <returns></returns>
         //Task<string> LoginGoolgeAsync(CFaUserInfoDTO pUserLoginInf);
-        string LoginGoolgeAsync();
+        CFaTokenLoginDTO LoginGoolgeAsync();
         /// <summary>
         /// GetTokenByCode
         /// </summary>
@@ -34,14 +34,15 @@ namespace LibTrinh
         /// </summary>
         /// <param name="pUserLoginInf"></param>
         /// <returns></returns>
-        Task<string> LoginUserAsync(CFaUserInfoDTO pUserLoginInf);
+        Task<CFaTokenLoginDTO> LoginUserAsync(CFaUserInfoDTO pUserLoginInf);
 
         /// <summary>
         /// ValidateToken
         /// </summary>
         /// <param name="token"></param>
         /// <param name="userId"></param>
-        Task<string> ValidateToken(string token, string userId);
+        /// <param name="publicKey"></param>
+        Task<string> ValidateToken(string token, string userId,string publicKey);
         /// <summary>
         /// RegisUser
         /// </summary>
