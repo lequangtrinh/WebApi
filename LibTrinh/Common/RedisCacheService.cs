@@ -49,9 +49,27 @@ namespace LibTrinh
                 SlidingExpiration = TimeSpan.FromMinutes(60)
             };
 
-            await _cache.SetStringAsync(key, JsonSerializer.Serialize(value), timeOut);
-
+            await _cache.SetStringAsync(key, JsonSerializer.Serialize(value), timeOut).ConfigureAwait(false);
             return value;
+        }
+
+        /// <summary>
+        /// Remove DATA CACHE REDIS
+        /// </summary>
+        /// <typeparam name="bool"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<bool> Remove<T>(string key)
+        {
+            var value = await _cache.GetStringAsync(key).ConfigureAwait(false);
+
+            if (value != null)
+            {
+                await _cache.RemoveAsync(key).ConfigureAwait(false);
+                return true;
+            }
+            return false;
         }
     }
 }
