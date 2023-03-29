@@ -22,13 +22,16 @@ namespace LibTrinh.Common.Api.AuthenService
         private readonly ITokenService _tokenService;
         private string _PathImg;
         private int _NumBerOTP;
+        private readonly IRedisCacheService _RedisCacheService;
 
         //protected JwtService _jwtService;
         public AuthenService(IConfiguration pConfiguration, IBaseDbContext pContext
-                            , IMapper pMapper, IHttpContextAccessor pHttpContext, ITokenService tokenService) : base(pContext, pMapper, pHttpContext)
+                            , IMapper pMapper, IHttpContextAccessor pHttpContext
+                            , ITokenService tokenService, IRedisCacheService RedisCacheService) : base(pContext, pMapper, pHttpContext)
         {
             _config = pConfiguration;
             _tokenService = tokenService;
+            _RedisCacheService = RedisCacheService;
             _PathImg = AppDomain.CurrentDomain.BaseDirectory + _config["Path:ForFront:ImagePath"].ToString();
         }
         #region login 

@@ -109,6 +109,7 @@ namespace LibTrinh.Api
                             //    FlagsDiv = row["FlagsDiv"].ToString().Trim()
                             //});
                         }
+                        _IRedisCache.Set<string>($"{UserID + "_" + UserIDTo}", res).ToString();
                     }
                     uow.Commit();
                     return res;

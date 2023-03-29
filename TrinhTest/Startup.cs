@@ -97,11 +97,11 @@ namespace TrinhTest
             #endregion
             #region execute cache Redis 
             services.AddOptions();
-            //services.AddStackExchangeRedisCache(options =>
-            //{
-            //    options.InstanceName = "TrinhTest";
-            //    options.Configuration = Configuration.GetSection("Redis")["ConnectionString"];
-            //});
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.InstanceName = "TrinhTest";
+                options.Configuration = Configuration.GetSection("Redis")["ConnectionString"];
+            });
             #endregion
             //services.Configure<IISServerOptions>(options => { options.AllowSynchronousIO = true; });
             #region LimitRate user call api
