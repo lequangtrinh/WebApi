@@ -46,8 +46,7 @@ namespace TrinhTest.Controllers
                 Response.Cookies.Append("X-UserID", objUser.userID);
             }
 
-            //_IRedisCache.Set<string>("Login", "trinh 123");
-            //var xx = _IRedisCache.Get<string>("Login");
+            _IRedisCache.Set<object>(objUser.userID+"_"+DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), res.ToString());
             return Ok(Newtonsoft.Json.JsonConvert.SerializeObject(res));
         }
 

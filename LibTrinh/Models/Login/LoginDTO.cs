@@ -28,7 +28,15 @@ namespace LibTrinh.Models
         public string PassWord { get; set; }
         public string PassWordNew { get; set; }
     }
-
+    /// <summary>
+    /// CFaTokenLoginDTO
+    /// </summary>
+    public class CFaTokenLoginDTO
+    {
+        public string token { get; set; }
+        public string PublicKey { get; set; }
+        public string Url { get; set; }
+    }
     /// <summary>
     /// CFaUserLoginDTO
     /// </summary>
