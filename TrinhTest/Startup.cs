@@ -99,7 +99,7 @@ namespace TrinhTest
             services.AddOptions();
             services.AddStackExchangeRedisCache(options =>
             {
-                options.InstanceName = "TrinhTest";
+                options.InstanceName = "T_";
                 options.Configuration = Configuration.GetSection("Redis")["ConnectionString"];
             });
             #endregion

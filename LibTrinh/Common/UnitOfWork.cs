@@ -28,12 +28,8 @@ namespace LibTrinh.Common
         /// <param name="transactional"></param>
         /// <param name="isolationLevel"></param>
         /// <param name="retryOptions"></param>
-        internal UnitOfWork(
-       SqlConnection connection,
-       IMemoryCache cache,
-       bool transactional = false,
-       IsolationLevel isolationLevel = IsolationLevel.ReadCommitted,
-       RetryOptions retryOptions = null)
+        internal UnitOfWork(SqlConnection connection,IMemoryCache cache,bool transactional = false
+                            ,IsolationLevel isolationLevel = IsolationLevel.ReadCommitted,RetryOptions retryOptions = null)
         {
             _conn = connection;
             _cache = cache;

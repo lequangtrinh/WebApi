@@ -15,7 +15,6 @@ namespace LibTrinh.Api
         public User(IBaseDbContext pContext, IMapper pMapper, IHttpContextAccessor pHttpContext) : base(pContext, pMapper, pHttpContext)
         {
         }
-
         /// <summary>
         /// LoadUser
         /// </summary>
