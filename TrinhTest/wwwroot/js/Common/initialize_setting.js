@@ -37,39 +37,6 @@
             $(document).find('form').unbind().on('submit', function () {
                 return false;
             });
-            //if (sys_isMobile === 1) {
-            //    if ($(".view-back-master").length != 0) {
-            //        $(".view-back-master").unbind("click").on("click", function () {
-            //            let _master_detail = $(this).closest(".view-session");
-            //            _master_detail.removeClass("active");
-            //        });
-            //    }
-            //    if ($(".view-session-master").length != 0) {
-            //        $(".view-session-master").unbind("click").on("click", ".master-group-item", function () {
-            //            let _title = $(this).attr("data-title") ? $(this).attr("data-title") : "";
-            //            let _master = $(this).closest(".view-session");
-            //            _master.toggleClass("active");
-            //            _master.find(".card-header-title").html(_title);
-            //        })
-            //    }
-            //    if ($(".view-session-detail").length != 0) {
-            //        var swiper = new Swipe('.view-session-detail');
-            //        swiper.onLeft(function () {
-            //            let parent = $(this.element).closest(".view-session")
-            //            parent.removeClass("active");
-            //        });
-            //        swiper.onRight(function () {
-
-            //        });
-            //        swiper.onUp(function () {
-
-            //        });
-            //        swiper.onDown(function () {
-
-            //        });
-            //        swiper.run();
-            //    }
-            //}
         }, 100
     )
 
