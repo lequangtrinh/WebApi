@@ -30,5 +30,18 @@
                 };
             });
         });
+    };
+    function TranslateLanguguagesData(value, translateFrom, translateTo) {
+        var apiUrl = `https://api.mymemory.translated.net/get?q=${value}&langpair=${translateFrom}|${translateTo}`;
+        console.log(apiUrl)
+        $.ajax(
+            {
+                type: "post",
+                dataType: "json",
+                url: apiUrl,
+                success: function (msg) {
+                    console.log(msg.responseData.translatedText);
+                }
+            });
     }
 })(jQuery);
