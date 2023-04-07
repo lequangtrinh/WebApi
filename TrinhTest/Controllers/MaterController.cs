@@ -15,7 +15,6 @@ namespace TrinhTest.Controllers
         public MaterController(IConfiguration config)
         {
             _config = config;
-
         }
     }
 }

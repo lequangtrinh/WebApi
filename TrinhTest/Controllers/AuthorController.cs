@@ -75,7 +75,7 @@ namespace TrinhTest.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         [Route("logout")]
         public ActionResult RevokeToken()
         {
@@ -84,7 +84,7 @@ namespace TrinhTest.Controllers
             return Ok();
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [Route("ValidateToken")]
         [HttpPost]
         public async Task<string> ValidateToken()
