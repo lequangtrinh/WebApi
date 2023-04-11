@@ -68,22 +68,18 @@
                     </div>
                 </div>
             </div>
-            <div id="DashPriceServices">
-            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-12">
-            <div id="globe" class="position-absolute end-0 top-10 mt-sm-3 mt-7 me-lg-7 peekaboo">
-                <canvas width="700" height="655" class="w-lg-100 h-lg-100 w-75 h-75 me-lg-0 me-n10 mt-lg-5" style="width: 700px; height: 655.594px;"></canvas>
-            </div>
+        <div id="DashPriceServices" class="col-lg-6 position-relative z-index-2">
+        </div>
+        <div id="DashMessages" class="col-lg-6 position-relative z-index-2">
         </div>
     </div>
 </div>
 <script src="./Assets/js/custom-validation.js"></script>
 <script src="./Assets/js/plugins/threejs.js"></script>
 <script src="./Assets/js/plugins/orbit-controls.js"></script>
-<script src="./js/Common/globe.js"></script>
 <script type="text/javascript">
     var MasterDataMenu = [
           {
@@ -324,11 +320,13 @@
          $("#Dashboards").addClass('show');
          eleClickMenuDash();
         LoadDataPriceServices();
+        LoadTempMessages();
          if (document.getElementById(idSumCoun).hasAttribute("countTo")) {
                      document.getElementById(idSumCoun).setAttribute("countTo", localStorage.getItem("X-SumPrice"));
                      DashMasterCountUpNumber(idSumCoun);
              };
     });
+    // execute click child node menu dash
     function eleClickMenuDash(){
          var ele=document.querySelectorAll('.settingCollapse');
         ele.forEach((node) => {
@@ -467,10 +465,16 @@
         iconSidenav.classList.remove('d-none');
         }
     };
+    //LoadDataPriceServices
     function LoadDataPriceServices(){
          $("#DashPriceServices").html('');
           $("#DashPriceServices").load("@Url.Action("PriceServices","Settings")");
        };
+    //LoadTempMessages chatbots
+    function LoadTempMessages(){
+        $("#DashMessages").html('');
+        $("#DashMessages").load("@Url.Action("LoadFriendChat","Messages")");
+    };
 </script>
 
 <style>
