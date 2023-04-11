@@ -16,8 +16,8 @@ namespace TrinhTest.Controllers
 
         public IActionResult Index()
         {
-            //return View("~/Views/Pages/Login/Login.cshtml");
-            return View("~/Views/Pages/Dash/Dash_Master.cshtml");
+            return View("~/Views/Pages/Login/Login.cshtml");
+            //return View("~/Views/Pages/Dash/Dash_Master.cshtml");
         }
         [Route("DashBoards")]
         public IActionResult DashBoards(string code)
