@@ -107,7 +107,7 @@
                         + '</div>'
                         +'</td>'
                         + '<td><a href="#" class="ms-3 my-auto text-bold buttonEditClass">' + item.Name + '</a></td>'
-                        + '<td class="text-sm text-dark">' + item.Price + ' VNĐ</td>'
+                        + '<td class="text-sm text-dark">' + ConvertNumberWithCommas(item.Price) + ' VNĐ</td>'
                         + '<td data-name="date" class="text-sm text-dark">' + yyyyMMddHHMMM_ddMMyyyy(item.CreateDate) + '</td>'
                         +'<td data-name="is_show_app">'
                     stringContent = stringContent + '<tr class="vt-number" role="row">' + tr + '</tr>';

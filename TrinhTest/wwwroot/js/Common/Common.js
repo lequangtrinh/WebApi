@@ -66,3 +66,9 @@ function RandomNumber() {
     let max = 9999999999;
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
+
+function ConvertNumberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
