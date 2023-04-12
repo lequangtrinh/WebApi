@@ -13,8 +13,12 @@ namespace TrinhTest.Controllers
             _logger = logger;
             _AuthenService = authenService;
         }
-        [Route("Login")]
         public IActionResult Index()
+        {
+            return View("~/Views/index.html");
+        }
+        [Route("Login")]
+        public IActionResult Login()
         {
             return View("~/Views/Pages/Login/Login.cshtml");
            // return View("~/Views/Pages/Dash/Dash_Master.cshtml");
