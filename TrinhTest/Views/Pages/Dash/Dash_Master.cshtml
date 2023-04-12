@@ -1,10 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@page
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container-fluid py-4">
+<script src="./js/Common/initialize_setting.js"></script>
+<div class="container-fluid py-4" id="divMainSettingDetail">
     <div class="row">
         <div class="col-lg-7 position-relative z-index-2">
             <div class="card card-plain mb-4">
@@ -351,8 +350,10 @@
             removeActive(element);
             $("#"+"Layout_"+e.target.children[1].innerText).addClass("show");
             document.getElementById(e.target.id).classList.add('active');
+            console.log(window.location.href.replace(window.location.pathname,("@Url.Action("PriceServices","Settings")"+ "?ver=" + versionofWebApplication)));
             $("#MainRenderBody").html('');
-            $("#MainRenderBody").load("@Url.Action("PriceServices","Settings")");
+            $("#MainRenderBody").load("@Url.Action("PriceServices","Settings")"+ "?ver=" + versionofWebApplication);
+            $('#MainRenderBody').show();
             })
         });
     }

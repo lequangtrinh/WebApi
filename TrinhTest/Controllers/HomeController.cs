@@ -13,11 +13,11 @@ namespace TrinhTest.Controllers
             _logger = logger;
             _AuthenService = authenService;
         }
-
+        [Route("Login")]
         public IActionResult Index()
         {
-            //return View("~/Views/Pages/Login/Login.cshtml");
-            return View("~/Views/Pages/Dash/Dash_Master.cshtml");
+            return View("~/Views/Pages/Login/Login.cshtml");
+           // return View("~/Views/Pages/Dash/Dash_Master.cshtml");
         }
         [Route("DashBoards")]
         public IActionResult DashBoards(string code)
@@ -28,30 +28,30 @@ namespace TrinhTest.Controllers
             }
             return View("~/Views/Pages/Dash/Dash_Master.cshtml");
         }
-        [Route("ChangePass")]
+        [Route("Login/ChangePass")]
         public IActionResult ChangePass()
         {
             return View("~/Views/Pages/Login/ChangePassword.cshtml");
         }
 
-        [Route("SignIn")]
+        [Route("Login/SignIn")]
         public IActionResult SignIn()
         {
             return View("~/Views/Pages/Login/SignIn.cshtml");
         }
 
-        [Route("User")]
+        [Route("Login/User")]
         public IActionResult User()
         {
             return View("~/Views/Pages/Login/User.cshtml");
         }
-        [Route("RoleUser")]
+        [Route("Login/RoleUser")]
         public IActionResult RoleUser()
         {
             return View("~/Views/Pages/Setting/SettingRoleUser.cshtml");
         }
 
-        [Route("EditRole")]
+        [Route("Login/EditRole")]
         public IActionResult EditRole()
         {
             return View("~/Views/Pages/Dash/EditMater.cshtml");

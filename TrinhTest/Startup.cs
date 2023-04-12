@@ -35,7 +35,6 @@ namespace TrinhTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
-            services.AddControllersWithViews();
             services.Configure<SetupOptions>(Configuration.GetSection("Setup"));
             #region Regis Service Design 
             services.AddTransient<ITokenService, TokenService>();
@@ -102,6 +101,10 @@ namespace TrinhTest
                 options.InstanceName = "T_";
                 options.Configuration = Configuration.GetSection("Redis")["ConnectionString"];
             });
+            services.AddRazorPages().AddRazorPagesOptions(options =>
+            {
+                options.Conventions.AuthorizeFolder("/Login");
+            });
             #endregion
             //services.Configure<IISServerOptions>(options => { options.AllowSynchronousIO = true; });
             #region LimitRate user call api
@@ -134,14 +137,17 @@ namespace TrinhTest
             app.UseAuthentication();
             pLoggerFactory.AddLog4Net();
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseIpRateLimiting();
+            app.UseIpRateLimiting();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 if (env.IsDevelopment())
                 {
                     endpoints.MapControllerRoute(

@@ -72,3 +72,24 @@ function ConvertNumberWithCommas(x) {
     parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     return parts.join(".");
 }
+
+function RenderLayoutPaggin(id, data) {
+    let myNode = document.getElementById(id);
+    if (myNode != null) {
+        myNode.innerHTML = '';
+        let stringContent = '';
+        //if (data && data.length > 0) {
+        //    for (let i = 0; i < data.length; i++) {
+        //        let li='<li class="">< a href = "#" data-page="3" >' +i+'</a ></li >'
+        //        stringContent = stringContent + li ;
+        //    }
+        //};
+        for (let i = 0; i < 10; i++) {
+            let li = '<li class=""><a href = "#" data-page="3" >' + (i+1) + '</a></li>'
+            stringContent = stringContent + li;
+        }
+        document.getElementById(id).innerHTML = '<li class="pager prev"><a href = "#" data - page="1">‹</a></li>'
+                                                + stringContent
+                                                + '<li class="pager Next"><a href = "#" data - page="2">›</a></li>';
+    }
+}

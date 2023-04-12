@@ -4,6 +4,7 @@
 @{
     Layout = null;
 }
+<script src="./js/Common/initialize_setting.js"></script>
 <div class="container-fluid py-3 px-0">
     <div class="row">
         <div class="col-12 col-lg-10">
@@ -13,7 +14,7 @@
                         <div class="w-50 col-auto my-auto">
                             <div class="h-100">
                                 <h6 class="mb-2">Price Services</h6>
-                                 <p data-languagestatic="" class="text-sm mb-0">Some text of detail sub</p>
+                                <p data-languagestatic="" class="text-sm mb-0">Some text of detail sub</p>
                             </div>
                         </div>
                         <div class="ms-auto my-auto mt-1">
@@ -37,29 +38,9 @@
                         <tbody data-languagedyn="grid" id="dtContentPriceServicesBody">
                         </tbody>
                     </table>
-                    <div class="dataTable-bottom">
-                        <div class="dataTable-info">Showing 1 to <span id="CountShow">6</span> of <span id="SumCountPagin">12</span> entries</div>
-                        <nav class="dataTable-pagination">
-                            <ul class="dataTable-pagination-list">
-                                <li class="pager">
-                                    <a href="#" data-page="1">
-                                        ‹
-                                    </a>
-                                </li>
-                                <li class="active">
-                                    <a href="#" data-page="1">1</a>
-                                </li>
-                                <li class="">
-                                    <a href="#" data-page="2">2</a>
-                                </li>
-                                <li class="">
-                                    <a href="#" data-page="3">3</a>
-                                </li>
-                                <li class="pager">
-                                    <a href="#" data-page="2">›</a>
-                                </li>
-                            </ul>
-                        </nav>
+                    <div class="card-footer p-3">
+                        <div class="ui pagination menu justify-content-end" id="generalInfo_anampage">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -67,24 +48,36 @@
         </div>
     </div>
 </div>
-
+<script src='./Assests/dist/Paginationjs/paginationjs.min.js'></script>
+<link href='./Assests/dist/Paginationjs/paginationjs.min.css' rel="stylesheet" />
 <script type="text/javascript">
     $(document).ready(function () {
         LoadataPriceServices();
+        RenderLayoutPaggin("SettingPriceSerPaggin","10");
+        if(window.location.pathname==="/DashBoards"){
+            $("#btnNewSetPriSer").addClass('d-none');
+        }
+        else{
+             $("#btnNewSetPriSer").removeClass('d-none');
+        }
     });
     function LoadataPriceServices(){
            AjaxLoad(url = "/api/PriceServices/LoadPriceServices"
-            ,data= JSON.stringify({
-                Pagination:0
-            })
+            ,data= JSON.stringify({})
             ,async = true
             , error = function () { notiError_SW() }
             , success = function (result) {
                 if (result != null && result!='') {
                     data=JSON.parse(result);
-                   document.getElementById("SumCountPagin").innerHTML =data.CountData;
-                   document.getElementById("CountShow").innerHTML = data.lstPriceServicesDTO.length;
-                   Render_Dash_Master_Price_Services("dtContentPriceServicesBody",data.lstPriceServicesDTO);
+                    $('#generalInfo_anampage').pagination({
+                            dataSource: data.lstPriceServicesDTO,
+                            pageSize: 2,
+                            autoHidePrevious: true,
+                            autoHideNext: true,
+                            callback: function (data, pagination) {
+                                Render_Dash_Master_Price_Services("dtContentPriceServicesBody",data);
+                            }
+                        });
                 }
             })
        };
