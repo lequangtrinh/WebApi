@@ -73,16 +73,17 @@ namespace TrinhTest
                          },
                      };
                  });
+
             #region login authen google and facabook
-             //.AddGoogle(options =>
-             //{
-             //    IConfigurationSection googleAuthNSection =
-             //    Configuration.GetSection("Authentication:Google");
-             //    options.ClientId = googleAuthNSection[Configuration.GetSection("Authentication:ClientID").ToString()];
-             //    options.ClientSecret = googleAuthNSection[Configuration.GetSection("Authentication:ClientSecret").ToString()];
-             //    //options.CallbackPath=""
-             //});
-            
+            //.AddGoogle(options =>
+            //{
+            //    IConfigurationSection googleAuthNSection =
+            //    Configuration.GetSection("Authentication:Google");
+            //    options.ClientId = googleAuthNSection[Configuration.GetSection("Authentication:ClientID").ToString()];
+            //    options.ClientSecret = googleAuthNSection[Configuration.GetSection("Authentication:ClientSecret").ToString()];
+            //    //options.CallbackPath=""
+            //});
+
             //.AddFacebook(options =>
             //{
             //    IConfigurationSection FBAuthNSection =
@@ -92,6 +93,7 @@ namespace TrinhTest
             //});
             #endregion
             #region RUNTIME VIEWS CODE
+            services.AddRazorPages();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             #endregion
             #region execute cache Redis 
@@ -100,10 +102,6 @@ namespace TrinhTest
             {
                 options.InstanceName = "T_";
                 options.Configuration = Configuration.GetSection("Redis")["ConnectionString"];
-            });
-            services.AddRazorPages().AddRazorPagesOptions(options =>
-            {
-                options.Conventions.AuthorizeFolder("/Login");
             });
             #endregion
             //services.Configure<IISServerOptions>(options => { options.AllowSynchronousIO = true; });
@@ -114,7 +112,9 @@ namespace TrinhTest
             services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             services.AddSingleton<IIpPolicyStore, DistributedCacheIpPolicyStore>();
             services.AddSingleton<IRateLimitCounterStore, DistributedCacheRateLimitCounterStore>();
+
             #endregion
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace TrinhTest
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseIpRateLimiting();
+           app.UseIpRateLimiting();
             app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseRouting();

@@ -45,10 +45,10 @@
     <link href='./css/root_element_grid.css' rel="stylesheet" />
     <link href='./css/root_element_color.css' rel="stylesheet" />
     <script href='./Assets/scss/soft-ui-dashboard/plugins/pro/_datatable-extend.scss'></script>
-    <script src="~/js/Preload/preload.js"></script>
+    <script src="/js/Preload/basket.min.js"></script>
+    <script src="./js/Preload/preload.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="/js/Preload/basket.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
@@ -60,14 +60,15 @@
     <script>css_require("/Assests/Error/css/style.css")</script>
     <script>css_require("/Assests/dist/css/scrollbar.css")</script>
     <script src="/Assets/js/core/bootstrap.js"></script>
-    <script src="/js/Common/Popup.js"></script>
-    <script src="~/js/Common/Datetime.js"></script>
-    <script src="~/js/Common/noti_function.js"></script>
-    <script src="~/js/Common/countup.min.js"></script>
+    <script src="./js/Common/Popup.js"></script>
+    <script src="./js/Common/Datetime.js"></script>
+    <script src="./js/Common/noti_function.js"></script>
+    <script src="./js/Common/countup.min.js"></script>
     <script src="./js/Common/Common.js"></script>
     <script src="./lib/jquery-validation/dist/semantic.min.js"></script>
     <script src="./Assets/js/plugins/datatables.js"></script>
-     <script src='./Assests/dist/Paginationjs/paginationjs.min.js'></script>
+    <script src='./Assests/dist/Paginationjs/paginationjs.min.js'></script>
+     <link href='./Assests/dist/Paginationjs/paginationjs.min.css' rel="stylesheet" />
 </head>
 <body class="g-sidenav-show bg-gray-100 " id="BodyMain">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 ps ps--active-y ps--collapsing-y" id="sidenav-main">
@@ -229,62 +230,6 @@
     </main>
         <div class="position-fixed bottom-1 end-1 z-index-2" id="MS_Notification">
         </div>
-        <script>
-            $(document).ready(function () {
-            Master_CheckingMenuSelected();
-            Master_RenderMenu();
-        });
-            function Master_CheckingMenuSelected () {
-            let url = window.location.pathname;
-
-            $(".menudesktop_render").each((idx, ele) => {
-                let currlink = $(ele).attr("href");
-                if (currlink.includes(url)) {
-                    if (ele.id != "menuCustomerCreate") {
-                        $(ele).addClass("active");
-                        $(ele).closest(".collapsesticky").siblings('.nav-link').addClass("active");
-                        $(ele).closest(".collapsesticky").addClass("show")
-                        MS_UrlRoot = $(ele).closest(".collapsesticky").siblings('.nav-link').find(".nav-link-text").text();
-                        MS_UrlChild = $(ele).children('.sidenav-normal').text();
-
-                    }
-                }
-            })
-        }
-        function Master_RenderMenu () {
-            RenderMenuDesktop(PermissionTableMenu, "menuDesktopCategory");
-            $('#menuDesktopCategory').on('click', '.menudesktop_render', function (e) {
-                e.preventDefault();
-                $('#menuDesktopCategory .menuparent_render').removeClass('active');
-                $('#menuDesktopCategory .menudesktop_render').removeClass('active');
-                let namechild = '', namegroup = '';
-                namechild = $(this).attr("data-name");
-                $(this).addClass('active');
-                let objparent = $(this).parent().parent();
-                if (objparent != undefined) {
-                    objparent.addClass('active');
-                    namegroup = objparent.attr("data-name");
-                }
-                let href = $(this).attr('href');
-                let hreflayoutnone = href + '?layout=none' + '&ver=' + versionofWebApplication;
-                MS_UrlRoot = namegroup;
-                MS_UrlChild = namechild;
-                if (href != '#') {
-                    $.ajax({
-                        url: hreflayoutnone,
-                        success: function (data) {
-                            $("#MainRenderBody").empty();
-                            $("#MainRenderBody_Manual").html(data);
-                            window.history.pushState(href, 'Title', href);
-                            MS_SetHeaderNavi();
-                        }
-                    })
-                }
-
-            });
-
-        }
-        </script>
         @await RenderSectionAsync("Scripts", required: false)
         <script src="./Assests/dist/signalr/dist/browser/signalr.js"></script>
         <script src="/js/Common/LoadLanguages_Packege.js"></script>

@@ -2,6 +2,7 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@Html.AntiForgeryToken()
 <script src="./js/Common/initialize_setting.js"></script>
 <div class="container-fluid py-4" id="divMainSettingDetail">
     <div class="row">
@@ -354,7 +355,11 @@
             $("#MainRenderBody").html('');
             $("#MainRenderBody").load("@Url.Action("PriceServices","Settings")"+ "?ver=" + versionofWebApplication);
             $('#MainRenderBody').show();
-            })
+            e.preventDefault();
+            
+            //var urlPath=window.location.href.replace(window.location.pathname,("@Url.Action("PriceServices","Settings")"+ "?ver=" + versionofWebApplication));
+            //window.history.pushState('urlPath','Title', urlPath);
+        })
         });
     }
     function DashMasterCountUpNumber(id){

@@ -89,7 +89,6 @@ namespace TrinhTest.Controllers
         [HttpPost]
         public async Task<string> ValidateToken()
         {
-
             var token = Request.Cookies["X-Access-Token"];
             var UserID = Request.Cookies["X-UserID"];
             var publicKey = Request.Cookies["X-Public-Key"];

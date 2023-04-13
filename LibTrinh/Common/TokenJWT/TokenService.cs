@@ -12,6 +12,7 @@ namespace LibTrinh.Common
     /// </summary>
     public class TokenService : ITokenService
     {
+        private string _pathConsKey = string.Empty;
         #region #BuildToken
         /// <summary>
         /// BuildToken
@@ -99,13 +100,15 @@ namespace LibTrinh.Common
         {
             try
             {
-                if (!Directory.Exists(userID)) Directory.CreateDirectory(userID);
+                var path=Path.Combine(AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\net6.0\\", "") + Constant.Constant.ForderToken);
+                _pathConsKey = Path.Combine(path, userID);
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                if (!Directory.Exists(_pathConsKey)) Directory.CreateDirectory(_pathConsKey);
                 var rsa = RSA.Create();
                 string privateKeyXml = rsa.ToXmlString(true);
                 string publicKeyXml = rsa.ToXmlString(false);
-                using var privateFile = File.Create(userID + "_" + Constant.Constant.PRIVATEKEY);
-                using var publicFile = File.Create(userID + "_" + Constant.Constant.PUBLICKEY);
-
+                using var privateFile = File.Create(_pathConsKey + "\\"+ userID + "_" + Constant.Constant.PRIVATEKEY);
+                using var publicFile = File.Create(_pathConsKey + "\\" + userID + "_" + Constant.Constant.PUBLICKEY);
                 privateFile.Write(Encoding.UTF8.GetBytes(privateKeyXml));
                 publicFile.Write(Encoding.UTF8.GetBytes(publicKeyXml));
                 return true;
@@ -127,7 +130,7 @@ namespace LibTrinh.Common
         public RSA ReadKeyToken(string userID, string nameKey)
         {
             var rsa = RSA.Create();
-            rsa.FromXmlString(System.IO.File.ReadAllTextAsync(userID.Trim() + "_" + nameKey.Trim()).ToString());
+            rsa.FromXmlString(System.IO.File.ReadAllText(_pathConsKey + "\\"+userID.Trim() + "_" + nameKey.Trim()).ToString());
             return rsa;
         } 
         #endregion

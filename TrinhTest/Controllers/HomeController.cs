@@ -1,4 +1,5 @@
 ﻿using LibTrinh;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrinhTest.Controllers
@@ -23,6 +24,7 @@ namespace TrinhTest.Controllers
             return View("~/Views/Pages/Login/Login.cshtml");
            // return View("~/Views/Pages/Dash/Dash_Master.cshtml");
         }
+        [Authorize]
         [Route("DashBoards")]
         public IActionResult DashBoards(string code)
         {
@@ -32,30 +34,32 @@ namespace TrinhTest.Controllers
             }
             return View("~/Views/Pages/Dash/Dash_Master.cshtml");
         }
-        [Route("Login/ChangePass")]
+        [Authorize]
+        [Route("ChangePass")]
         public IActionResult ChangePass()
         {
             return View("~/Views/Pages/Login/ChangePassword.cshtml");
         }
-
-        [Route("Login/SignIn")]
+        [Authorize]
+        [Route("SignIn")]
         public IActionResult SignIn()
         {
             return View("~/Views/Pages/Login/SignIn.cshtml");
         }
-
-        [Route("Login/User")]
+        [Authorize]
+        [Route("User")]
         public IActionResult User()
         {
             return View("~/Views/Pages/Login/User.cshtml");
         }
-        [Route("Login/RoleUser")]
+        [Authorize]
+        [Route("RoleUser")]
         public IActionResult RoleUser()
         {
             return View("~/Views/Pages/Setting/SettingRoleUser.cshtml");
         }
-
-        [Route("Login/EditRole")]
+        [Authorize]
+        [Route("EditRole")]
         public IActionResult EditRole()
         {
             return View("~/Views/Pages/Dash/EditMater.cshtml");

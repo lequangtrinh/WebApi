@@ -6,13 +6,13 @@ namespace TrinhTest.Controllers
     public class SettingsController : Controller
     {
         [Authorize]
-        [Route("Setting/PriceServices")]
+        [Route("PriceServices")]
         public IActionResult PriceServices()
         {
             return View("~/Views/Pages/Setting/PriceServices/SettingPriceServices.cshtml");
         }
         [Authorize]
-        [Route("Setting/Languages")]
+        [Route("SLanguages")]
         public IActionResult Languages()
         {
             return View("~/Views/Pages/Setting/Languages.cshtml");

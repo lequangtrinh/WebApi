@@ -183,7 +183,6 @@
             if ($('#username').val() == '') $('#username').addClass('active').removeClass('disabled');
                 if ($('#password').val() == '') $('#password').addClass('active').removeClass('disabled');
                 $('#loginbtn').removeClass('disabed');
-
         }
     };
 
@@ -211,12 +210,10 @@
             ,async = true
             , error = function () { notiError_SW() }
             , success = function (result) {
-                console.log(result)
             }
             , before = function (e) {
-                console.log(e.responseText)
-                if(e.responseText!=""){
-                        window.location.href="@Url.Action("DashBoards", "Home")"+window.btoa(userId);
+                if(e.responseText !==""){
+                        window.location.href="@Url.Action("DashBoards", "Home")"+"?id="+window.btoa(userId);
                     }
                     else{
                         validateLogin()
@@ -261,17 +258,15 @@
             ,async = true
             , error = function () { notiError_SW() }
             , success = function (result) {
-                console.log(result)
-                if (result != "[]") {
+            }
+            , before = function (e) {
+                 $('#loader').show();
+                 if ( e.responseText !== "" && e.responseText !== undefined) {
                   localStorage.setItem("X-Mater-Data","trinh");
                   localStorage.setItem("X-UserID",$('#username').val());
                   notiSuccess();
-                  window.location.href="@Url.Action("DashBoards", "Home")?id="+window.btoa($('#username').val());
+                  window.location.href="@Url.Action("DashBoards", "Home")"+"?id="+window.btoa($('#username').val());
                 }
-            }
-            , before = function (e) {
-                console.log(e.responseText)
-                        $('#loader').show();
              });
     };
     function Login_RegisUser(){
@@ -289,7 +284,7 @@
             , success = function (result) {
                 if (result != "[]") {
                     notiSuccess();
-                   window.location.href="@Url.Action("DashBoards", "Home")?id="+$('#username').val();
+                   window.location.href="@Url.Action("DashBoards", "Home")"+"?id="+window.btoa($('#username').val());
                 }
             }
             , before = function (e) {
