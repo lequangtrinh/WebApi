@@ -29,9 +29,14 @@
 
     .paginationjs .paginationjs-pages li {
         float: left;
-        border: 1px solid #67748e3b;
-        border-right: none;
-        list-style: none
+        border: 1px solid #8392ab;
+        list-style: none;
+        border-radius: 48%;
+        margin-right: 3px;
+    }
+    .paginationjs .paginationjs-pages a {
+        border-radius: 50%;
+        border: 1px solid #8392ab !important;
     }
 
         .paginationjs .paginationjs-pages li > a {
@@ -47,16 +52,17 @@
         }
 
             .paginationjs .paginationjs-pages li > a:hover {
-                background: #eee
+                background: #eee;
+                border-radius: 50%;
             }
 
         .paginationjs .paginationjs-pages li.active {
-            border: none
+            border-radius: 50%
         }
 
             .paginationjs .paginationjs-pages li.active > a {
                 height: 29px;
-               
+                border-radius: 50%;
                 background: #a7c6ec;
                 color: #fff
             }
@@ -66,27 +72,34 @@
         }
 
             .paginationjs .paginationjs-pages li.disabled > a:hover {
-                background: 0 0
+                background: 0 0;
+                border-radius: 50%;
             }
 
-        .paginationjs .paginationjs-pages li:first-child, .paginationjs .paginationjs-pages li:first-child > a {
-            border-radius: 3px 0 0 3px
-        }
+    .paginationjs .paginationjs-pages li:first-child, .paginationjs .paginationjs-pages li:first-child > a {
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 
         .paginationjs .paginationjs-pages li:last-child {
             border-right: 1px solid #a7c6ec;
-            border-radius: 0 3px 3px 0
+            border-radius: 50%;
+            margin-right: 3px;
         }
 
             .paginationjs .paginationjs-pages li:last-child > a {
-                border-radius: 0 3px 3px 0
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
     .paginationjs .paginationjs-go-input > input[type=text] {
         width: 30px;
         height: 28px;
         background: #fff;
-        border-radius: 3px;
+        border-radius: 50%;
         border: 1px solid #a7c6ec;
         padding: 0;
         font-size: 14px;
@@ -102,7 +115,7 @@
         height: 30px;
         line-height: 28px;
         background: #fff;
-        border-radius: 3px;
+        border-radius: 50%;
         border: 1px solid #a7c6ec;
         text-align: center;
         padding: 0 8px;

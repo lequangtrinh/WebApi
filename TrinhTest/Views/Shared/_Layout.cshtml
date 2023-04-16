@@ -36,6 +36,7 @@
         var VDNAME = '@ViewData["NAME"]'.toLowerCase();
         var VDMINIFY = "true";
         var VDVERSION = "6.0";
+        const versionofWebApplication = '1681282715158';
     </script>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -43,29 +44,31 @@
     <link href='./Assets/css/soft-ui-dashboard.css' rel="stylesheet" />
     <link href='./css/root_element_grid.css' rel="stylesheet" />
     <link href='./css/root_element_color.css' rel="stylesheet" />
-    <link href='./Assets/scss/soft-ui-dashboard/plugins/pro/_datatable-extend.scss' rel="stylesheet" />
-    <script src="~/js/Preload/preload.js"></script>
+    <script href='./Assets/scss/soft-ui-dashboard/plugins/pro/_datatable-extend.scss'></script>
+    <script src="/js/Preload/basket.min.js"></script>
+    <script src="./js/Preload/preload.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="/js/Preload/basket.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
     <script src="/Assests/js/ajax.min.js" type="text/javascript"></script>
-    <link href="/css/master1.css" rel="stylesheet" />
+    <link href="./css/master1.css" rel="stylesheet" />
     <script>css_require('/css/main.custom.css')</script>
     <script>css_require("/css/text_editor.css")</script>
     <script>css_require("/css/button.css")</script>
     <script>css_require("/Assests/Error/css/style.css")</script>
     <script>css_require("/Assests/dist/css/scrollbar.css")</script>
     <script src="/Assets/js/core/bootstrap.js"></script>
-    <script src="/js/Common/Popup.js"></script>
-    <script src="~/js/Common/Datetime.js"></script>
-    <script src="~/js/Common/noti_function.js"></script>
-    <script src="~/js/Common/countup.min.js"></script>
+    <script src="./js/Common/Popup.js"></script>
+    <script src="./js/Common/Datetime.js"></script>
+    <script src="./js/Common/noti_function.js"></script>
+    <script src="./js/Common/countup.min.js"></script>
     <script src="./js/Common/Common.js"></script>
     <script src="./lib/jquery-validation/dist/semantic.min.js"></script>
     <script src="./Assets/js/plugins/datatables.js"></script>
+    <script src='./Assests/dist/Paginationjs/paginationjs.min.js'></script>
+     <link href='./Assests/dist/Paginationjs/paginationjs.min.css' rel="stylesheet" />
 </head>
 <body class="g-sidenav-show bg-gray-100 " id="BodyMain">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 ps ps--active-y ps--collapsing-y" id="sidenav-main">
@@ -225,92 +228,8 @@
         <div id="MainRenderBody_Manual" class="pusher  mx-3 border-radius-lg  px-0">
         </div>
     </main>
-
-    <div class="fixed-plugin ps">
-        <a class="fixed-plugin-button position-fixed px-3 py-2 pulse">
-            <i class="fa fa-whatsapp py-2" aria-hidden="true"> </i>
-        </a>
-        <div class="card shadow-lg blur">
-            <div class="card-header pb-0 pt-3  bg-transparent ">
-                <div class="float-start">
-                    <h5 class="mt-3 mb-0">Soft UI Configurator</h5>
-                    <p>ChatBots.</p>
-                </div>
-                <div class="float-end mt-4">
-                    <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
-                        <i class="fa fa-close" aria-hidden="true"></i>
-                    </button>
-                </div>
-
-            </div>
-            <hr class="horizontal dark my-1">
-            <div class="card-body pt-sm-3 pt-0">
-            </div>
-        </div>
-
         <div class="position-fixed bottom-1 end-1 z-index-2" id="MS_Notification">
         </div>
-
-        <div class="position-absolute top-0 start-50 translate-middle-x z-index-2" id="MS_NotificationTop">
-            <div id="CallCenter_Area" class="toast fade show p-2 mt-2 bg-gradient-info d-none" role="alert" aria-live="assertive" aria-atomic="true">
-                <audio id="audio_callcenter" autoplay="autoplay" loop></audio>
-                <div class="toast-header bg-transparent border-0">
-                    <i class="fab fa-stumbleupon-circle fa-spin text-md text-white me-3" aria-hidden="true"></i>
-                    <span id="CallCenter_Header" class="me-auto text-white font-weight-bold">Incomming Call</span>
-
-                </div>
-                <hr class="horizontal light m-0">
-                <div class="toast-body text-white">
-                    <div class="d-flex align-items-center">
-                        <div class="icon icon-shape icon-sm me-3 shadow text-center">
-                            <img id="CallCenter_Avatar" alt="avatar" src="/assests/img/gray.png"
-                                 class="call-animation avatar avatar-sm" />
-                        </div>
-                        <div class="d-flex flex-column">
-                            <h6 id="CallCenter_Phone" class="text-md text-white mb-0"></h6>
-                            <h6 id="CallCenter_Name" class="mb-1 text-sm text-white"></h6>
-
-                        </div>
-
-                    </div>
-                    <div class="d-flex ms-5" id="CallCenter_MultiPhone">
-                    </div>
-                    <div class="d-flex mt-4" id="CallCenter_HangDiv">
-                        <div class="text-center">
-                            <button class="btn bg-gradient-light btn-sm my-0"
-                                    onclick="event.preventDefault();return CCF_Incom_Decline()">
-                                Decline
-                            </button>
-                        </div>
-                        <div class="d-flex flex-column ms-auto">
-                            <button class="btn bg-gradient-success btn-sm my-0"
-                                    onclick="event.preventDefault();return CCF_Incom_Accept();">
-                                Accept
-                            </button>
-                        </div>
-                    </div>
-                    <div id="CallCenter_ProgressingArea" class="d-flex mt-4 d-none">
-                        <div class="text-center">
-                            <div id="CallCenter_ProgressingTime"></div>
-                        </div>
-                        <div class="d-flex ms-auto">
-
-                            <div id="CallCenter_ProgressingMute" class=" cursor-pointer  icon-shape icon-xs shadow border-radius-lg blur text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="fas fa-microphone text-dark  text-md pt-2" style=" font-size: 14px;"></i>
-                            </div>
-                            <div id="CallCenter_ProgressingUnMute" class="cursor-pointer  icon icon-shape icon-xs shadow border-radius-lg bg-gradient-danger text-center me-2 d-flex align-items-center justify-content-center d-none">
-                                <i class="text-white fas fa-microphone-slash text-md pt-2" style=" font-size: 14px;"></i>
-                            </div>
-
-                            <span id="CallCenter_ProgressingEndCall" class="cursor-pointer badge bg-gradient-danger">End call</span>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-        </script>
         @await RenderSectionAsync("Scripts", required: false)
         <script src="./Assests/dist/signalr/dist/browser/signalr.js"></script>
         <script src="/js/Common/LoadLanguages_Packege.js"></script>

@@ -27,7 +27,7 @@ namespace LibTrinh.Api.PriceServices
         /// </summary>
         /// <param name="Pagination"></param>
         /// <returns></returns>
-        public async Task<CFaPaginPriceServicesDTO> LoadPriceServices(int Pagination)
+        public async Task<CFaPaginPriceServicesDTO> LoadPriceServices()
         {
             try
             {
@@ -36,8 +36,7 @@ namespace LibTrinh.Api.PriceServices
                     CFaPaginPriceServicesDTO cFaPaginPriceServicesDTO = new CFaPaginPriceServicesDTO();
                     List<CFaPriceServicesDTO> lstPriceServices = new List<CFaPriceServicesDTO>();
                     var CheckData = await uow.ExecuteDataTable("[YYY_sp_Load_T_PriceServices]", CommandType.StoredProcedure
-                        , "@PAGINATION", SqlDbType.Int, Pagination
-                         , "@COUNT", SqlDbType.Int, 0
+                        , "@COUNT", SqlDbType.Int, 0
                        );
                     foreach (DataRow row in CheckData.Rows)
                     {

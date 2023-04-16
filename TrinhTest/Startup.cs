@@ -35,7 +35,6 @@ namespace TrinhTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
-            services.AddControllersWithViews();
             services.Configure<SetupOptions>(Configuration.GetSection("Setup"));
             #region Regis Service Design 
             services.AddTransient<ITokenService, TokenService>();
@@ -75,16 +74,17 @@ namespace TrinhTest
                          },
                      };
                  });
+
             #region login authen google and facabook
-             //.AddGoogle(options =>
-             //{
-             //    IConfigurationSection googleAuthNSection =
-             //    Configuration.GetSection("Authentication:Google");
-             //    options.ClientId = googleAuthNSection[Configuration.GetSection("Authentication:ClientID").ToString()];
-             //    options.ClientSecret = googleAuthNSection[Configuration.GetSection("Authentication:ClientSecret").ToString()];
-             //    //options.CallbackPath=""
-             //});
-            
+            //.AddGoogle(options =>
+            //{
+            //    IConfigurationSection googleAuthNSection =
+            //    Configuration.GetSection("Authentication:Google");
+            //    options.ClientId = googleAuthNSection[Configuration.GetSection("Authentication:ClientID").ToString()];
+            //    options.ClientSecret = googleAuthNSection[Configuration.GetSection("Authentication:ClientSecret").ToString()];
+            //    //options.CallbackPath=""
+            //});
+
             //.AddFacebook(options =>
             //{
             //    IConfigurationSection FBAuthNSection =
@@ -94,6 +94,7 @@ namespace TrinhTest
             //});
             #endregion
             #region RUNTIME VIEWS CODE
+            services.AddRazorPages();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             #endregion
             #region execute cache Redis 
@@ -112,7 +113,9 @@ namespace TrinhTest
             services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             services.AddSingleton<IIpPolicyStore, DistributedCacheIpPolicyStore>();
             services.AddSingleton<IRateLimitCounterStore, DistributedCacheRateLimitCounterStore>();
+
             #endregion
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
         }
 
         /// <summary>
@@ -135,14 +138,17 @@ namespace TrinhTest
             app.UseAuthentication();
             pLoggerFactory.AddLog4Net();
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseIpRateLimiting();
+           app.UseIpRateLimiting();
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 if (env.IsDevelopment())
                 {
                     endpoints.MapControllerRoute(

@@ -12,7 +12,7 @@ namespace TrinhTest.Controllers
             return View("~/Views/Pages/Setting/PriceServices/SettingPriceServices.cshtml");
         }
         [Authorize]
-        [Route("Languages")]
+        [Route("SLanguages")]
         public IActionResult Languages()
         {
             return View("~/Views/Pages/Setting/Languages.cshtml");

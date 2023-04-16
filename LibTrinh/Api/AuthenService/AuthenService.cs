@@ -91,6 +91,7 @@ namespace LibTrinh.Common.Api.AuthenService
                     );
                     foreach (DataRow row in CheckUser.Rows)
                     {
+                        userDto.UserID = row["UserID"].ToString();
                         userDto.UserName = row["UserName"].ToString();
                         userDto.Password = row["Password"].ToString();
                         userDto.IP = "123.123.123";

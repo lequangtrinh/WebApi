@@ -26,9 +26,9 @@ namespace TrinhTest.Controllers.API
         }
         [Route("LoadPriceServices")]
         [HttpPost]
-        public async Task<IActionResult> LoadPriceServices(int Pagination)
+        public async Task<IActionResult> LoadPriceServices()
         {
-            var res = await _IPriceServices.LoadPriceServices(Pagination);
+            var res = await _IPriceServices.LoadPriceServices();
             return Ok(Newtonsoft.Json.JsonConvert.SerializeObject(res));
         }
     }

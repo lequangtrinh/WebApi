@@ -7,6 +7,7 @@
 		<RazorCompileOnBuild>false</RazorCompileOnBuild>
 		<RazorCompileOnPublish>false</RazorCompileOnPublish>
 		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<StaticWebAssetBasePath Condition="$(StaticWebAssetBasePath) == ''">/cl</StaticWebAssetBasePath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -48,7 +49,6 @@
 	<ItemGroup>
 		<ProjectReference Include="..\LibTrinh\LibTrinh.csproj" />
 	</ItemGroup>
-
 	<ItemGroup>
 		<Folder Include="Models\" />
 		<Folder Include="wwwroot\css\" />
