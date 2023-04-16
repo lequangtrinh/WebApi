@@ -40,6 +40,7 @@ namespace TrinhTest
             #region Regis Service Design 
             services.AddTransient<ITokenService, TokenService>();
             services.AddScoped<IBaseDbContext, BaseDbContext>();
+            services.AddScoped<IRabitMQ, RabitMQ>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddBussiness();
             #endregion
