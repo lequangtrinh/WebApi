@@ -9,10 +9,10 @@ namespace TrinhTest.Controllers
         [Route("PriceServices")]
         public IActionResult PriceServices()
         {
-            return View("~/Views/Pages/Setting/PriceServices/SettingPriceServices.cshtml");
+           return View("~/Views/Pages/Error/Error404.html");
         }
         [Authorize]
-        [Route("SLanguages")]
+        [Route("Languages")]
         public IActionResult Languages()
         {
             return View("~/Views/Pages/Setting/Languages.cshtml");

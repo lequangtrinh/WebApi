@@ -154,11 +154,13 @@
 <script src="./Assets/js/plugins/orbit-controls.js"></script>
 <script src="./js/Common/globe.js"></script>
 <script type="text/javascript">
-    var userId=localStorage.getItem("userID");
+    var userId=localStorage.getItem("X-UserID");
+     var Token =localStorage.getItem("X-Access-Token");
     $(document).ready(function () {
         document.getElementById('LoginGoogle').addEventListener("click", ClickLoginGoogle);
         showTextPassWord();
-        if(userId !=null){
+        console.log(Token.length)
+        if(userId !=null && Token.length>10){
             Login_ValidateToken();
         }
         //else LoginResetPassClick();
@@ -206,14 +208,19 @@
             $('#loginbtn').addClass('disabed');
             $('#loader').show();
           AjaxApi(url = "/api/Author/ValidateToken"
-            ,data= JSON.stringify({})
+            ,data= JSON.stringify({
+                UserID:userId
+               ,Token:Token
+               ,PublicKey:"trytry"
+            })
             ,async = true
-            , error = function () { notiError_SW() }
+            , error = function () { }
             , success = function (result) {
             }
             , before = function (e) {
-                if(e.responseText !==""){
-                        window.location.href="@Url.Action("DashBoards", "Home")"+"?id="+window.btoa(userId);
+                let data=JSON.parse(e.responseText);
+                if(data != null){
+                        wwindow.location.href="@Url.Action("DashBoards", "Home")"+"?code="+data.token+"&CurrentID="+window.btoa(userId);;
                     }
                     else{
                         validateLogin()
@@ -221,30 +228,13 @@
              }
         );
     };
+
     function validateLogin(){
          $('#username').addClass('active').removeClass('disabled');
             $('#password').addClass('active').removeClass('disabled');
             $('#loginbtn').removeClass('disabed');
             $('#loader').hide();
     };
-    function showTextPassWord(){
-                $(".show_pass_icon").unbind().on("click", function () {
-                let obj = $(this).parent().next();
-                if (obj != undefined) {
-                    if (obj.hasClass('sercu')) {
-                        obj.removeClass('sercu');
-                        $(this).addClass('fa-eye');
-                        $(this).removeClass('fa-eye-slash');
-
-                    }
-                    else {
-                        obj.addClass('sercu')
-                        $(this).removeClass('fa-eye');
-                        $(this).addClass('fa-eye-slash');
-                    }
-                }
-            })
-    }
     function Login_LoadInforUser () {
         AjaxApi(url = "/api/Author/login"
             ,data= JSON.stringify({
@@ -258,17 +248,41 @@
             ,async = true
             , error = function () { notiError_SW() }
             , success = function (result) {
+                console.log('result')
+                console.log(result)
             }
             , before = function (e) {
                  $('#loader').show();
                  if ( e.responseText !== "" && e.responseText !== undefined) {
-                  localStorage.setItem("X-Mater-Data","trinh");
+                  var data=JSON.parse(e.responseText);
+                  localStorage.setItem("X-PublicKey",data.PublicKey);
                   localStorage.setItem("X-UserID",$('#username').val());
+                  localStorage.setItem("X-Access-Token",data.token);
                   notiSuccess();
-                  window.location.href="@Url.Action("DashBoards", "Home")"+"?id="+window.btoa($('#username').val());
+                  window.location.href="@Url.Action("DashBoards", "Home")"+"?code="+data.token+"&CurrentID="+window.btoa($('#username').val());
+                }
+                else{
+                    notiError_SW();
                 }
              });
     };
+    function showTextPassWord(){
+                $(".show_pass_icon").unbind().on("click", function () {
+                let obj = $(this).parent().next();
+                if (obj != undefined) {
+                    if (obj.hasClass('sercu')) {
+                        obj.removeClass('sercu');
+                        $(this).addClass('fa-eye');
+                        $(this).removeClass('fa-eye-slash');
+                    }
+                    else {
+                        obj.addClass('sercu')
+                        $(this).removeClass('fa-eye');
+                        $(this).addClass('fa-eye-slash');
+                    }
+                }
+            })
+    }
     function Login_RegisUser(){
          AjaxApi(url = "/api/Author/RegisUser"
             ,data= JSON.stringify({
@@ -284,7 +298,7 @@
             , success = function (result) {
                 if (result != "[]") {
                     notiSuccess();
-                   window.location.href="@Url.Action("DashBoards", "Home")"+"?id="+window.btoa($('#username').val());
+                   window.location.href="@Url.Action("DashBoards", "Home")"+"?code="+data.token+"&CurrentID="+window.btoa($('#username').val());
                 }
             }
             , before = function (e) {

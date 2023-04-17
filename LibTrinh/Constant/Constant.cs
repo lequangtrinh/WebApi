@@ -6,7 +6,7 @@
     public class Constant
     {
         public const string ForderToken = "Token";
-        public const int Token_Required_Time = 60;
+        public const int Token_Required_Time = 120;
         public const string PRIVATEKEY = "privateKey";
         public const string PUBLICKEY = "publicKey";
         #region google

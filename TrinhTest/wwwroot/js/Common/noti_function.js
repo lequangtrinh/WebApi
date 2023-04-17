@@ -1,6 +1,6 @@
 ﻿
 //#region //success,info,danger,warning,other
-async function notif_initialize (_type, _mes,_delay) {
+async function notif_initialize(_type, _mes, _delay) {
     let _id = (new Date()).getTime() + 12;
     let _pa = 'MS_Notification';
     let _rel = await notif_createel(_id, _pa, _type, _mes);
@@ -20,6 +20,7 @@ function notif_closeauto (_id, _delay) {
     return new Promise(resolve => {
         setTimeout(() => {
             if ($('#nt' + _id).length) $('#nt' + _id).remove();
+            console.log($('#nt' + _id))
         }, _delay);
     });
 }
@@ -27,6 +28,7 @@ function notif_progressrun (_id, _delay) {
     let seco = _delay / 200;
     return new Promise(resolve => {
         let elem = document.getElementById('pb' + _id);
+        console.log($('#pb' + _id))
         if (typeof (elem) != 'undefined' && elem != null) {
             let width = 1;
             let id = setInterval(frame, seco);
@@ -80,11 +82,12 @@ function notif_createel (_id, _pa, _type, _mes) {
             + per
             + '</div>'
         let el = createElementFromHTML(content)
+        console.log(el)
         $("#" + _pa).append(el);
         resolve('resolved');
     });
 }
-function notif_closeevent (_id) {
+function notif_closeevent(_id) {
     $("#cl" + _id).unbind('click').click(function (event) {
         if ($('#nt' + _id).length) $('#nt' + _id).remove();
 
@@ -94,7 +97,7 @@ function notif_timmersend (_id) {
     let seco = 30;
     return new Promise(resolve => {
         let _timenow = DateNowHHMM();
-        let id = setInterval(function () {frame(_timenow)}, seco);
+        let id = setInterval(function () { frame(_timenow) }, seco);
         function frame (_timenow) {
             let elem = document.getElementById('tm' + _id);
             if (typeof (elem) != 'undefined' && elem != null) {

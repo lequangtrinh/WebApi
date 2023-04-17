@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace LibTrinh.Models
 {
     /// <summary>
@@ -14,16 +13,13 @@ namespace LibTrinh.Models
         public string UserID { get; set; } = string.Empty;
     }
     /// <summary>
-    /// AuthorResultModel
+    /// CFaAuthorValidateToken
     /// </summary>
-    public class AuthorResultModel
+    public class CFaAuthorValidateToken
     {
-        [Required]
-        public string Session { get; set; }
-        [Required]
-        public string UserName { get; set; }
-        [Required]
-        public string PasswordEnCrypt { get; set; }
+        public string UserID { get; set; }
+        public string Token { get; set; }
+        public string PublicKey { get; set; }
 
     }
 }

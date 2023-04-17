@@ -18,27 +18,40 @@ namespace TrinhTest.Controllers
         {
             return View("~/Views/index.html");
         }
+        [Route("ErrorAuthorize")]
+        public IActionResult ErrorAuthorize()
+        {
+            //return View("~/Views/Pages/Login/Login.cshtml");
+            return View("~/Views/Pages/Error/Error404.cshtml");
+        }
+        [Route("ErrorNotFound")]
+        public IActionResult ErrorNotFound()
+        {
+            //return View("~/Views/Pages/Login/Login.cshtml");
+            return View("~/Views/Pages/Error/Error500.cshtml");
+        }
         [Route("Login")]
         public IActionResult Login()
         {
-            return View("~/Views/Pages/Login/Login.cshtml");
-           // return View("~/Views/Pages/Dash/Dash_Master.cshtml");
+            //return View("~/Views/Pages/Login/Login.cshtml");
+           return View("~/Views/Pages/Dash/Dash_Master.cshtml");
         }
         [Authorize]
         [Route("DashBoards")]
         public IActionResult DashBoards(string code)
         {
-            if(!string.IsNullOrWhiteSpace(code))
-            {
-                _AuthenService.GetTokenByCode(code);
-            }
-            return View("~/Views/Pages/Dash/Dash_Master.cshtml");
+                if (!string.IsNullOrWhiteSpace(code))
+                {
+                    _AuthenService.GetTokenByCode(code);
+                }
+                return View("~/Views/Pages/Dash/Dash_Master.cshtml");
+            
         }
         [Authorize]
         [Route("ChangePass")]
         public IActionResult ChangePass()
         {
-            return View("~/Views/Pages/Login/ChangePassword.cshtml");
+           return View("~/Views/Pages/Login/ChangePassword.cshtml");
         }
         [Authorize]
         [Route("SignIn")]

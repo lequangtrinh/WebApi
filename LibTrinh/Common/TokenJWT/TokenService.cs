@@ -12,7 +12,7 @@ namespace LibTrinh.Common
     /// </summary>
     public class TokenService : ITokenService
     {
-        private string _pathConsKey = string.Empty;
+        private string _pathConsKey =  Path.Combine(AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\net6.0\\", "") + Constant.Constant.ForderToken);
         #region #BuildToken
         /// <summary>
         /// BuildToken
@@ -57,15 +57,13 @@ namespace LibTrinh.Common
         /// <param name="token"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public bool IsTokenValid(string token, string publicKey, string issuer)
+        public bool IsTokenValid(string token, string UserID, string issuer)
         {
             var jwtToken = new JwtSecurityToken(token);
-            //return (jwtToken.ValidTo < DateTime.UtcNow);
-            // return (jwtToken.ValidFrom > DateTime.UtcNow) || (jwtToken.ValidTo < DateTime.UtcNow);
             #region rsa validtoken
-            if (jwtToken.ValidTo < DateTime.UtcNow)
+            if (jwtToken.ValidTo > DateTime.UtcNow)
             {
-                var rsa = new RSACryptoServiceProvider();
+                var rsaSecurityKey = new RsaSecurityKey(ReadKeyToken(UserID, Constant.Constant.PUBLICKEY));
                 var tokenHandler = new JwtSecurityTokenHandler();
                 try
                 {
@@ -76,7 +74,7 @@ namespace LibTrinh.Common
                         ValidateIssuer = true,
                         ValidIssuer = issuer,
                         ValidAudience = issuer,
-                        IssuerSigningKey = new RsaSecurityKey(rsa),
+                        IssuerSigningKey = rsaSecurityKey,
                     }, out SecurityToken validatedToken);
                     return true;
                 }
@@ -100,15 +98,15 @@ namespace LibTrinh.Common
         {
             try
             {
-                var path=Path.Combine(AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\net6.0\\", "") + Constant.Constant.ForderToken);
-                _pathConsKey = Path.Combine(path, userID);
-                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                var path= _pathConsKey;
+                path = Path.Combine(_pathConsKey, userID);
                 if (!Directory.Exists(_pathConsKey)) Directory.CreateDirectory(_pathConsKey);
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
                 var rsa = RSA.Create();
                 string privateKeyXml = rsa.ToXmlString(true);
                 string publicKeyXml = rsa.ToXmlString(false);
-                using var privateFile = File.Create(_pathConsKey + "\\"+ userID + "_" + Constant.Constant.PRIVATEKEY);
-                using var publicFile = File.Create(_pathConsKey + "\\" + userID + "_" + Constant.Constant.PUBLICKEY);
+                using var privateFile = File.Create(path + "\\"+ userID + "_" + Constant.Constant.PRIVATEKEY);
+                using var publicFile = File.Create(path + "\\" + userID + "_" + Constant.Constant.PUBLICKEY);
                 privateFile.Write(Encoding.UTF8.GetBytes(privateKeyXml));
                 publicFile.Write(Encoding.UTF8.GetBytes(publicKeyXml));
                 return true;
@@ -130,7 +128,7 @@ namespace LibTrinh.Common
         public RSA ReadKeyToken(string userID, string nameKey)
         {
             var rsa = RSA.Create();
-            rsa.FromXmlString(System.IO.File.ReadAllText(_pathConsKey + "\\"+userID.Trim() + "_" + nameKey.Trim()).ToString());
+            rsa.FromXmlString(System.IO.File.ReadAllText(Path.Combine(_pathConsKey, userID) + "\\"+userID.Trim() + "_" + nameKey.Trim()).ToString());
             return rsa;
         } 
         #endregion

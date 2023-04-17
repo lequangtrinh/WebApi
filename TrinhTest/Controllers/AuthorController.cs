@@ -41,9 +41,7 @@ namespace TrinhTest.Controllers
             var res = await _AuthenService.LoginAsync(objUser);
             if (res != null)
             {
-                Response.Cookies.Append("X-Access-Token", res.token, new CookieOptions() { HttpOnly = false, SameSite = SameSiteMode.Strict });
-                Response.Cookies.Append("X-Public-Key", res.PublicKey, new CookieOptions() { HttpOnly = false, SameSite = SameSiteMode.Strict });
-                Response.Cookies.Append("X-UserID", objUser.userID);
+                Response.Cookies.Append("X-UserID", objUser.userID, new CookieOptions() { HttpOnly = false, SameSite = SameSiteMode.Strict });
             }
 
             //_IRedisCache.Set<object>(objUser.userID+"_"+DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), res.ToString());
@@ -79,24 +77,21 @@ namespace TrinhTest.Controllers
         [Route("logout")]
         public ActionResult RevokeToken()
         {
-            Response.Cookies.Delete("X-Access-Token");
-            Response.Cookies.Delete("X-UserID");
+            //Response.Cookies.Delete("X-Access-Token");
+            //Response.Cookies.Delete("X-UserID");
             return Ok();
         }
 
         [Authorize]
         [Route("ValidateToken")]
         [HttpPost]
-        public async Task<string> ValidateToken()
+        public async Task<IActionResult>ValidateToken(CFaAuthorValidateToken value)
         {
-            var token = Request.Cookies["X-Access-Token"];
-            var UserID = Request.Cookies["X-UserID"];
-            var publicKey = Request.Cookies["X-Public-Key"];
-            if (token != null)
+            if (value.Token != null)
             {
-                var res = await _AuthenService.ValidateToken(token, UserID, publicKey);
-                Response.Cookies.Append("X-Access-Token", res, new CookieOptions() { HttpOnly = false, SameSite = SameSiteMode.Strict });
-                return res.ToString();
+                var res = await _AuthenService.ValidateToken(value.Token, value.UserID, value.PublicKey);
+                //Response.Cookies.Append("X-Access-Token", res, new CookieOptions() { HttpOnly = false, SameSite = SameSiteMode.Strict });
+                return Ok(Newtonsoft.Json.JsonConvert.SerializeObject(res));
             }
             return null;
         }
@@ -129,11 +124,5 @@ namespace TrinhTest.Controllers
             if (!res) return Content("0");
             else return Content("1");
         }
-
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //public IActionResult Error()
-        //{
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
     }
 }

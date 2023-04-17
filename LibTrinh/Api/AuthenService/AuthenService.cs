@@ -215,7 +215,7 @@ namespace LibTrinh.Common.Api.AuthenService
                 UserDTO userDto = new UserDTO();
                 using (var uow = await _context.CreateAsync())
                 {
-                    if (_tokenService.IsTokenValid(token, _config["JWT:Issuer"].ToString(), publicKey))
+                    if (!_tokenService.IsTokenValid(token, userId, _config["JWT:Issuer"].ToString()))
                     {
                         // refersh token
                         var CheckUser = await uow.ExecuteDataTable("[YYY_sp_CheckLoginUser]", CommandType.StoredProcedure,

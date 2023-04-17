@@ -7,7 +7,7 @@ namespace TrinhTest.Controllers
         [Route("LoadFriendChat")]
         public IActionResult LoadFriendChat()
         {
-            return View("~/Views/Pages/Chat/ChatBots.cshtml");
+             return View("~/Views/Pages/Chat/ChatBots.cshtml");
         }
     }
 }
