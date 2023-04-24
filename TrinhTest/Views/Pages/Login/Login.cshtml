@@ -220,7 +220,7 @@
             , before = function (e) {
                 let data=JSON.parse(e.responseText);
                 if(data != null){
-                        wwindow.location.href="@Url.Action("DashBoards", "Home")"+"?code="+data.token+"&CurrentID="+window.btoa(userId);;
+                        window.location.href="@Url.Action("DashBoards", "Home")"+"?code="+data.token+"&CurrentID="+window.btoa(userId);;
                     }
                     else{
                         validateLogin()

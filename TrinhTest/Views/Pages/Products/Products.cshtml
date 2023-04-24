@@ -1,0 +1,149 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<script src="./js/Common/initialize_setting.js"></script>
+<div class="container-fluid py-3 px-0">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header pb-0 p-3">
+                    <div class="d-lg-flex">
+                        <div class="w-50 col-auto my-auto">
+                            <div class="h-100">
+                                <h6 class="mb-2">Products Services</h6>
+                                <p data-languagestatic="" class="text-sm mb-0">Some text of detail sub</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-2">
+                    <div class="row" id="ListProduct">
+                        <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                            <div class="card card-blog card-plain">
+                                <div class="position-relative">
+                                    <a class="d-block shadow-xl border-radius-xl">
+                                        <img src="./Assets/img/ao-dai-tay-xanh-3125.jpeg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                                    </a>
+                                </div>
+                                <div class="card-body px-1 pb-0">
+                                    <p class="text-gradient text-dark mb-2 text-sm">Project #2</p>
+                                    <a href="javascript:;">
+                                        <h5>
+                                            Modern
+                                        </h5>
+                                    </a>
+                                    <p class="mb-4 text-sm">
+                                        As Uber works through a huge amount of internal management turmoil.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                            <div class="card card-blog card-plain">
+                                <div class="position-relative">
+                                    <a class="d-block shadow-xl border-radius-xl">
+                                        <img src="./Assets/img/ao-dai-tay-xanh-3125.jpeg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                                    </a>
+                                </div>
+                                <div class="card-body px-1 pb-0">
+                                    <p class="text-gradient text-dark mb-2 text-sm">Project #2</p>
+                                    <a href="javascript:;">
+                                        <h5>
+                                            Modern
+                                        </h5>
+                                    </a>
+                                    <p class="mb-4 text-sm">
+                                        As Uber works through a huge amount of internal management turmoil.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                            <div class="card card-blog card-plain">
+                                <div class="position-relative">
+                                    <a class="d-block shadow-xl border-radius-xl">
+                                        <img src="./Assets/img/ao-dai-tay-xanh-3125.jpeg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                                    </a>
+                                </div>
+                                <div class="card-body px-1 pb-0">
+                                    <p class="text-gradient text-dark mb-2 text-sm">Project #2</p>
+                                    <a href="javascript:;">
+                                        <h5>
+                                            Modern
+                                        </h5>
+                                    </a>
+                                    <p class="mb-4 text-sm">
+                                        As Uber works through a huge amount of internal management turmoil.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="col-xl-3 col-md-6 mb-xl-0 mb-4">
+                            <div class="card card-blog card-plain">
+                                <div class="position-relative">
+                                    <a class="d-block shadow-xl border-radius-xl">
+                                        <img src="./Assets/img/ao-dai-tay-xanh-3125.jpeg" alt="img-blur-shadow" class="img-fluid shadow border-radius-xl">
+                                    </a>
+                                </div>
+                                <div class="card-body px-1 pb-0">
+                                    <p class="text-gradient text-dark mb-2 text-sm">Project #2</p>
+                                    <a href="javascript:;">
+                                        <h5>
+                                            Modern
+                                        </h5>
+                                    </a>
+                                    <p class="mb-4 text-sm">
+                                        As Uber works through a huge amount of internal management turmoil.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer p-3">
+                        <div class="ui pagination menu justify-content-end" id="Products_anampage">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+    function LoadDataProducts(){
+        RenderListDataProducts("ListProduct",data);
+    };
+    function RenderListDataProducts(id,data){
+         let myNode = document.getElementById(id);
+        if (myNode != null) {
+            myNode.innerHTML = '';
+            let stringContent = '';
+            let sumPrice=0;
+            if (data && data.length > 0) {
+                for (let i = 0; i < data.length; i++) {
+                    let item = data[i];
+                    let tr =
+                        '<td class="d-none">' + item.CodeServices + '</td>'
+                        + '<td class="vt-number-order"></td>'
+                        + '<td>'
+                        + '<div class="icon icon-shape icon-sm me-2 text-center" >'
+                        + '<img class="avatar m-2" src="./Assets/img/'+item.Images+'" alt="label-image">'
+                        + '</div>'
+                        +'</td>'
+                        + '<td><a href="#" class="ms-3 my-auto text-bold buttonEditClass">' + item.Name + '</a></td>'
+                        + '<td class="text-sm text-dark">' + ConvertNumberWithCommas(item.Price) + ' VNĐ</td>'
+                        + '<td data-name="date" class="text-sm text-dark">' + yyyyMMddHHMMM_ddMMyyyy(item.CreateDate) + '</td>'
+                        +'<td data-name="is_show_app">'
+                    stringContent = stringContent + '<tr class="vt-number" role="row">' + tr + '</tr>';
+                }
+            };
+            document.getElementById(id).innerHTML = stringContent;
+        }
+    }
+</script>

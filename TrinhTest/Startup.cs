@@ -35,7 +35,9 @@ namespace TrinhTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
+
             services.Configure<SetupOptions>(Configuration.GetSection("Setup"));
+
             #region Regis Service Design 
             services.AddTransient<ITokenService, TokenService>();
             services.AddScoped<IBaseDbContext, BaseDbContext>();
@@ -115,6 +117,7 @@ namespace TrinhTest
             services.AddSingleton<IRateLimitCounterStore, DistributedCacheRateLimitCounterStore>();
 
             #endregion
+            
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
         }
 
