@@ -11,9 +11,14 @@ var connection = factory.CreateConnection();
 //Here we create channel with session and model
 using
 var channel = connection.CreateModel();
+//// Đây là cổng trung gian tiếp nhận message từ Producer và gửi về Queue. Routing key: Một địa chỉ dành cho message. Binding: Đảm nhận nhiệm vụ liên kết giữa Exchange và Queue
+////Có 5 loại Exchange: direct, topic, fanout, headers,Dead Letter Exchange
+//channel.ExchangeDeclare("T-Message", "Direct", durable: true,
+//               autoDelete: false,
+//               arguments: null);
 //declare the queue after mentioning name and a few property related to that
 channel.QueueDeclare("T-Message", durable: true,
-                exclusive: false,
+                exclusive: true,// tự động hàm đợi khi ko sub xóa thông qua exe 
                 autoDelete: false,
                 arguments: null);
 //Set Event object which listen message from chanel which is sent by producer
