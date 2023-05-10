@@ -124,7 +124,7 @@
                                     </form>
                                     <div id="textMessage" name="Content" style="text-align: center;height: 52px;padding-top: 24px;color: #dc3545;"></div>
                                     <div class="card-footer text-center pt-0 px-sm-4 px-1">
-                                        <p class=" mx-auto">
+                                        <p class=" mx-auto SignInAccount">
                                             Already have an account?
                                             <a class="text-primary text-gradient font-weight-bold">Sign in</a>
                                         </p>
@@ -137,7 +137,7 @@
                         </div>
                         <div id="globe" class="col-xl-5 col-md-6 h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
                             <div class="h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
-                               <canvas width="700" height="655" class="w-lg-100 h-lg-100 w-75 h-75 me-lg-0 me-n10 mt-lg-5" style="width: 700px; height: 655.594px;"></canvas>
+                               <canvas width="500px" height="350px" class="w-lg-100 h-lg-100 w-75 h-75 me-lg-0 me-n10 mt-lg-5"></canvas>
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@
         if(userId !=null && Token.length>10){
             Login_ValidateToken();
         }
-        //else LoginResetPassClick();
+        else LoginResetPassClick();
         $('.inforlogin').on('keyup', function (e) {
             var code = e.key;
             if (code === "Enter") {
