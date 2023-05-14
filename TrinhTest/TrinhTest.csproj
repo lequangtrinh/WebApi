@@ -50,7 +50,6 @@
 		<ProjectReference Include="..\LibTrinh\LibTrinh.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="Models\" />
 		<Folder Include="wwwroot\css\" />
 		<Folder Include="wwwroot\lib\bootstrap\" />
 		<Folder Include="wwwroot\lib\bootstrap\dist\js\" />

@@ -10,6 +10,12 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Models\Master\**" />
+	  <EmbeddedResource Remove="Models\Master\**" />
+	  <None Remove="Models\Master\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="log4net" Version="2.0.15" />
 		<PackageReference Include="MailKit" Version="3.4.3" />
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
@@ -22,10 +28,6 @@
 		<PackageReference Include="AutoMapper" Version="10.1.1" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
 		
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Models\Master\" />
 	</ItemGroup>
 
 </Project>
