@@ -144,7 +144,6 @@ namespace TrinhTest
             };
             app.UseAuthentication();
             pLoggerFactory.AddLog4Net();
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
            app.UseIpRateLimiting();

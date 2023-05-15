@@ -28,53 +28,63 @@
     }
 
     .paginationjs .paginationjs-pages li {
+        width: 36px;
+        height: 36px;
         float: left;
         border: 1px solid #8392ab;
         list-style: none;
         border-radius: 48%;
         margin-right: 3px;
     }
+
     .paginationjs .paginationjs-pages a {
+        width: 36px;
+        height: 36px;
         border-radius: 50%;
         border: 1px solid #8392ab !important;
     }
 
-        .paginationjs .paginationjs-pages li > a {
-            min-width: 30px;
-            height: 28px;
-            line-height: 28px;
-            display: block;
-            background: #fff;
-            font-size: 14px;
-            color: #333;
-            text-decoration: none;
-            text-align: center
+    .paginationjs .paginationjs-pages li > a {
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        display: block;
+        background: #fff;
+        font-size: 14px;
+        color: #8392ab;
+        text-decoration: none;
+        text-align: center
+    }
+
+        .paginationjs .paginationjs-pages li > a:hover {
+            background: #eee;
+            border-radius: 50%;
         }
 
-            .paginationjs .paginationjs-pages li > a:hover {
-                background: #eee;
-                border-radius: 50%;
-            }
+    .paginationjs .paginationjs-pages li.active {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        margin-left: 2px;
+    }
 
-        .paginationjs .paginationjs-pages li.active {
-            border-radius: 50%
+        .paginationjs .paginationjs-pages li.active > a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #a7c6ec;
+            color: #fff;
+            margin-top:1px
         }
 
-            .paginationjs .paginationjs-pages li.active > a {
-                height: 29px;
-                border-radius: 50%;
-                background: #a7c6ec;
-                color: #fff
-            }
+    .paginationjs .paginationjs-pages li.disabled > a {
+        opacity: .3
+    }
 
-        .paginationjs .paginationjs-pages li.disabled > a {
-            opacity: .3
+        .paginationjs .paginationjs-pages li.disabled > a:hover {
+            background: 0 0;
+            border-radius: 50%;
         }
-
-            .paginationjs .paginationjs-pages li.disabled > a:hover {
-                background: 0 0;
-                border-radius: 50%;
-            }
 
     .paginationjs .paginationjs-pages li:first-child, .paginationjs .paginationjs-pages li:first-child > a {
         border-radius: 50%;
@@ -83,21 +93,21 @@
         align-items: center;
     }
 
-        .paginationjs .paginationjs-pages li:last-child {
-            border-right: 1px solid #a7c6ec;
-            border-radius: 50%;
-            margin-right: 3px;
+    .paginationjs .paginationjs-pages li:last-child {
+        border-right: 1px solid #a7c6ec;
+        border-radius: 50%;
+        margin-right: 3px;
+    }
+
+        .paginationjs .paginationjs-pages li:last-child > a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-            .paginationjs .paginationjs-pages li:last-child > a {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
     .paginationjs .paginationjs-go-input > input[type=text] {
-        width: 30px;
-        height: 28px;
+        width: 36px;
+        height: 36px;
         background: #fff;
         border-radius: 50%;
         border: 1px solid #a7c6ec;
@@ -111,9 +121,9 @@
     }
 
     .paginationjs .paginationjs-go-button > input[type=button] {
-        min-width: 40px;
-        height: 30px;
-        line-height: 28px;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
         background: #fff;
         border-radius: 50%;
         border: 1px solid #a7c6ec;
@@ -137,8 +147,8 @@
     }
 
     .paginationjs .paginationjs-nav {
-        height: 30px;
-        line-height: 30px
+        height: 36px;
+        height: 36px;
     }
 
     .paginationjs .paginationjs-go-button, .paginationjs .paginationjs-go-input {
@@ -157,8 +167,8 @@
         }
 
         .paginationjs.paginationjs-small .paginationjs-pages li.active > a {
-            height: 26px;
-            line-height: 26px
+            height: 36px;
+            line-height: 36px
         }
 
         .paginationjs.paginationjs-small .paginationjs-go-input {
@@ -176,9 +186,9 @@
         }
 
             .paginationjs.paginationjs-small .paginationjs-go-button > input[type=button] {
-                min-width: 30px;
-                height: 26px;
-                line-height: 24px;
+                min-width: 36px;
+                height: 36px;
+                line-height: 36px;
                 padding: 0 6px;
                 font-size: 12px
             }
@@ -311,7 +321,19 @@
     .paginationjs.paginationjs-theme-yellow .paginationjs-pages li.disabled > a:hover {
         background: 0 0
     }
+    /*#region Pagination */
+    .paginationjs .paginationjs-pages li.active > a {
+        background: var(--color--primary) !important;
+        color: var(--color--white) !important;
+    }
 
+    .paginationjs .paginationjs-pages li {
+        border: 1px solid #f8f8f8 !important;
+    }
+
+        .paginationjs .paginationjs-pages li.active {
+            border: none !important;
+        }
     .paginationjs.paginationjs-theme-yellow .paginationjs-go-button > input[type=button] {
         background: #ec971f;
         border-color: #ec971f;

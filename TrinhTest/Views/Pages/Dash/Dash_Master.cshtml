@@ -6,7 +6,7 @@
 <script src="./js/Common/initialize_setting.js"></script>
 <div class="container-fluid py-4" id="divMainSettingDetail">
     <div class="row">
-        <div class="col-lg-7 position-relative z-index-2">
+        <div class="col-12 position-relative z-index-2">
             <div class="card card-plain mb-4">
                 <div class="card-body p-3">
                     <div class="row">
@@ -19,18 +19,36 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-5 col-sm-6">
+                <div class="col-sm-3">
                     <div class="card  mb-4">
                         <div class="card-body p-3">
                             <div class="row">
                                 <div class="col-8">
                                     <div class="numbers">
-                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">User Number Accessing</p>
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Doctor</p>
                                         <h5 class="font-weight-bolder mb-0">
-                                            <span id="Dash_User_Number_Accessing" countto="123"></span>
-                                            <span class="text-success text-sm font-weight-bolder">
-                                                55%
-                                            </span>
+                                            <span id="Dash_User_Doctor" countto="123"></span>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                        <i class="fa fa-user-md text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="card  mb-4">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Patient</p>
+                                        <h5 class="font-weight-bolder mb-0">
+                                            <span id="Dash_Price_Patient" countto="123"></span>
                                         </h5>
                                     </div>
                                 </div>
@@ -43,24 +61,42 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-5 col-sm-6">
+                 <div class="col-sm-3">
                     <div class="card  mb-4">
                         <div class="card-body p-3">
                             <div class="row">
                                 <div class="col-8">
                                     <div class="numbers">
-                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Price Services</p>
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Appointment</p>
                                         <h5 class="font-weight-bolder mb-0">
-                                            <span id="Dash_Price_Services_Accessing" countto="123"></span>
-                                            <span class="text-success text-sm font-weight-bolder">
-                                                VND
-                                            </span>
+                                            <span id="Dash_User_Appointment" countto="123">456</span>
                                         </h5>
                                     </div>
                                 </div>
                                 <div class="col-4 d-flex justify-content-end">
                                     <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                                        <i class="fa fa-money text-lg opacity-10" aria-hidden="true"></i>
+                                        <i class="fa fa-calendar-plus-o text-lg opacity-10" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-sm-3">
+                    <div class="card  mb-4">
+                        <div class="card-body p-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="numbers">
+                                        <p class="text-sm mb-0 text-capitalize font-weight-bold">Prescription</p>
+                                        <h5 class="font-weight-bolder mb-0">
+                                            <span id="Dash_User_Prescription" countto="123">456</span>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <div class="col-4 d-flex justify-content-end">
+                                    <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
+                                        <i class="fa fa-plus-square text-lg opacity-10" aria-hidden="true"></i>
                                     </div>
                                 </div>
                             </div>
@@ -71,9 +107,9 @@
         </div>
     </div>
     <div class="row">
-        <div id="DashPriceServices" class="col-lg-6 position-relative z-index-2">
+        <div id="DashPriceServices" class="col-lg-5 position-relative z-index-2">
         </div>
-        <div id="DashMessages" class="col-lg-6 position-relative z-index-2">
+        <div id="DashMessages" class="col-lg-7 position-relative z-index-2">
         </div>
     </div>
 </div>
@@ -100,16 +136,16 @@
                     ,"ChildNode":[]
                     ,"Img":""
                     ,"Url":"@Url.Action("EditRole","Mater")"
-                  }
-                  ,{"Name":"CRM"
+                  },
+                  {"Name":"Chats"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"@Url.Action("EditUser","Home")"
+                    ,"Url":"@Url.Action("Chat","ChatBots")"
                   }
               ]
           },
           {
-              "Name":"Pages"
+              "Name":"Doctor"
               ,"Img":"",
               "child":[
                   {"Name":"Chats"
@@ -117,7 +153,7 @@
                     ,"Img":""
                     ,"Url":"@Url.Action("Chat","ChatBots")"
                   }
-                  ,{"Name":"Teams"
+                  ,{"Name":"Calendar Schedule"
                     ,"ChildNode":[]
                     ,"Img":""
                     ,"Url":""
@@ -137,37 +173,10 @@
                     ,"Img":""
                     ,"Url":""
                   }
-                  ,{"Name":"Settings"
-                    ,"ChildNode":[
-                        {
-                        "Name":"Languages"
-                        ,"ChildNode":[]
-                        ,"Url":"@Url.Action("Languages","Settings")"
-                        },
-                        {
-                            "Name":"Price Services"
-                            ,"ChildNode":[]
-                            ,"Url":"@Url.Action("PriceServices","Settings")"
-                        }
-                        ,
-                        {
-                            "Name":"New Project"
-                            ,"ChildNode":[]
-                            ,"Url":"@Url.Action("RoleUser","Home")"
-                        },
-                        {
-                            "Name":"Trinh020"
-                            ,"ChildNode":[]
-                            ,"Url":"@Url.Action("RoleUser","Home")"
-                        }
-                      ]
-                    ,"Img":""
-                    ,"Url":""
-                  }
               ]
           },
           {
-              "Name":"Applications"
+              "Name":"Patient"
               ,"Img":""
               ,"child":[
                   {
@@ -188,28 +197,16 @@
                       ,"Img":""
                       ,"Url":""
                   }
-                  ,{
-                      "Name":"Calendar"
-                      ,"ChildNode":[]
-                      ,"Img":""
-                      ,"Url":""
-                  }
-                  ,{
-                      "Name":"Analytics"
-                      ,"ChildNode":[]
-                      ,"Img":""
-                      ,"Url":""
-                  }
               ]
           },
           {
-              "Name":"Ecommerce"
+              "Name":"Nurse"
               ,"Img":""
               ,"child":[
               ]
           }
           ,{
-              "Name":"Authentication"
+              "Name":"Pharmacist"
               ,"Img":""
               ,"child":[
                   {
@@ -271,34 +268,111 @@
               ]
           }
           ,{
-              "Name":"Basic"
+              "Name":"Laboratorist"
               ,"Img":""
               ,"child":[]
           }
           ,{
-              "Name":"Admin"
+              "Name":"Appointment"
+              ,"Img":""
+              ,"child":[]
+          }
+          ,{
+              "Name":"Payment"
+              ,"Img":""
+              ,"child":[]
+          }
+           ,{
+              "Name":"Blood Bank"
+              ,"Img":""
+              ,"child":[]
+          }
+          ,{
+              "Name":"Medicine"
+              ,"Img":""
+              ,"child":[]
+          }
+          ,{
+              "Name":"Report"
               ,"Img":""
               ,"child":[
                   {
-                      "Name":"Users"
+                      "Name":"Operation Report"
                       ,"ChildNode":[]
                       ,"Img":""
                       ,"Url":""
                   }
                   ,{
-                      "Name":"Edit Profiles"
+                      "Name":"Birth Report"
                       ,"ChildNode":[]
                       ,"Img":""
                       ,"Url":""
                   }
                   ,{
-                      "Name":"Setting Users"
+                      "Name":"Death Report"
                       ,"ChildNode":[]
                       ,"Img":""
                       ,"Url":""
                   }
                   ,{
                       "Name":"Default"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+              ]
+          }
+          ,{
+              "Name":"Settings"
+              ,"Img":""
+              ,"child":[
+                  {
+                      "Name":"Noticeboard"
+                      ,"ChildNode":[]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+                  ,{
+                      "Name":"Rom"
+                      ,"ChildNode":[
+                          {
+                            "Name":"Bed Allotment"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                          }
+                          ,{
+                            "Name":"Manufacture"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                          }
+                      ]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+                  ,{
+                      "Name":"Orders"
+                      ,"ChildNode":[
+                         {
+                            "Name":"Order List"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                          }
+                          ,{
+                            "Name":"Order Details"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                          }
+                          ,{
+                            "Name":"Order Trinh"
+                            ,"ChildNode":[]
+                            ,"Url":""
+                          }
+                      ]
+                      ,"Img":""
+                      ,"Url":""
+                  }
+                  ,{
+                      "Name":"Referral"
                       ,"ChildNode":[]
                       ,"Img":""
                       ,"Url":""
@@ -315,7 +389,7 @@
         ShowMenuMater();
         CloseMneuMater();
        LoadMenuMater("sidenav-collapse-main");
-       DashMasterCountUpNumber('Dash_User_Number_Accessing');
+       DashMasterCountUpNumber('Dash_User_Doctor');
         $("#Layout_EditUser").addClass('active');
          $("#Dashboards").addClass('show');
          eleClickMenuDash();
@@ -384,8 +458,12 @@
         let stringContent = '';
         for(let i=0;i<MasterDataMenu.length;i++){
             let item=MasterDataMenu[i];
+            let replaceDataCollapse='';
+            if(item.child.length >0){
+                replaceDataCollapse='data-bs-toggle="collapse" aria-controls='+item.Name+' role="button" aria-expanded="false"'
+            }
             let tr ='<li class="nav-item settingCollapse">'
-                    +'<a data-bs-toggle="collapse" id="'+item.Name+'collapse" class="nav-link" aria-controls='+item.Name+' role="button" aria-expanded="false">'
+                    +'<a '+replaceDataCollapse+' id="'+item.Name+'collapse" class="nav-link">'
                     +'<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2">'
                     +'<svg width="12px" height="12px" viewBox="0 0 45 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">'
                     +'<title>shop </title>'
@@ -401,7 +479,7 @@
                     +'</g>'
                     +'</svg>'
                     +'</div>'
-                    +'<span class="nav-link-text ms-1">'+item.Name
+                    +'<span class="">'+item.Name
                     +'</span>'
                     +'</a>'
                     + LoadChildMasterMenu(item.child,item.Name)
@@ -414,7 +492,7 @@
         let resulf  = '';
         if(dataChild.length >0){
             let tr ='<div class="collapse" id='+id+'>'
-                     +'<ul class="nav ms-4 ps-3">'
+                     +'<ul class="nav ms-2 ps-3 me-2">'
             for(let i=0;i<dataChild.length;i++){
                  let coll='';
                  if(dataChild[i].ChildNode.length>0){
