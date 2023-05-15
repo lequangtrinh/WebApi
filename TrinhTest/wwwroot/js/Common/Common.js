@@ -93,3 +93,30 @@ function RenderLayoutPaggin(id, data) {
                                                 + '<li class="pager Next"><a href = "#" data - page="2">›</a></li>';
     }
 }
+
+function ColorSearchFilterText(keyword, className) {
+    var options = {
+        "accuracy": {
+            "value": "partially",
+            "limiters": [",", "."]
+        }
+    };
+    $("." + className).unmark({
+        done: function () {
+            $("." + className).mark(keyword, options);
+        }
+    });
+}
+function ColorSearchFilterText_Combo(keyword, className) {
+    var options = {
+        "accuracy": {
+            "value": "partially",
+            "limiters": [",", "."]
+        }
+    };
+    $(className).unmark({
+        done: function () {
+            $(className).mark(keyword, options);
+        }
+    });
+}

@@ -112,8 +112,7 @@
                     <ul class="navbar-nav  justify-content-end">
                         <li class="nav-item d-flex align-items-center" id="LogOutUser">
                             <a class="nav-link text-body font-weight-bold px-0" target="_blank">
-                                <i class="fa fa-user me-sm-1" aria-hidden="true"></i>
-                                <span class="d-sm-inline d-none">LogOut</span>
+                                <i class="fa fa-sign-out me-sm-1 cursor-pointer" aria-hidden="true"></i>
                             </a>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
@@ -233,5 +232,16 @@
         @await RenderSectionAsync("Scripts", required: false)
         <script src="./Assests/dist/signalr/dist/browser/signalr.js"></script>
         <script src="/js/Common/LoadLanguages_Packege.js"></script>
+        <script>
+            document.getElementById("LogOutUser").addEventListener("click",ClickLogOutUser);
+            function ClickLogOutUser(){
+                localStorage.removeItem("X-UserID");
+                localStorage.removeItem("X-Access-Token");
+                localStorage.removeItem("X-PublicKey");
+                var urlPath=window.location.href.replace(window.location.pathname,("@Url.Action("Login","Home")" + "?first=1&ver=" + (new Date().getTime())));
+                window.history.pushState('urlPath','Title', urlPath);
+                window.location.reload();
+            }
+        </script>
 </body>
 </html>

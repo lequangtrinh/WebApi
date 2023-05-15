@@ -47,7 +47,7 @@ namespace LibTrinh.Common
                 ThreadContext.Properties["OperationDate"] = pOperationDate;
                 ThreadContext.Properties["UserID"] = pUserID;
                 ThreadContext.Properties["RunSQL"] = pSql;
-                _dbUserLogger.Info("Log");
+                _dbUserLogger.Info("LogExeSql");
             });
             logTask.Start();
         }

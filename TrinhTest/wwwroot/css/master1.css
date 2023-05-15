@@ -4742,24 +4742,6 @@ ul li.list-group-item:hover {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/*#endregion */
-
-/*#region Pagination */
-.paginationjs .paginationjs-pages li.active > a {
-    background: var(--color--primary) !important;
-    color: var(--color--white) !important;
-    height: 30px !important;
-}
-
-.paginationjs .paginationjs-pages li {
-    border: 1px solid #67748e3b !important;
-}
-
-    .paginationjs .paginationjs-pages li.active {
-        border: none !important;
-    }
-
-/*#endregion */
 
 /*#region Collapse */
 .vttcollapse {

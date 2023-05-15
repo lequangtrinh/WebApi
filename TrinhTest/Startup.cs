@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace TrinhTest
 {
@@ -37,7 +38,10 @@ namespace TrinhTest
             services.AddSignalR();
 
             services.Configure<SetupOptions>(Configuration.GetSection("Setup"));
-
+            services.Configure<KestrelServerOptions>(
+                op => op.Limits.MaxRequestBodySize = 300000000);
+            services.Configure<IISServerOptions>(
+                op=>op.MaxRequestBodySize=300000000);
             #region Regis Service Design 
             services.AddTransient<ITokenService, TokenService>();
             services.AddScoped<IBaseDbContext, BaseDbContext>();
@@ -140,7 +144,6 @@ namespace TrinhTest
             };
             app.UseAuthentication();
             pLoggerFactory.AddLog4Net();
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
            app.UseIpRateLimiting();

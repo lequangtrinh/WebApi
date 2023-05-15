@@ -5,11 +5,11 @@ namespace TrinhTest.Controllers
 {
     public class SettingsController : Controller
     {
-        [Authorize]
+        
         [Route("PriceServices")]
         public IActionResult PriceServices()
         {
-           return View("~/Views/Pages/Error/Error404.html");
+           return View("~/Views/Pages/Setting/PriceServices/SettingPriceServices.cshtml");
         }
         [Authorize]
         [Route("Languages")]

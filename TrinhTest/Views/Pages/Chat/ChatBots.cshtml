@@ -12,7 +12,14 @@
             <div class="card blur shadow-blur max-height-vh-70 overflow-auto overflow-x-hidden mb-5 mb-lg-0">
                 <div class="card-header p-3">
                     <h6>Friends</h6>
-                    <input type="email" class="form-control" placeholder="Search Contact" aria-label="Email" onfocus="focused(this)" onfocusout="defocused(this)">
+                    <div class="input-group flex-nowrap" id="ChatBotFilter">
+                        <div class="input-group-text input-group-text px-2">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                            <div class="spinner-border spinner-border-sm d-none"></div>
+                        </div>
+                        <input id="filterSetting" type="text" class="form-control" placeholder="eg .search">
+                        <div class="input-group-text"><i class="btn_clear fas fa-minus-circle opacity-1"></i></div>
+                    </div>
                 </div>
                 <div class="card-body p-2" id="ChatLstFriend">
                 </div>
@@ -84,7 +91,7 @@
                         </div>
                         <div class="d-flex">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Type here" aria-label="Message example input" id="inputMessagesUsers" onkeyup="SendMessagesAnimationDots()">
+                                <input type="text" class="form-control" autocomplete="off" placeholder="Type here" aria-label="Message example input" id="inputMessagesUsers" onkeyup="SendMessagesAnimationDots()">
                             </div>
                             <button class="btn bg-gradient-primary mb-0 ms-2" onclick="event.preventDefault();return SendMessagesUsers()">
                                 <i class="fa fa-paper-plane-o fa-lg"></i>
@@ -102,7 +109,20 @@
         LoadDataFriendChat();
         RenderUserChatLogin();
         document.getElementById("ShowMoreProfileUsers").addEventListener("click", ShowMoreProfileUsers);
+        SearchFitterSpiner();
     });
+    function SearchFitterSpiner(){
+        $('#filterSetting').keyup(function () {
+            if ($(this).val().length > 0) $(".btn_clear").removeClass('opacity-1');
+            else $(".btn_clear").addClass('opacity-1');
+            $("#ChatBotFilter .fa-search").hide();
+            $("#ChatBotFilter .spinner-border").removeClass('d-none');
+            clearTimeout(data_TimerOnchange);
+            data_TimerOnchange = setTimeout(function (e) {
+                
+            }, 500);
+        });
+    }
     function ShowMoreProfileUsers(){
         if(!this.children[1].classList.contains("show")){
             this.children[1].classList.add("show");
@@ -148,8 +168,6 @@
                 let item=data[i];
                 let tr='<a href="javascript:;" class=" card d-block p-2 border-radius-lg m-2 bg-gray-200 MessagesUser">'
                     +'<div class="d-flex p-2 row">'
-                    + '<div class="col-5 ms-auto badge badge-md badge-circle badge-floating badge-light text-dark border-white me-2">'
-                    + '</div>'
                     +'<div class="avatar avatar-lg rounded-circle border border-primary d-flex">'
                     +'<img alt="Image" src="./Assets/img/'+item.Image+'">'
                     +'<span class="bg-gradient-success rounded-circle border position-absolute mb-n2 me-n2 DotOnline"></span>'
