@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
-
+//using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 namespace TrinhTest
 {
     /// <summary>

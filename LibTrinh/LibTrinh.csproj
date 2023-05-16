@@ -20,6 +20,7 @@
 		<PackageReference Include="MailKit" Version="3.4.3" />
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.16" />
 		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.25.0" />
 		<PackageReference Include="RabbitMQ.Client" Version="6.5.0" />
 		<PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
