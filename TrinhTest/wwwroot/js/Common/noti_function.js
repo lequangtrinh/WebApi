@@ -44,15 +44,15 @@ function notif_progressrun (_id, _delay) {
     });
 }
 function notif_createel (_id, _pa, _type, _mes) {
-    let type = 'success', mess = '', per = '', title = '', time = '';
+    let type = 'dark', mess = '', per = '', title = '', time = '';
     if (_type != 'danger') {
         per = '<div class="progress bg-transparent">'
             + '<div id="pb' + _id + '" class="progress-bar bg-gradient-light" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>'
             + '</div>'
     }
     switch (_type) {
-        case 'success':
-            type = 'bg-gradient-success';title = 'Successful';
+        case 'dark':
+            type = 'bg-gradient-dark';title = 'Successful';
             break;
         case 'info':
             type = 'bg-gradient-info';title = 'Notice';
@@ -75,7 +75,6 @@ function notif_createel (_id, _pa, _type, _mes) {
             + '<i class="ni ni-bell-55 text-white me-2"></i>'
             + '<span class="me-auto text-white font-weight-bold">' + title + '</span>'
             + time
-            + '<i id="cl' + _id + '"class="fas fa-times text-md text-white ms-3 cursor-pointer" data-bs-dismiss="toast" aria-label="Close"></i>'
             + '</div>'
             + '<hr class="horizontal light m-0">'
             + mess
@@ -119,7 +118,7 @@ function notiError_SW () {
     notif_initialize('danger', 'Something Wrongs');
 }
 function notiSuccess () {
-    notif_initialize('success', '', 2000);
+    notif_initialize('dark', '', 2000);
 }
 function notiSuccessMess (mes) {
     notif_initialize('success', mes, 2000);

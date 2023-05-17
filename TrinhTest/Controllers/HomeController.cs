@@ -75,5 +75,10 @@ namespace TrinhTest.Controllers
         {
             return View("~/Views/Pages/Dash/EditMater.cshtml");
         }
+        [Route("MedicineReport")]
+        public IActionResult MedicineReport()
+        {
+            return View("~/Views/Pages/Report/Medicine/MedicineReport.cshtml");
+        }
     }
 }

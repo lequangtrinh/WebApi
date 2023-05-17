@@ -109,7 +109,7 @@
     <div class="row">
         <div id="DashPriceServices" class="col-lg-5 position-relative z-index-2">
         </div>
-        <div id="DashMessages" class="col-lg-7 position-relative z-index-2">
+        <div id="DashMedicineReport" class="col-lg-7 position-relative z-index-2">
         </div>
     </div>
 </div>
@@ -122,12 +122,7 @@
               "Name":"Dashboards"
               ,"Img":"fa fa-tachometer",
               "child":[
-                  {"Name":"Dashboards"
-                    ,"ChildNode":[]
-                    ,"Img":""
-                    ,"Url":"@Url.Action("User","Home")"
-                  }
-                  ,{"Name":"Role"
+                  {"Name":"Role"
                     ,"ChildNode":[]
                     ,"Img":""
                     ,"Url":"@Url.Action("RoleUser","Home")"
@@ -393,13 +388,14 @@
          $("#Dashboards").addClass('show');
          eleClickMenuDash();
         LoadDataPriceServices();
-        LoadTempMessages();
+        LoadTempMedicineReport();
     });
     //Load head dashboard
     function LoadDataUser(){
          AjaxLoad(url = "/api/Mater/LoadDataHeardDashBoard"
             , data = {
-            }, async = true, error = null
+            }, async = true
+           , error = function () { notiError_SW(); }
             , success = function (result) {
                 if (result != "") {
                     let data=JSON.parse(result);
@@ -407,6 +403,10 @@
                     DashMasterCountUpNumber("Dash_Price_Patient",data[0].DOCTOR_COUNT);
                     DashMasterCountUpNumber("Dash_User_Prescription",data[0].PATIENT_COUNT);
                     DashMasterCountUpNumber("Dash_User_Appointment",data[0].PRESCRIPTION_COUNT);
+                    notiSuccess();
+                }
+                else{
+                    notiError_SW();
                 }
             });
     }
@@ -554,9 +554,9 @@
           $("#DashPriceServices").load("@Url.Action("PriceServices","Settings")");
        };
     //LoadTempMessages chatbots
-    function LoadTempMessages(){
-        $("#DashMessages").html('');
-        $("#DashMessages").load("@Url.Action("LoadFriendChat","Messages")");
+    function LoadTempMedicineReport(){
+        $("#DashMedicineReport").html('');
+        $("#DashMedicineReport").load("@Url.Action("MedicineReport","Home")");
     };
 </script>
 
