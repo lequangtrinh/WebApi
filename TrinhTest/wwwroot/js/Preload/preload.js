@@ -361,7 +361,7 @@ function js_require_notasync (url, loadnormal) {
     //});
 }
 
-function js_require (_url, callback, _skipCache) {
+function js_require(_url, callback, _skipCache) {
     if (VDMINIFY == "true" && !_url.includes('/assests/') && !_url.includes('/assets/')) _url = _url.replace('.js', '.min.js');
     basket
         .require({

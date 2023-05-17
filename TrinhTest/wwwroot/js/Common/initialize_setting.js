@@ -1,7 +1,6 @@
 ﻿
-
-
 (function ($) {
+
     //init Language page
     if (typeof LanguageVTT !== 'undefined') {
         LanguageVTT.Refresh();

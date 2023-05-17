@@ -4,6 +4,8 @@
 @{
     Layout = null;
 }
+
+<script src="./js/comon/initialize_setting.js"></script>
 <script src="./js/Common/Chat.js"></script>
 <script src="/Assests/js/ajax.js"></script>
 <div class="container-fluid py-3 px-0">
@@ -104,293 +106,294 @@
     </div>
 </div>
 <script type="text/javascript">
-    var data;
-    $(document).ready(function () {
-        LoadDataFriendChat();
-        RenderUserChatLogin();
-        document.getElementById("ShowMoreProfileUsers").addEventListener("click", ShowMoreProfileUsers);
-        SearchFitterSpiner();
-    });
-    function SearchFitterSpiner(){
-        $('#filterSetting').keyup(function () {
-            if ($(this).val().length > 0) $(".btn_clear").removeClass('opacity-1');
-            else $(".btn_clear").addClass('opacity-1');
-            $("#ChatBotFilter .fa-search").hide();
-            $("#ChatBotFilter .spinner-border").removeClass('d-none');
-            clearTimeout(data_TimerOnchange);
-            data_TimerOnchange = setTimeout(function (e) {
-                
-            }, 500);
+        var data;
+        $(document).ready(function () {
+
+            LoadDataFriendChat();
+            RenderUserChatLogin();
+            document.getElementById("ShowMoreProfileUsers").addEventListener("click", ShowMoreProfileUsers);
+            SearchFitterSpiner();
         });
-    }
-    function ShowMoreProfileUsers(){
-        if(!this.children[1].classList.contains("show")){
-            this.children[1].classList.add("show");
-        }
-        else{
-            this.children[1].classList.remove("show");
-        }
-    }
-    // func click send messages user
-    function ClickItemUserSendMessages(){
-        LoadDataMessagesUser("00002");
-        document.querySelectorAll('.MessagesUser').forEach(node=>{
-            node.addEventListener("click", e => {
-                sessionStorage.setItem("X-UserIDTo",e.target.children[0].innerText);
-                LoadDataMessagesUser(e.target.children[0].innerText);
-            })
-        });
-    }
-    // dots animation messages
-    function SendMessagesAnimationDots(){
-         connection.invoke("SendMessage", localStorage.getItem("X-UserID"),sessionStorage.getItem("X-UserIDTo"), '').catch(function (err) {
-                return console.error(err.toString());
-                });
-    }
-    // load data Messages Friend User
-    function LoadDataFriendChat(){
-            AjaxLoad(url = "/api/ApiMessages/loadFriendChat?UserID="+localStorage.getItem("X-UserID")+""
-            ,data= {}
-            ,async = true
-            ,error = null
-            ,success = function (result) {
-                if(result != undefined){
-                    RenderDataFriendChat(JSON.parse(result),"ChatLstFriend");
-                    ClickItemUserSendMessages();
-                }
+        function SearchFitterSpiner(){
+            $('#filterSetting').keyup(function () {
+                if ($(this).val().length > 0) $(".btn_clear").removeClass('opacity-1');
+                else $(".btn_clear").addClass('opacity-1');
+                $("#ChatBotFilter .fa-search").hide();
+                $("#ChatBotFilter .spinner-border").removeClass('d-none');
+                clearTimeout(data_TimerOnchange);
+                data_TimerOnchange = setTimeout(function (e) {
+
+                }, 500);
             });
-        };
-        function RenderDataFriendChat(data,id){
-            let stringContent = '';
-            let myNode = document.getElementById(id);
-        if (myNode != null) {
-            for(let i=0;i<data.length;i++){
-                let item=data[i];
-                let tr='<a href="javascript:;" class=" card d-block p-2 border-radius-lg m-2 bg-gray-200 MessagesUser">'
-                    +'<div class="d-flex p-2 row">'
-                    +'<div class="avatar avatar-lg rounded-circle border border-primary d-flex">'
-                    +'<img alt="Image" src="./Assets/img/'+item.Image+'">'
-                    +'<span class="bg-gradient-success rounded-circle border position-absolute mb-n2 me-n2 DotOnline"></span>'
-                    +'</div>'
-                    //+'<img alt="Image" src="./Assets/img/'+item.Image+'" class="avatar shadow">'
-                    +'<div class="ms-3 col-md-8">'
-                    +'<div class="justify-content-between align-items-center">'
-                    +'<h6 class="text-dark mb-0">'
-                    +item.UserName
-                    +' <p class="d-none">'+item.IDFriend+'</p>'
-                    +' <p class="text-dark text-xs mb-2">'+item.TimeOnline+'</p>'
-                    +'<span class="badge badge-success"></span>'
-                    +'</h6>'
-                    +'<p class="text-white mb-0 text-sm" id="MessagesID'+item.IDFriend+'">trinh Typing...</p>'
-                    +'</div>'
-                    +'</div>'
-                    +'<div class="col-md-1 align-items-end">'
-                    + ChatBots_Render_Table_item_Execute(item.IDFriend, 1, 1)
-                    +'</div>'
-                    +'</div>'
-                    +'</a>';
-            stringContent=stringContent+tr;
-                }
-            };
-            document.getElementById(id).innerHTML = stringContent;
-        };
-
-
-    function ChatBots_Render_Table_item_Execute(id, editbutton, deletebutton) {
-        let buttons = [];
-        if (editbutton === 1) {
-            buttons.push('<button title="Edit" class="buttonGrid" value="' + id + '"><i class="buttonEditClass fa fa-pencil"></i></button>');
         }
-        if (deletebutton === 1) {
-            buttons.push('<button title="Delete" class="buttonGrid" value="' + id + '"><i  class="buttonDeleteClass fa fa-trash"></i></button>');
-        }
-        return Render_Button_Grid(buttons)
-    }
-        function RemoveAddClassTestUserSend(id){
-              let myNode = document.getElementById("MessagesID"+id);
-            if (myNode != null){
-                if($("#MessagesID"+id).hasClass("text-dark")){
-                    $("#MessagesID"+id).removeClass("text-dark");
-                    $("#MessagesID"+id).addClass("text-white");
-                }
-                else{
-                     $("#MessagesID"+id).removeClass("text-white");
-                    $("#MessagesID"+id).addClass("text-dark");
-                }
-            }
-        }
-         //Render Data Heard User Login Messages
-        function RenderUserChatLogin(){
-            let checkStatusUser=1;
-            let classStatus="";
-            if(checkStatusUser==1){
-                classStatus="bg-gradient-success"
+        function ShowMoreProfileUsers(){
+            if(!this.children[1].classList.contains("show")){
+                this.children[1].classList.add("show");
             }
             else{
-                classStatus="bg-gray-200"
+                this.children[1].classList.remove("show");
             }
-            let stringContent = ' <div class="d-flex align-items-center">'
-                                +'<div class="avatar avatar-lg rounded-circle border border-primary d-flex">'
-                                +'<img alt="Image" src="https://blogger.googleusercontent.com/img/a/AVvXsEgJ2RhSCrZhobPEtEpb0dkF11qnGy1LHzdAJ8oQANOZwIPK1BB3eQu5s7f0waXV9hHjshqAX_j_PYQC0oeqYu3J7LF4q0lvuH9RHq8LxiYtlHMASLwrowtSgLWaXgqOltlFaNG7f1N70DlLrIRtpHMh7OKO28SzO_VtJbr3diAMQzNIbgiv6hk0akVDNw" class="avatar avatar-lg">'
-                                +'<a href="javascript:;" class="'+classStatus+' rounded-circle border position-absolute mb-n2 me-n2 DotOnline">'
-                                +'</a>'
-                                +'</div>'
-                                +'<div class="ms-3">'
-                                +'<h6 class="mb-0 d-block">Quang Trinh</h6>'
-                                +'<span class="text-sm text-dark opacity-8">last seen today at 1:53am</span>'
-                                +'</div>'
-                                +'</div>';
-            document.getElementById("chatUserLogin").innerHTML = stringContent;
         }
-        //load data Messages Item User
-        function LoadDataMessagesUser(UserIdTo){
-          AjaxLoad(url = "/api/ApiMessages/LoadDataMessages"
-            ,data= JSON.stringify({
-                UserID:localStorage.getItem("X-UserID"),
-                UserIDTo:UserIdTo
-            })
-            ,async = true
-            , error = function () { notiError_SW() }
-            , success = function (result) {
-                if (result != null && result!='') {
-                    data=JSON.parse(result);
-                    RenderDataMessagesUsers(data,"ChatItemUsers");
-                }
-                else{
-                data = {
-                "UserID":localStorage.getItem("X-UserID"),
-                "UserIDTo":UserIdTo,
-                "DateTime":"",
-                "ValuesMessages":[]
-                }
-                 RenderDataMessagesUsers(data,"ChatItemUsers");
-            }
+        // func click send messages user
+        function ClickItemUserSendMessages(){
+            LoadDataMessagesUser("00002");
+            document.querySelectorAll('.MessagesUser').forEach(node=>{
+                node.addEventListener("click", e => {
+                    sessionStorage.setItem("X-UserIDTo",e.target.children[0].innerText);
+                    LoadDataMessagesUser(e.target.children[0].innerText);
+                })
             });
-        };
-
-        function RenderDataMessagesUsers(data,id){
-            let dataItem=data.ValuesMessages;
-            let myNode = document.getElementById(id);
+        }
+        // dots animation messages
+        function SendMessagesAnimationDots(){
+             connection.invoke("SendMessage", localStorage.getItem("X-UserID"),sessionStorage.getItem("X-UserIDTo"), '').catch(function (err) {
+                    return console.error(err.toString());
+                    });
+        }
+        // load data Messages Friend User
+        function LoadDataFriendChat(){
+                AjaxLoad(url = "/api/ApiMessages/loadFriendChat?UserID="+localStorage.getItem("X-UserID")+""
+                ,data= {}
+                ,async = true
+                ,error = null
+                ,success = function (result) {
+                    if(result != undefined){
+                        RenderDataFriendChat(JSON.parse(result),"ChatLstFriend");
+                        ClickItemUserSendMessages();
+                    }
+                });
+            };
+            function RenderDataFriendChat(data,id){
+                let stringContent = '';
+                let myNode = document.getElementById(id);
             if (myNode != null) {
-                RenderDataItemMessages(dataItem,id);
-                deleteDataItemMessagerUser(dataItem);
-            }
-        };
-        function RenderDataItemMessages(data,id){
-            let stringContent=''; 
-            for(let i=0 ;i<data.length;i++){
+                for(let i=0;i<data.length;i++){
                     let item=data[i];
-                    if(item.UserID === localStorage.getItem("X-UserID")){
-                        stringContent+='<div class="row justify-content-start mb-4" id="'+i+'">'
-                            +'<div class="col-auto">'
-                            +'<div class="card">'
-                            +'<div class="card-body py-2 px-3">'
-                            +'<div class="d-flex">'
-                            +CheckValueMessagesUser(item.Value)
-                            +'<div class="my-auto ps-3">'
-                            + ChatBots_Render_Table_item_Execute(i, 1, 1)
-                            +'</div>'
-                            +'</div>'
-                            +'<div class="d-flex align-items-center text-sm opacity-6">'
-                            +'<i class="fa fa-check text-sm me-1"></i>'
-                            +'<small>4:42pm</small>'
-                            +'</div>'
-                            +'</div>'
-                            +'</div>'
-                            +'</div>'
-                            +'</div>';
+                    let tr='<a href="javascript:;" class=" card d-block p-2 border-radius-lg m-2 bg-gray-200 MessagesUser">'
+                        +'<div class="d-flex p-2 row">'
+                        +'<div class="avatar avatar-lg rounded-circle border border-primary d-flex">'
+                        +'<img alt="Image" src="./Assets/img/'+item.Image+'">'
+                        +'<span class="bg-gradient-success rounded-circle border position-absolute mb-n2 me-n2 DotOnline"></span>'
+                        +'</div>'
+                        //+'<img alt="Image" src="./Assets/img/'+item.Image+'" class="avatar shadow">'
+                        +'<div class="ms-3 col-md-8">'
+                        +'<div class="justify-content-between align-items-center">'
+                        +'<h6 class="text-dark mb-0">'
+                        +item.UserName
+                        +' <p class="d-none">'+item.IDFriend+'</p>'
+                        +' <p class="text-dark text-xs mb-2">'+item.TimeOnline+'</p>'
+                        +'<span class="badge badge-success"></span>'
+                        +'</h6>'
+                        +'<p class="text-white mb-0 text-sm" id="MessagesID'+item.IDFriend+'">trinh Typing...</p>'
+                        +'</div>'
+                        +'</div>'
+                        +'<div class="col-md-1 align-items-end">'
+                        + ChatBots_Render_Table_item_Execute(item.IDFriend, 1, 1)
+                        +'</div>'
+                        +'</div>'
+                        +'</a>';
+                stringContent=stringContent+tr;
+                    }
+                };
+                document.getElementById(id).innerHTML = stringContent;
+            };
+
+
+        function ChatBots_Render_Table_item_Execute(id, editbutton, deletebutton) {
+            let buttons = [];
+            if (editbutton === 1) {
+                buttons.push('<button title="Edit" class="buttonGrid" value="' + id + '"><i class="buttonEditClass fa fa-pencil"></i></button>');
+            }
+            if (deletebutton === 1) {
+                buttons.push('<button title="Delete" class="buttonGrid" value="' + id + '"><i  class="buttonDeleteClass fa fa-trash"></i></button>');
+            }
+            return Render_Button_Grid(buttons)
+        }
+            function RemoveAddClassTestUserSend(id){
+                  let myNode = document.getElementById("MessagesID"+id);
+                if (myNode != null){
+                    if($("#MessagesID"+id).hasClass("text-dark")){
+                        $("#MessagesID"+id).removeClass("text-dark");
+                        $("#MessagesID"+id).addClass("text-white");
                     }
                     else{
-                        stringContent+='<div class="row justify-content-end text-right mb-4" id="'+i+'">'
-                            +'<div class="col-auto">'
-                            +'<div class="card bg-gray-200">'
-                            +'<div class="card-body py-2 px-3">'
-                            +'<div class="d-flex">'
-                            +CheckValueMessagesUser(item.Value)
-                            +'<div class="my-auto ps-3">'
-                            +ChatBots_Render_Table_item_Execute(i, 1, 1)
-                            +'</div>'
-                            +'</div>'
-                            +'<div class="d-flex align-items-center text-sm opacity-6">'
-                            +'<i class="fa fa-check text-sm me-1"></i>'
-                            +'<small>4:42pm</small>'
-                            +'</div>'
-                            +'</div>'
-                            +'</div>'
-                            +'</div>'
-                            +'</div>';
+                         $("#MessagesID"+id).removeClass("text-white");
+                        $("#MessagesID"+id).addClass("text-dark");
                     }
                 }
-                document.getElementById(id).innerHTML = stringContent;
-        }
-        function deleteDataItemMessagerUser(value){
-            $('#ChatItemUsers').on('click', '.buttonDeleteClass', function () {
-                console.log(value);
-                let index=Number($(this).closest('div')[0].childNodes[0].value);
-                console.log(index);
-                data=value.filter(function(value, n, arr) {
-                    return n != index;
-                });
-                console.log(data);
-                deleteDataItemMessagerUser(data);
-                RenderDataItemMessages(data,"ChatItemUsers");
-            });
-        }
-        // render data value img
-        function RenderDataImgMessagesUsers(ValueImg){
-            let tr='<div class="col-12 p-0">'
-                    +'<img src="./Assets/img/'+ValueImg+'" alt="Rounded image" class="mb-2 border-radius-lg" style="width: 200px; height: 200px;">'
-                    +'</div>';
-            return tr;
-        }
-
-         // render data value text
-        function RenderDataTestMessagesUsers(ValueTest){
-            let tr='<p class="mb-1">'
-                    +ValueTest
-                    +'</p>';
-            return tr;
-        }
-        // send messages
-        function SendMessagesUsers(){
-            let valueInput=$("#inputMessagesUsers").val();
-            if(!valueInput==''){
-                 connection.invoke("SendMessage", localStorage.getItem("X-UserID"),sessionStorage.getItem("X-UserIDTo"), valueInput).catch(function (err) {
-                return console.error(err.toString());
-            });};
-            $("#inputMessagesUsers").val("");
-            $("#StageMessagesDots").addClass("d-none");
-            RegisDataMessagesUser(data);
-        }
-        // RegisTer data Messages User
-        function RegisDataMessagesUser(data){
-            console.log(data);
-            // AjaxApi(url = "/api/ApiMessages/RegisDataMessagesUser"
-            //,data= JSON.stringify({
-            //    UserID:localStorage.getItem("X-UserID"),
-            //    UserIDTo:sessionStorage.getItem("X-UserIDTo"),
-            //    DataMess:data
-            //})
-            //,async = true
-            //, error = function () { notiError_SW() }
-            //, success = function (result) {
-            //}
-            //, before = function (e) {
-
-            // });
-        }
-        //check value img,text,file
-        function CheckValueMessagesUser(value){
-            let res='';
-            if(value.includes(".png")
-            ||value.includes(".jpg")){
-                res=RenderDataImgMessagesUsers(value);
             }
-            else{
-                res=RenderDataTestMessagesUsers(value);
+             //Render Data Heard User Login Messages
+            function RenderUserChatLogin(){
+                let checkStatusUser=1;
+                let classStatus="";
+                if(checkStatusUser==1){
+                    classStatus="bg-gradient-success"
+                }
+                else{
+                    classStatus="bg-gray-200"
+                }
+                let stringContent = ' <div class="d-flex align-items-center">'
+                                    +'<div class="avatar avatar-lg rounded-circle border border-primary d-flex">'
+                                    +'<img alt="Image" src="https://blogger.googleusercontent.com/img/a/AVvXsEgJ2RhSCrZhobPEtEpb0dkF11qnGy1LHzdAJ8oQANOZwIPK1BB3eQu5s7f0waXV9hHjshqAX_j_PYQC0oeqYu3J7LF4q0lvuH9RHq8LxiYtlHMASLwrowtSgLWaXgqOltlFaNG7f1N70DlLrIRtpHMh7OKO28SzO_VtJbr3diAMQzNIbgiv6hk0akVDNw" class="avatar avatar-lg">'
+                                    +'<a href="javascript:;" class="'+classStatus+' rounded-circle border position-absolute mb-n2 me-n2 DotOnline">'
+                                    +'</a>'
+                                    +'</div>'
+                                    +'<div class="ms-3">'
+                                    +'<h6 class="mb-0 d-block">Quang Trinh</h6>'
+                                    +'<span class="text-sm text-dark opacity-8">last seen today at 1:53am</span>'
+                                    +'</div>'
+                                    +'</div>';
+                document.getElementById("chatUserLogin").innerHTML = stringContent;
+            }
+            //load data Messages Item User
+            function LoadDataMessagesUser(UserIdTo){
+              AjaxLoad(url = "/api/ApiMessages/LoadDataMessages"
+                ,data= JSON.stringify({
+                    UserID:localStorage.getItem("X-UserID"),
+                    UserIDTo:UserIdTo
+                })
+                ,async = true
+                , error = function () { notiError_SW() }
+                , success = function (result) {
+                    if (result != null && result!='') {
+                        data=JSON.parse(result);
+                        RenderDataMessagesUsers(data,"ChatItemUsers");
+                    }
+                    else{
+                    data = {
+                    "UserID":localStorage.getItem("X-UserID"),
+                    "UserIDTo":UserIdTo,
+                    "DateTime":"",
+                    "ValuesMessages":[]
+                    }
+                     RenderDataMessagesUsers(data,"ChatItemUsers");
+                }
+                });
             };
-            return res;
-        };
+
+            function RenderDataMessagesUsers(data,id){
+                let dataItem=data.ValuesMessages;
+                let myNode = document.getElementById(id);
+                if (myNode != null) {
+                    RenderDataItemMessages(dataItem,id);
+                    deleteDataItemMessagerUser(dataItem);
+                }
+            };
+            function RenderDataItemMessages(data,id){
+                let stringContent='';
+                for(let i=0 ;i<data.length;i++){
+                        let item=data[i];
+                        if(item.UserID === localStorage.getItem("X-UserID")){
+                            stringContent+='<div class="row justify-content-start mb-4" id="'+i+'">'
+                                +'<div class="col-auto">'
+                                +'<div class="card">'
+                                +'<div class="card-body py-2 px-3">'
+                                +'<div class="d-flex">'
+                                +CheckValueMessagesUser(item.Value)
+                                +'<div class="my-auto ps-3">'
+                                + ChatBots_Render_Table_item_Execute(i, 1, 1)
+                                +'</div>'
+                                +'</div>'
+                                +'<div class="d-flex align-items-center text-sm opacity-6">'
+                                +'<i class="fa fa-check text-sm me-1"></i>'
+                                +'<small>4:42pm</small>'
+                                +'</div>'
+                                +'</div>'
+                                +'</div>'
+                                +'</div>'
+                                +'</div>';
+                        }
+                        else{
+                            stringContent+='<div class="row justify-content-end text-right mb-4" id="'+i+'">'
+                                +'<div class="col-auto">'
+                                +'<div class="card bg-gray-200">'
+                                +'<div class="card-body py-2 px-3">'
+                                +'<div class="d-flex">'
+                                +CheckValueMessagesUser(item.Value)
+                                +'<div class="my-auto ps-3">'
+                                +ChatBots_Render_Table_item_Execute(i, 1, 1)
+                                +'</div>'
+                                +'</div>'
+                                +'<div class="d-flex align-items-center text-sm opacity-6">'
+                                +'<i class="fa fa-check text-sm me-1"></i>'
+                                +'<small>4:42pm</small>'
+                                +'</div>'
+                                +'</div>'
+                                +'</div>'
+                                +'</div>'
+                                +'</div>';
+                        }
+                    }
+                    document.getElementById(id).innerHTML = stringContent;
+            }
+            function deleteDataItemMessagerUser(value){
+                $('#ChatItemUsers').on('click', '.buttonDeleteClass', function () {
+                    console.log(value);
+                    let index=Number($(this).closest('div')[0].childNodes[0].value);
+                    console.log(index);
+                    data=value.filter(function(value, n, arr) {
+                        return n != index;
+                    });
+                    console.log(data);
+                    deleteDataItemMessagerUser(data);
+                    RenderDataItemMessages(data,"ChatItemUsers");
+                });
+            }
+            // render data value img
+            function RenderDataImgMessagesUsers(ValueImg){
+                let tr='<div class="col-12 p-0">'
+                        +'<img src="./Assets/img/'+ValueImg+'" alt="Rounded image" class="mb-2 border-radius-lg" style="width: 200px; height: 200px;">'
+                        +'</div>';
+                return tr;
+            }
+
+             // render data value text
+            function RenderDataTestMessagesUsers(ValueTest){
+                let tr='<p class="mb-1">'
+                        +ValueTest
+                        +'</p>';
+                return tr;
+            }
+            // send messages
+            function SendMessagesUsers(){
+                let valueInput=$("#inputMessagesUsers").val();
+                if(!valueInput==''){
+                     connection.invoke("SendMessage", localStorage.getItem("X-UserID"),sessionStorage.getItem("X-UserIDTo"), valueInput).catch(function (err) {
+                    return console.error(err.toString());
+                });};
+                $("#inputMessagesUsers").val("");
+                $("#StageMessagesDots").addClass("d-none");
+                RegisDataMessagesUser(data);
+            }
+            // RegisTer data Messages User
+            function RegisDataMessagesUser(data){
+                console.log(data);
+                // AjaxApi(url = "/api/ApiMessages/RegisDataMessagesUser"
+                //,data= JSON.stringify({
+                //    UserID:localStorage.getItem("X-UserID"),
+                //    UserIDTo:sessionStorage.getItem("X-UserIDTo"),
+                //    DataMess:data
+                //})
+                //,async = true
+                //, error = function () { notiError_SW() }
+                //, success = function (result) {
+                //}
+                //, before = function (e) {
+
+                // });
+            }
+            //check value img,text,file
+            function CheckValueMessagesUser(value){
+                let res='';
+                if(value.includes(".png")
+                ||value.includes(".jpg")){
+                    res=RenderDataImgMessagesUsers(value);
+                }
+                else{
+                    res=RenderDataTestMessagesUsers(value);
+                };
+                return res;
+            };
 </script>
 <style>
     .DotOnline {

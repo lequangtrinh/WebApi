@@ -80,5 +80,11 @@ namespace TrinhTest.Controllers
         {
             return View("~/Views/Pages/Report/Medicine/MedicineReport.cshtml");
         }
+
+        [Route("ChatBots")]
+        public IActionResult ChatBots()
+        {
+            return View("~/Views/Pages/Chat/ChatBots.cshtml");
+        }
     }
 }

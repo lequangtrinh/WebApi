@@ -6,7 +6,8 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<RazorCompileOnBuild>false</RazorCompileOnBuild>
 		<RazorCompileOnPublish>false</RazorCompileOnPublish>
-		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+		<ProduceReferenceAssembly>true</ProduceReferenceAssembly>
+		<GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
 		<StaticWebAssetBasePath Condition="$(StaticWebAssetBasePath) == ''">/cl</StaticWebAssetBasePath>
 	</PropertyGroup>
 

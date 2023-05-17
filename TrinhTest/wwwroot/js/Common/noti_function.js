@@ -81,7 +81,6 @@ function notif_createel (_id, _pa, _type, _mes) {
             + per
             + '</div>'
         let el = createElementFromHTML(content)
-        console.log(el)
         $("#" + _pa).append(el);
         resolve('resolved');
     });

@@ -3,7 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Html.AntiForgeryToken()
-<script src="./js/Common/initialize_setting.js"></script>
 <div class="container-fluid py-4" id="divMainSettingDetail">
     <div class="row">
         <div class="col-12 position-relative z-index-2">
@@ -116,6 +115,7 @@
 <script src="./Assets/js/custom-validation.js"></script>
 <script src="./Assets/js/plugins/threejs.js"></script>
 <script src="./Assets/js/plugins/orbit-controls.js"></script>
+<script src="./js/Common/initialize_setting.js"></script>
 <script type="text/javascript">
     var MasterDataMenu = [
           {
@@ -125,17 +125,17 @@
                   {"Name":"Role"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"@Url.Action("RoleUser","Home")"
+                    ,"Url":"Home/RoleUser"
                   }
                   ,{"Name":"EditRole"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"@Url.Action("EditRole","Mater")"
+                    ,"Url":"Home/EditRole"
                   },
                   {"Name":"Chats"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"@Url.Action("Chat","ChatBots")"
+                    ,"Url":"Home/ChatBots"
                   }
               ]
           },
@@ -146,7 +146,7 @@
                   {"Name":"Chats"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"@Url.Action("Chat","ChatBots")"
+                    ,"Url":"Home/ChatBots"
                   }
                   ,{"Name":"Calendar Schedule"
                     ,"ChildNode":[]
@@ -204,29 +204,23 @@
               "Name":"Pharmacist"
               ,"Img":"fa fa-graduation-cap"
               ,"child":[
-                  {
-                      "Name":"Overview"
-                      ,"ChildNode":[]
-                      ,"Img":""
-                      ,"Url":""
-                  }
-                  ,{
+                 {
                       "Name":"Products"
                       ,"ChildNode":[
                           {
                             "Name":"New Product"
                             ,"ChildNode":[]
-                            ,"Url":""
+                            ,"Url":"@Url.Action("Chat","ChatBots")"
                           }
                           ,{
                             "Name":"Edit Product"
                             ,"ChildNode":[]
-                            ,"Url":""
+                            ,"Url":"@Url.Action("Chat","ChatBots")"
                           }
                           ,{
                             "Name":"Product Page"
                             ,"ChildNode":[]
-                            ,"Url":""
+                            ,"Url":"@Url.Action("Chat","ChatBots")"
                           }
                       ]
                       ,"Img":""
@@ -434,15 +428,15 @@
             removeActive(element);
             $("#"+"Layout_"+e.target.children[1].innerText).addClass("show");
             document.getElementById(e.target.id).classList.add('active');
+            let ValueView=e.target.children[0].innerText.substr(e.target.children[0].innerText.indexOf("/"),e.target.children[0].innerText.length);
             $("#MainRenderBody").html('');
-           
-            $("#MainRenderBody").load("@Url.Action("Product","Products")");
+            $("#MainRenderBody").load(ValueView);
             $('#MainRenderBody').show();
             e.preventDefault();
-            
-            //var urlPath=window.location.href.replace(window.location.pathname,("@Url.Action("Product","Products")"+ "?ver=" + versionofWebApplication));
-            //window.history.pushState('urlPath','Title', urlPath);
-        })
+            //var urlPath=window.location.href.replace(window.location.pathname,(ValueView+ "?ver=" + versionofWebApplication));
+             var urlPath=window.location.href.replace(window.location.pathname,ValueView);
+            window.history.pushState(null,null, urlPath);
+            });
         });
     }
     function DashMasterCountUpNumber(id,valueCount){
@@ -498,9 +492,10 @@
                      coll='data-bs-toggle="collapse"'
                  }
                 var item=dataChild[i];
+                console.log(item.Url);
                 tr += '<li class="nav-item Settingitem__item cursor-pointer">'
                     +'<a class="nav-link"'+coll+' id="Layout_'+item.Name+'">'
-                    +'<span class="sidenav-mini-icon"> D </span>'
+                    +'<span class="sidenav-mini-icon"> '+item.Url+' </span>'
                     +'<span class="sidenav-normal">'+item.Name+'</span>'
                     +'</a>'
                     +LoadChildMasterMenu(dataChild[i].ChildNode,item.Name)
