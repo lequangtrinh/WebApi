@@ -116,7 +116,7 @@
 <script src="./Assets/js/plugins/threejs.js"></script>
 <script src="./Assets/js/plugins/orbit-controls.js"></script>
 <script src="./js/Common/initialize_setting.js"></script>
-<script type="text/javascript">
+        <script type="text/javascript">
     var MasterDataMenu = [
           {
               "Name":"Dashboards"
@@ -125,17 +125,17 @@
                   {"Name":"Role"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"Home/RoleUser"
+                    ,"Url":"/Dash/EditMater"
                   }
                   ,{"Name":"EditRole"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"Home/EditRole"
+                    ,"Url":"/Dash/EditRole"
                   },
                   {"Name":"Chats"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"Home/ChatBots"
+                    ,"Url":"/Dash/ChatBots"
                   }
               ]
           },
@@ -146,7 +146,7 @@
                   {"Name":"Chats"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"Home/ChatBots"
+                    ,"Url":"/Dash/ChatBots"
                   }
                   ,{"Name":"Calendar Schedule"
                     ,"ChildNode":[]
@@ -374,6 +374,7 @@
     let body = document.getElementsByTagName('body')[0];
     let className = 'g-sidenav-pinned';
     $(document).ready(function (){
+        js_require_notasync('./Assests/Library/jquery-ui.js', true);
         ShowMenuMater();
         CloseMneuMater();
         LoadDataUser();
@@ -404,40 +405,36 @@
                 }
             });
     }
-    // execute click child node menu dash
+     // execute click child node menu dash
     function eleClickMenuDash(){
-         var ele=document.querySelectorAll('.settingCollapse');
-        ele.forEach((node) => {
-            node.addEventListener("click", e => {
-            removeActive(ele);
-            if($("#"+e.target.children[1].innerText).hasClass("show")){
-                $("#"+e.target.children[1].innerText).removeClass("show");
-                document.getElementById(e.target.id).setAttribute("aria-expanded", false);
-                e.target.querySelector('div').classList.remove("bg-gradient-light");
-            }
-            else{
-                document.getElementById(e.target.id).setAttribute("aria-expanded", true);
-                $("#"+e.target.children[1].innerText).addClass("show");
-                e.target.querySelector('div').classList.add("bg-gradient-light");
-            }
-            })
-        });
-        var element=document.querySelectorAll('.Settingitem__item');
-            element.forEach((node) => {
-            node.addEventListener("click", e => {
-            removeActive(element);
-            $("#"+"Layout_"+e.target.children[1].innerText).addClass("show");
-            document.getElementById(e.target.id).classList.add('active');
-            let ValueView=e.target.children[0].innerText.substr(e.target.children[0].innerText.indexOf("/"),e.target.children[0].innerText.length);
-            $("#MainRenderBody").html('');
-            $("#MainRenderBody").load(ValueView);
-            $('#MainRenderBody').show();
-            e.preventDefault();
-            //var urlPath=window.location.href.replace(window.location.pathname,(ValueView+ "?ver=" + versionofWebApplication));
-             var urlPath=window.location.href.replace(window.location.pathname,ValueView);
-            window.history.pushState(null,null, urlPath);
-            });
-        });
+        $('#sidenav-collapse-main').on('click', '.Settingitem__item', function (e) {
+                e.preventDefault();
+                $('#sidenav-collapse-main .Settingitem__item').removeClass('active');
+                $('#sidenav-collapse-main .settingCollapse').removeClass('active');
+                let namechild = '', namegroup = '';
+                namechild = $(this).attr("data-name");
+                $(this).addClass('active');
+                let objparent = $(this).parent().parent();
+                if (objparent != undefined) {
+                    objparent.addClass('active');
+                    namegroup = objparent.attr("data-name");
+                }
+                let href = $(this).attr('href');
+                let hreflayoutnone = href + '?layout=none' + '&ver=' + versionofWebApplication;
+                MS_UrlRoot = namegroup;
+                MS_UrlChild = namechild;
+                if (href != '#') {
+                    $.ajax({
+                        url: hreflayoutnone,
+                        success: function (data) {
+                            $("#MainRenderBody").empty();
+                            $("#MainRenderBody_Manual").html(data);
+                            window.history.pushState(href, 'Title', hreflayoutnone);
+                           // MS_SetHeaderNavi();
+                        }
+                    })
+                }
+    });
     }
     function DashMasterCountUpNumber(id,valueCount){
         if (document.getElementById(id).hasAttribute("countTo")) {
@@ -447,8 +444,6 @@
           const countUp = new CountUp(id, document.getElementById(id).getAttribute("countTo"));
           if (!countUp.error) {
             countUp.start();
-          } else {
-            console.error(countUp.error);
           }
         }
     }
@@ -468,7 +463,7 @@
                 replaceDataCollapse='data-bs-toggle="collapse" aria-controls='+item.Name+' role="button" aria-expanded="false"'
             }
             let tr ='<li class="nav-item">'
-                    +'<a '+replaceDataCollapse+' id="'+item.Name+'collapse" class="nav-link cursor-pointer settingCollapse">'
+                    +'<a '+replaceDataCollapse+' href="#" id="'+item.Name+'collapse" class="nav-link cursor-pointer settingCollapse">'
                     +'<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2">'
                     +'<i class="'+item.Img+' text-secondary"></i>'
                     +'</div>'
@@ -492,10 +487,8 @@
                      coll='data-bs-toggle="collapse"'
                  }
                 var item=dataChild[i];
-                console.log(item.Url);
-                tr += '<li class="nav-item Settingitem__item cursor-pointer">'
-                    +'<a class="nav-link"'+coll+' id="Layout_'+item.Name+'">'
-                    +'<span class="sidenav-mini-icon"> '+item.Url+' </span>'
+                tr += '<li class="nav-item cursor-pointer">'
+                    +'<a class="nav-link Settingitem__item"'+coll+' href="' + item.Url + '" id="Layout_'+item.Name+'">'
                     +'<span class="sidenav-normal">'+item.Name+'</span>'
                     +'</a>'
                     +LoadChildMasterMenu(dataChild[i].ChildNode,item.Name)
@@ -554,7 +547,6 @@
         $("#DashMedicineReport").load("@Url.Action("MedicineReport","Home")");
     };
 </script>
-
 <style>
     .navbar-vertical .navbar-nav .nav-link[data-bs-toggle=collapse][aria-expanded=true]:after {
         color: #3a416f;

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using WebMarkupMin.AspNetCore6;
 //using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 namespace TrinhTest
 {
@@ -49,8 +50,8 @@ namespace TrinhTest
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddBussiness();
             #endregion
-            //services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false).AddNewtonsoftJson();
-            //services.AddResponseCaching();
+            services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false).AddNewtonsoftJson();
+            services.AddResponseCaching();
             var xx = Configuration.GetSection("Authentication:ClientID");
             services.AddAuthentication(options =>
             {
@@ -80,7 +81,45 @@ namespace TrinhTest
                          },
                      };
                  });
+            services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+                options.MimeTypes = new[] { "text/plain",
+                        "text/css",
+                        "application/javascript",
+                        "text/html",
+                        "application/xml",
+                        "text/xml",
+                        "application/json",
+                        "text/json"};
+            });
+            services.AddWebMarkupMin(options =>
+            {
+                options.AllowMinificationInDevelopmentEnvironment = true;
+                options.AllowCompressionInDevelopmentEnvironment = true;
+                options.DisableMinification = false;
+                options.DisableCompression = false;
+                options.DisablePoweredByHttpHeaders = true;
+            }).AddHtmlMinification(options =>
+            {
+                options.MinificationSettings.RemoveHttpProtocolFromAttributes = false;
+                options.MinificationSettings.RemoveHttpsProtocolFromAttributes = false;
+                options.MinificationSettings.WhitespaceMinificationMode = WebMarkupMin.Core.WhitespaceMinificationMode.Safe;
+                options.MinificationSettings.RemoveRedundantAttributes = false;
+                options.MinificationSettings.RemoveTagsWithoutContent = false;
+                options.MinificationSettings.PreserveCase = true;
+                options.MinificationSettings.RemoveEmptyAttributes = false;
+                options.MinificationSettings.RemoveOptionalEndTags = false;
+                options.MinificationSettings.MinifyEmbeddedCssCode = true;
+                options.MinificationSettings.MinifyInlineCssCode = true;
+                options.MinificationSettings.MinifyEmbeddedJsonData = true;
+                options.MinificationSettings.EmptyTagRenderMode = WebMarkupMin.Core.HtmlEmptyTagRenderMode.Slash;
 
+            }).AddHttpCompression();
+            services.AddRazorPages().AddRazorPagesOptions(options => { }).AddNewtonsoftJson().AddMvcOptions(options =>
+            {
+                options.Filters.Add(new AsyncPageFilter(Configuration));
+            });
             #region login authen google and facabook
             //.AddGoogle(options =>
             //{
@@ -103,7 +142,8 @@ namespace TrinhTest
             services.AddRazorPages();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             #endregion
-            #region execute cache Redis 
+            #region execute cache 
+            services.AddDistributedMemoryCache();
             services.AddOptions();
             services.AddStackExchangeRedisCache(options =>
             {
@@ -136,6 +176,7 @@ namespace TrinhTest
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseWebMarkupMin();
             }
             else
             {
@@ -154,7 +195,11 @@ namespace TrinhTest
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                //endpoints.MapControllerRoute(
+                //  name: "default",
+                //  pattern: "{controller}/{action}/{id?}",
+                //  defaults: new { controller = "Home", action = "Index" }
+                //);
                 if (env.IsDevelopment())
                 {
                     endpoints.MapControllerRoute(
@@ -169,6 +214,7 @@ namespace TrinhTest
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                     endpoints.MapControllers();
                 }
+                endpoints.MapRazorPages();
                 endpoints.MapHub<MessagesHub>("/MessagesHub");
 
             });

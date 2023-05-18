@@ -29,6 +29,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="AspNetCoreRateLimit" Version="4.0.2" />
+		<PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+		<PackageReference Include="BundlerMinifier.Core" Version="3.2.449" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="6.0.1" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.10" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
@@ -45,18 +47,51 @@
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
 		<PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.0" />
+		<PackageReference Include="WebMarkupMin.AspNetCore6" Version="2.13.9" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\LibTrinh\LibTrinh.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="Views\Pages\Report\Account\" />
-		<Folder Include="wwwroot\css\" />
-		<Folder Include="wwwroot\lib\bootstrap\" />
-		<Folder Include="wwwroot\lib\bootstrap\dist\js\" />
-		<Folder Include="wwwroot\lib\jquery\" />
-		<Folder Include="wwwroot\lib\jquery\dist\" />
+		<Folder Include="Views\Pages\Chat\**" />
+		<Folder Include="Views\Pages\Dash\**" />
+		<Folder Include="Views\Pages\Login\**" />
+		<Folder Include="Views\Pages\Products**" />
+		<Folder Include="Views\Pages\Report\**" />
+		<Folder Include="Views\Pages\Setting\**" />
+		<Folder Include="Views\Pages\PriceServices\**" />
+		<Folder Include="wwwroot\lib\bootstrap\**" />
+		<Folder Include="wwwroot\lib\bootstrap\dist\js\**" />
+		<Folder Include="wwwroot\lib\jquery\**" />
+		<Folder Include="wwwroot\lib\jquery\dist\**" />
 	</ItemGroup>
-
+	<ItemGroup>
+		<None Include="bundleconfig.json" />
+	</ItemGroup>
+	<ItemGroup>
+		<Content Remove="bundleconfig.json" />
+		<Content Remove="Pages\Chat\ChatBots.cshtml" />
+		<Content Remove="Pages\Dash\Dash_Master.cshtml" />
+		<Content Remove="Pages\Dash\EditMater.cshtml" />
+		<Content Remove="Pages\Error\Error404.cshtml" />
+		<Content Remove="Pages\Error\Error500.cshtml" />
+		<Content Remove="Pages\Login\ChangePassword.cshtml" />
+		<Content Remove="Pages\Login\Login.cshtml" />
+		<Content Remove="Pages\Login\SignIn.cshtml" />
+		<Content Remove="Pages\Login\TextLoginGoogle.cshtml" />
+		<Content Remove="Pages\Login\User.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="Pages\Chat\ChatBots.cshtml" />
+		<None Include="Pages\Dash\Dash_Master.cshtml" />
+		<None Include="Pages\Dash\EditMater.cshtml" />
+		<None Include="Pages\Error\Error404.cshtml" />
+		<None Include="Pages\Error\Error500.cshtml" />
+		<None Include="Pages\Login\ChangePassword.cshtml" />
+		<None Include="Pages\Login\Login.cshtml" />
+		<None Include="Pages\Login\SignIn.cshtml" />
+		<None Include="Pages\Login\TextLoginGoogle.cshtml" />
+		<None Include="Pages\Login\User.cshtml" />
+	</ItemGroup>
 </Project>
