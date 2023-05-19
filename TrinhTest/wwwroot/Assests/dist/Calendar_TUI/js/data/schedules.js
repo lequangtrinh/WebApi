@@ -105,7 +105,6 @@ function generateNames() {
 }
 
 function generateRandomSchedule(calendar, renderStart, renderEnd) {
-    debugger
     var schedule = new ScheduleInfo();
 
     schedule.id = chance.guid();
@@ -150,7 +149,6 @@ function generateRandomSchedule(calendar, renderStart, renderEnd) {
 }
 
 function generateSchedule(viewName, renderStart, renderEnd) {
-    debugger
     ScheduleList = [];
     CalendarList.forEach(function(calendar) {
         var i = 0, length = 10;

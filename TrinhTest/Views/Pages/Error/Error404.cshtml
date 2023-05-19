@@ -18,7 +18,7 @@
                         <h1 class="display-1 text-bolder text-gradient text-danger">Error 404</h1>
                         <h2>Erm. Page not found</h2>
                         <p class="lead">We suggest you to go to the homepage while we solve this issue.</p>
-                        <button type="button" class="btn bg-gradient-dark mt-4">Go to Homepage</button>
+                        <button type="button" class="btn bg-gradient-dark mt-4" onclick="ErronrGoHome()">Go to Homepage</button>
                     </div>
                     <div class="col-lg-6 my-auto position-relative">
                         <img class="w-100 position-relative" src="../../../assets/img/illustrations/error-404.png" alt="404-error">
@@ -82,4 +82,10 @@
         </div>
     </footer>
 </body>
+$<script>
+function ErronrGoHome() {
+    let userId=localStorage.getItem("X-UserID");
+   window.location.href="@Url.Action("DashBoards", "Home")"+"?CurrentID="+window.btoa(userId);
+}
+</script>
 </html>

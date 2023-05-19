@@ -8,6 +8,7 @@ using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using WebMarkupMin.AspNetCore6;
+using Microsoft.Extensions.FileProviders;
 //using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 namespace TrinhTest
 {
@@ -72,14 +73,6 @@ namespace TrinhTest
                          ValidIssuer = Configuration.GetSection("JWT").GetSection("Issuer").Value,
                          ValidAudience = Configuration.GetSection("JWT").GetSection("Issuer").Value
                      };
-                     options.Events = new JwtBearerEvents
-                     {
-                         OnMessageReceived = context =>
-                         {
-                             context.Token = context.Request.Cookies["X-Access-Token"];
-                             return Task.CompletedTask;
-                         },
-                     };
                  });
             services.AddResponseCompression(options =>
             {
@@ -120,6 +113,7 @@ namespace TrinhTest
             {
                 options.Filters.Add(new AsyncPageFilter(Configuration));
             });
+            services.AddOutputCaching();
             #region login authen google and facabook
             //.AddGoogle(options =>
             //{
@@ -189,7 +183,6 @@ namespace TrinhTest
             app.UseStaticFiles();
            app.UseIpRateLimiting();
             app.UseDefaultFiles();
-            app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

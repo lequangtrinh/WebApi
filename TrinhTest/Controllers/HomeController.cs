@@ -32,18 +32,12 @@ namespace TrinhTest.Controllers
         public IActionResult Login()
         {
             return View("~/Views/Pages/Login/Login.cshtml");
-           //return View("~/Views/Pages/Dash/Dash_Master.cshtml");
         }
         [Authorize]
         [Route("DashBoards")]
         public IActionResult DashBoards(string code)
         {
-                if (!string.IsNullOrWhiteSpace(code))
-                {
-                    _AuthenService.GetTokenByCode(code);
-                }
-                return View("~/Views/Pages/Dash/Dash_Master.cshtml");
-            
+           return View("~/Views/Pages/Dash/Dash_Master.cshtml");
         }
         [Authorize]
         [Route("ChangePass")]

@@ -119,14 +119,11 @@ function Master_IndexDB_Read (dbName, name) {
 
                     };
                 } catch (ex) {
-                    console.log('error 1: ' + name)
                     return {};
                 }
                 db.close();
             };
             request.error = function () {
-                debugger
-                console.log('error 2: ' + name)
             }
             
         });

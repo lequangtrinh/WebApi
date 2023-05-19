@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrinhTest", "TrinhTest\Trin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibTrinh", "LibTrinh\LibTrinh.csproj", "{DF65B063-5A11-4F96-9589-94100C5D48BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RabbitMQManageAPI", "RabbitMQManageAPI\RabbitMQManageAPI.csproj", "{503A2258-9087-4218-AEDF-91FFB4465C5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RabbitMQManageAPI", "RabbitMQManageAPI\RabbitMQManageAPI.csproj", "{503A2258-9087-4218-AEDF-91FFB4465C5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,36 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head runat="server">
-    <style>
-        .pulse {
-            height: 50px;
-            width: 50px;
-            position: absolute;
-            margin: auto;
-            display: grid;
-            place-items: center;
-        }
-
-            .pulse:before,
-            .pulse:after {
-                content: "";
-                position: absolute;
-                height: 100%;
-                width: 100%;
-                background-color: #8a82fb;
-                border-radius: 50%;
-                z-index: -1;
-                opacity: 0.7;
-            }
-
-            .pulse:before {
-                animation: pulse 5s ease-out infinite;
-            }
-
-            .pulse:after {
-                animation: pulse 5s 1s ease-out infinite;
-            }
-    </style>
     <script>
         var VDTIME = '@ViewData["TIME"]'.toLowerCase();
         var VDNAME = '@ViewData["NAME"]'.toLowerCase();
@@ -73,6 +43,8 @@
     <script src='./Assests/dist/Paginationjs/paginationjs.min.js'></script>
      <script src="../../Assets/js/plugins/chartjs.min.js"></script>
      <link href='./Assests/dist/Paginationjs/paginationjs.min.css' rel="stylesheet" />
+     <script src="./Assests/dist/components/visibility.js"></script>
+      <script src="./Assests/dist/components/visibility.min.js"></script>
 </head>
 <body class="g-sidenav-show bg-gray-100 " id="BodyMain">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 ps ps--active-y ps--collapsing-y" id="sidenav-main">
@@ -236,16 +208,18 @@
         @await RenderSectionAsync("Scripts", required: false)
         <script src="./Assests/dist/signalr/dist/browser/signalr.js"></script>
         <script src="/js/Common/LoadLanguages_Packege.js"></script>
-        <script>
-            document.getElementById("LogOutUser").addEventListener("click",ClickLogOutUser);
-            function ClickLogOutUser(){
-                localStorage.removeItem("X-UserID");
-                localStorage.removeItem("X-Access-Token");
-                localStorage.removeItem("X-PublicKey");
-                var urlPath=window.location.href.replace(window.location.pathname,("@Url.Action("Login","Home")" + "?first=1&ver=" + (new Date().getTime())));
-                window.history.pushState('urlPath','Title', urlPath);
-                window.location.reload();
-            }
-        </script>
+         <script src="./Assests/dist/components/visibility.js"></script>
+      <script src="./Assests/dist/components/visibility.min.js"></script>
+<script>
+    document.getElementById("LogOutUser").addEventListener("click",ClickLogOutUser);
+    function ClickLogOutUser(){
+        localStorage.removeItem("X-UserID");
+        localStorage.removeItem("X-Access-Token");
+        localStorage.removeItem("X-PublicKey");
+        var urlPath=window.location.href.replace(window.location.pathname,("@Url.Action("Login","Home")" + "?first=1&ver=" + (new Date().getTime())));
+        window.history.pushState('urlPath','Title', urlPath);
+        window.location.reload();
+    }
+ </script>
 </body>
 </html>

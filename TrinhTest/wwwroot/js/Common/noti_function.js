@@ -20,7 +20,6 @@ function notif_closeauto (_id, _delay) {
     return new Promise(resolve => {
         setTimeout(() => {
             if ($('#nt' + _id).length) $('#nt' + _id).remove();
-            console.log($('#nt' + _id))
         }, _delay);
     });
 }
@@ -28,7 +27,6 @@ function notif_progressrun (_id, _delay) {
     let seco = _delay / 200;
     return new Promise(resolve => {
         let elem = document.getElementById('pb' + _id);
-        console.log($('#pb' + _id))
         if (typeof (elem) != 'undefined' && elem != null) {
             let width = 1;
             let id = setInterval(frame, seco);

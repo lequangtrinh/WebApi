@@ -3,7 +3,14 @@ function ResCountPage(data) {
     let count = ((data.length / 50) <= 0) ? 1 : (data.length / 50);
     return count > Math.round(count) ? Math.round(count + 0.5) : Math.round(count);
 }
-
+//check author page 
+function validateAuthor(role) {
+    let count = 0;
+    switch (role) {
+        case "users":count=1; break;
+    }
+    return count;
+}
 //render page data
 function RenderPageData(id, page) {
     let myNode = document.getElementById(id);
