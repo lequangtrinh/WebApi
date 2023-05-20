@@ -2,6 +2,8 @@
 using LibTrinh.Api;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace TrinhTest.Controllers.API
 {

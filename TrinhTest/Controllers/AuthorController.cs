@@ -2,7 +2,10 @@
 using LibTrinh.Api.UploadImage;
 using LibTrinh.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace TrinhTest.Controllers
 {

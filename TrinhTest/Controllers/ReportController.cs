@@ -1,6 +1,8 @@
 ﻿using LibTrinh;
 using LibTrinh.Api;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
 namespace TrinhTest.Controllers
 {

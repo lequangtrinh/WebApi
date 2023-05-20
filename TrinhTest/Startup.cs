@@ -5,10 +5,15 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using AspNetCoreRateLimit;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using WebMarkupMin.AspNetCore6;
-using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 //using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 namespace TrinhTest
 {
@@ -178,7 +183,7 @@ namespace TrinhTest
                 app.UseHsts();
             };
             app.UseAuthentication();
-            pLoggerFactory.AddLog4Net();
+            //pLoggerFactory.AddLog4Net();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
            app.UseIpRateLimiting();
@@ -196,16 +201,22 @@ namespace TrinhTest
                 if (env.IsDevelopment())
                 {
                     endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                    endpoints.MapControllers().WithMetadata(new AllowAnonymousAttribute());
+                        name: "default",
+                        pattern: "{controller}/{action}/{id?}",
+                        defaults: new { controller = "Home", action = "Index" });
+                    endpoints.MapControllerRoute(
+                      name: "api",
+                      pattern: "api/{controller}/{action}/{id?}",
+                      defaults: new { controller = "Home", action = "Index" }
+                    );
+
                 }
                 else
                 {
                     endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                    endpoints.MapControllers();
+                      name: "default",
+                      pattern: "{controller}/{action}/{id?}",
+                      defaults: new { controller = "Home", action = "Index" });
                 }
                 endpoints.MapRazorPages();
                 endpoints.MapHub<MessagesHub>("/MessagesHub");

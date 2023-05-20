@@ -1,11 +1,14 @@
 ﻿using LibTrinh;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace TrinhTest.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     //[ValidateAntiForgeryToken]
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IAuthenService _AuthenService;
@@ -14,71 +17,76 @@ namespace TrinhTest.Controllers
             _logger = logger;
             _AuthenService = authenService;
         }
-        public IActionResult Index()
+        [HttpGet("KeepAlive")]
+        public ActionResult KeepAlive()
         {
-            return View("~/Views/index.html");
+            return Content("1");
         }
-        [Route("ErrorAuthorize")]
-        public IActionResult ErrorAuthorize()
-        {
-            return View("~/Views/Pages/Error/Error404.cshtml");
-        }
-        [Route("ErrorNotFound")]
-        public IActionResult ErrorNotFound()
-        {
-            return View("~/Views/Pages/Error/Error500.cshtml");
-        }
-        [Route("Login")]
-        public IActionResult Login()
-        {
-            return View("~/Views/Pages/Login/Login.cshtml");
-        }
-        [Authorize]
-        [Route("DashBoards")]
-        public IActionResult DashBoards(string code)
-        {
-           return View("~/Views/Pages/Dash/Dash_Master.cshtml");
-        }
-        [Authorize]
-        [Route("ChangePass")]
-        public IActionResult ChangePass()
-        {
-           return View("~/Views/Pages/Login/ChangePassword.cshtml");
-        }
-        [Authorize]
-        [Route("SignIn")]
-        public IActionResult SignIn()
-        {
-            return View("~/Views/Pages/Login/SignIn.cshtml");
-        }
-        [Authorize]
-        [Route("User")]
-        public IActionResult User()
-        {
-            return View("~/Views/Pages/Login/User.cshtml");
-        }
-        [Authorize]
-        [Route("RoleUser")]
-        public IActionResult RoleUser()
-        {
-            return View("~/Views/Pages/Setting/SettingRoleUser.cshtml");
-        }
-        [Authorize]
-        [Route("EditRole")]
-        public IActionResult EditRole()
-        {
-            return View("~/Views/Pages/Dash/EditMater.cshtml");
-        }
-        [Route("MedicineReport")]
-        public IActionResult MedicineReport()
-        {
-            return View("~/Views/Pages/Report/Medicine/MedicineReport.cshtml");
-        }
+        //public IActionResult Index()
+        //{
+        //    return View("~/Views/index.html");
+        //}
+        //[Route("ErrorAuthorize")]
+        //public IActionResult ErrorAuthorize()
+        //{
+        //    return View("~/Views/Pages/Error/Error404.cshtml");
+        //}
+        //[Route("ErrorNotFound")]
+        //public IActionResult ErrorNotFound()
+        //{
+        //    return View("~/Views/Pages/Error/Error500.cshtml");
+        //}
+        //[Route("Login")]
+        //public IActionResult Login()
+        //{
+        //    return View("~/Views/Pages/Login/Login.cshtml");
+        //}
+        //[Authorize]
+        //[Route("DashBoards")]
+        //public IActionResult DashBoards(string code)
+        //{
+        //   return View("~/Views/Pages/Dash/Dash_Master.cshtml");
+        //}
+        //[Authorize]
+        //[Route("ChangePass")]
+        //public IActionResult ChangePass()
+        //{
+        //   return View("~/Views/Pages/Login/ChangePassword.cshtml");
+        //}
+        //[Authorize]
+        //[Route("SignIn")]
+        //public IActionResult SignIn()
+        //{
+        //    return View("~/Views/Pages/Login/SignIn.cshtml");
+        //}
+        //[Authorize]
+        //[Route("User")]
+        //public IActionResult User()
+        //{
+        //    return View("~/Views/Pages/Login/User.cshtml");
+        //}
+        //[Authorize]
+        //[Route("RoleUser")]
+        //public IActionResult RoleUser()
+        //{
+        //    return View("~/Views/Pages/Setting/SettingRoleUser.cshtml");
+        //}
+        //[Authorize]
+        //[Route("EditRole")]
+        //public IActionResult EditRole()
+        //{
+        //    return View("~/Views/Pages/Dash/EditMater.cshtml");
+        //}
+        //[Route("MedicineReport")]
+        //public IActionResult MedicineReport()
+        //{
+        //    return View("~/Views/Pages/Report/Medicine/MedicineReport.cshtml");
+        //}
 
-        [Route("ChatBots")]
-        public IActionResult ChatBots()
-        {
-            return View("~/Views/Pages/Chat/ChatBots.cshtml");
-        }
+        //[Route("ChatBots")]
+        //public IActionResult ChatBots()
+        //{
+        //    return View("~/Views/Pages/Chat/ChatBots.cshtml");
+        //}
     }
 }
