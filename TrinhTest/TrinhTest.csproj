@@ -9,15 +9,12 @@
 		<StaticWebAssetBasePath Condition="$(StaticWebAssetBasePath) == ''">/cl</StaticWebAssetBasePath>
 	</PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Pages\**" />
     <Compile Remove="wwwroot\Assests\**" />
     <Compile Remove="wwwroot\Assets\**" />
     <Content Remove="wwwroot\Assests\**" />
     <Content Remove="wwwroot\Assets\**" />
-    <EmbeddedResource Remove="Pages\**" />
     <EmbeddedResource Remove="wwwroot\Assests\**" />
     <EmbeddedResource Remove="wwwroot\Assets\**" />
-    <None Remove="Pages\**" />
     <None Remove="wwwroot\Assests\**" />
     <None Remove="wwwroot\Assets\**" />
   </ItemGroup>

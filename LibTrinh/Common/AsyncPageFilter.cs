@@ -3,23 +3,18 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace LibTrinh.Common
 {
-    public class AsyncPageFilter : IAsyncPageFilter
+    public class AsyncPageFilter : IAsyncActionFilter
     {
         private readonly IConfiguration _config;
         public AsyncPageFilter(IConfiguration config)
         {
             _config = config;
         }
-
-        public Task OnPageHandlerSelectionAsync(PageHandlerSelectedContext context)
-        {
-            return Task.CompletedTask;
-        }
-
-        public async Task OnPageHandlerExecutionAsync(PageHandlerExecutingContext context, PageHandlerExecutionDelegate next)
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             var isPass = true;
             if (context.HttpContext.Request.Method == "GET")

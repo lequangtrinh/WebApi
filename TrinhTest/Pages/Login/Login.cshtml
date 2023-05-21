@@ -1,12 +1,12 @@
 ﻿@page "/Login/Login"
 @{
-    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+    Layout = "~/Pages/Shared/_Layout_Login.cshtml";
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Login</title>
-    <script src="./js/Common/initialize_setting.js</script>
+    <script src="./js/Common/initialize_setting.js"></script>
     <link rel="icon" type="image/x-icon" href="/Assets/img/l">
     <meta charset="UTF-8">
     <script src="/Assests/library/jquery-2.1.4.min.js" type="text/javascript"></script>
@@ -135,9 +135,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="globe" class="col-xl-5 col-md-6 h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
-                            <div class="h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
-                               <canvas width="500px" height="350px" class="w-lg-100 h-lg-100 w-75 h-75 me-lg-0 me-n10 mt-lg-5"></canvas>
+                        <div class="col-xl-4 col-md-6">
+                            <div id="globe" class="position-absolute end-0 top-10 mt-sm-3 mt-7 me-lg-7">
+                                <canvas width="500" height="400" class="w-lg-100 h-lg-100 w-75 h-75 me-lg-0 me-n10 mt-lg-5"></canvas>
                             </div>
                         </div>
                     </div>

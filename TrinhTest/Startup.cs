@@ -42,13 +42,11 @@ namespace TrinhTest
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSignalR();
-
             services.Configure<SetupOptions>(Configuration.GetSection("Setup"));
-            services.Configure<KestrelServerOptions>(
-                op => op.Limits.MaxRequestBodySize = 300000000);
-            services.Configure<IISServerOptions>(
-                op=>op.MaxRequestBodySize=300000000);
+            //services.Configure<KestrelServerOptions>(
+            //    op => op.Limits.MaxRequestBodySize = 300000000);
+            //services.Configure<IISServerOptions>(
+            //    op=>op.MaxRequestBodySize=300000000);
             #region Regis Service Design 
             services.AddTransient<ITokenService, TokenService>();
             services.AddScoped<IBaseDbContext, BaseDbContext>();
@@ -114,10 +112,6 @@ namespace TrinhTest
                 options.MinificationSettings.EmptyTagRenderMode = WebMarkupMin.Core.HtmlEmptyTagRenderMode.Slash;
 
             }).AddHttpCompression();
-            services.AddRazorPages().AddRazorPagesOptions(options => { }).AddNewtonsoftJson().AddMvcOptions(options =>
-            {
-                options.Filters.Add(new AsyncPageFilter(Configuration));
-            });
             services.AddOutputCaching();
             #region login authen google and facabook
             //.AddGoogle(options =>
@@ -137,10 +131,6 @@ namespace TrinhTest
             //    options.ClientSecret = FBAuthNSection["ClientSecret"];
             //});
             #endregion
-            #region RUNTIME VIEWS CODE
-            services.AddRazorPages();
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
-            #endregion
             #region execute cache 
             services.AddDistributedMemoryCache();
             services.AddOptions();
@@ -150,7 +140,7 @@ namespace TrinhTest
                 options.Configuration = Configuration.GetSection("Redis")["ConnectionString"];
             });
             #endregion
-            //services.Configure<IISServerOptions>(options => { options.AllowSynchronousIO = true; });
+           
             #region LimitRate user call api
             services.Configure<IpRateLimitOptions>(Configuration.GetSection("IpRateLimiting"));
             services.Configure<IpRateLimitPolicies>(Configuration.GetSection("IpRateLimitPolicies"));
@@ -158,10 +148,15 @@ namespace TrinhTest
             services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             services.AddSingleton<IIpPolicyStore, DistributedCacheIpPolicyStore>();
             services.AddSingleton<IRateLimitCounterStore, DistributedCacheRateLimitCounterStore>();
-
             #endregion
-            
+            services.AddRazorPages().AddRazorPagesOptions(options => { }).AddNewtonsoftJson().AddMvcOptions(options =>
+            {
+                options.Filters.Add(new AsyncPageFilter(Configuration));
+            });
+            services.Configure<IISServerOptions>(options => { options.AllowSynchronousIO = true; });
+            services.AddSignalR();
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 
         /// <summary>
@@ -172,43 +167,41 @@ namespace TrinhTest
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory pLoggerFactory)
         {
             // Configure the HTTP request pipeline.
-            if (env.IsDevelopment())
+            if (bool.Parse(Configuration["IsProductEnviroment"]))
             {
-                app.UseDeveloperExceptionPage();
+                app.UseResponseCompression();
                 app.UseWebMarkupMin();
             }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            };
-            app.UseAuthentication();
+            app.UseIpRateLimiting();
+            //app.UseSession();
+            if (env.IsDevelopment()){app.UseDeveloperExceptionPage();}
+            else{app.UseExceptionHandler("/Error");app.UseHsts();};
             //pLoggerFactory.AddLog4Net();
+            app.UseDefaultFiles();// mặc định là file index.hmtl luôn đặt trước staticFiles().
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-           app.UseIpRateLimiting();
-            app.UseDefaultFiles();
             app.UseRouting();
-            app.UseAuthorization();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                //endpoints.MapControllerRoute(
-                //  name: "default",
-                //  pattern: "{controller}/{action}/{id?}",
-                //  defaults: new { controller = "Home", action = "Index" }
-                //);
+                endpoints.MapControllerRoute(
+                  name: "default",
+                  pattern: "{controller}/{action}/{id?}",
+                  defaults: new { controller = "Home", action = "Index" }
+                );
                 if (env.IsDevelopment())
                 {
-                    endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{controller}/{action}/{id?}",
-                        defaults: new { controller = "Home", action = "Index" });
-                    endpoints.MapControllerRoute(
-                      name: "api",
-                      pattern: "api/{controller}/{action}/{id?}",
-                      defaults: new { controller = "Home", action = "Index" }
-                    );
+                    //endpoints.MapControllerRoute(
+                    //    name: "default",
+                    //    pattern: "{controller}/{action}/{id?}",
+                    //    defaults: new { controller = "Home", action = "Index" });
+                    //endpoints.MapControllerRoute(
+                    //  name: "api",
+                    //  pattern: "api/{controller}/{action}/{id?}",
+                    //  defaults: new { controller = "Home", action = "Index" }
+                    //);
 
                 }
                 else
