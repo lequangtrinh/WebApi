@@ -85,7 +85,7 @@ namespace TrinhTest.Controllers
             return Ok();
         }
 
-        [Authorize]
+        
         [Route("ValidateToken")]
         [HttpPost]
         public async Task<IActionResult>ValidateToken(CFaAuthorValidateToken value)

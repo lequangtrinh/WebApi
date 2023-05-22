@@ -1,5 +1,6 @@
-﻿@{
-    Layout = null;
+﻿@page
+@{
+    Layout = "_Layout";
 }
 @Html.AntiForgeryToken()
 <div class="container-fluid py-4" id="divMainSettingDetail">
@@ -111,10 +112,10 @@
         </div>
     </div>
 </div>
-<script src="./Assets/js/custom-validation.js"></script>
-<script src="./Assets/js/plugins/threejs.js"></script>
-<script src="./Assets/js/plugins/orbit-controls.js"></script>
-<script src="./js/Common/initialize_setting.js"></script>
+<script src="/Assets/js/custom-validation.js"></script>
+<script src="/Assets/js/plugins/threejs.js"></script>
+<script src="/Assets/js/plugins/orbit-controls.js"></script>
+<script src="/js/Common/initialize_setting.js"></script>
 <script type="text/javascript">
     var MasterDataMenu = [
           {
@@ -124,17 +125,17 @@
                   {"Name":"Role"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"/EditRole"
+                    ,"Url":"/Login/User"
                   }
                   ,{"Name":"EditRole"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"/EditRole"
+                    ,"Url":"/Dash/EditMater"
                   },
                   {"Name":"Chats"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"/ChatBots"
+                    ,"Url":"/Chat/ChatBots"
                   }
               ]
           },
@@ -145,7 +146,7 @@
                   {"Name":"Chats"
                     ,"ChildNode":[]
                     ,"Img":""
-                    ,"Url":"/ChatBots"
+                    ,"Url":"/Products/Products"
                   }
                   ,{"Name":"Calendar Schedule"
                     ,"ChildNode":[]
@@ -373,7 +374,7 @@
     let body = document.getElementsByTagName('body')[0];
     let className = 'g-sidenav-pinned';
     $(document).ready(function (){
-        js_require_notasync('./Assests/Library/jquery-ui.js', true);
+        js_require_notasync('/Assests/Library/jquery-ui.js', true);
         ShowMenuMater();
         CloseMneuMater();
         LoadDataUser();
@@ -408,20 +409,21 @@
          //$("#parent_Dashboards").children(0).addClass('bg-gradient-light');
          $("#parent_Dashboards").children()[0].classList.add('bg-gradient-light');
         var ele=document.querySelectorAll('.settingCollapse');
-        ele.forEach((node) => {
-            node.addEventListener("click", e => {
-            if($("#collapse_"+e.target.children[1].innerText).hasClass("show")){
-                $("#collapse_"+e.target.children[1].innerText).removeClass("show");
-                document.getElementById(e.target.id).setAttribute("aria-expanded", false);
-                e.target.querySelector('div').classList.remove("bg-gradient-light");
-            }
-            else{
-                document.getElementById(e.target.id).setAttribute("aria-expanded", true);
-                $("#collapse_"+e.target.children[1].innerText).addClass("show");
-                e.target.querySelector('div').classList.add("bg-gradient-light");
-            }
-            })
-        });
+        //ele.forEach((node) => {
+        //    node.addEventListener("click", e => {
+        //    if($("#collapse_"+e.target.children[1].innerText).hasClass("show")){
+        //        $("#collapse_"+e.target.children[1].innerText).removeClass("show");
+        //        document.getElementById(e.target.id).setAttribute("aria-expanded", false);
+        //        e.target.querySelector('div').classList.remove("bg-gradient-light");
+        //    }
+        //    else
+        //        {
+        //            document.getElementById(e.target.id).setAttribute("aria-expanded", true);
+        //            $("#collapse_"+e.target.children[1].innerText).addClass("show");
+        //            e.target.querySelector('div').classList.add("bg-gradient-light");
+        //        }
+        //    })
+        //});
         $('#sidenav-collapse-main').on('click', '.Settingitem__item', function (e) {
                 e.preventDefault();
                 $('#sidenav-collapse-main .Settingitem__item').removeClass('active');
@@ -523,7 +525,7 @@
     }
     function PopUpDetail(){
             $("#DetailModal_Content").html('');
-            $("#DetailModal_Content").load("@Url.Action("ChangePass","Home")");
+            $("#DetailModal_Content").load("/Login/ChangePassword");
             $('#DetailModal').modal('show');
             return false;
     }
@@ -545,12 +547,12 @@
     //LoadDataPriceServices
     function LoadDataPriceServices(){
          $("#DashPriceServices").html('');
-          $("#DashPriceServices").load("@Url.Action("PriceServices","Settings")");
+          $("#DashPriceServices").load("/Setting/PriceServices/SettingPriceServices");
        };
     //LoadTempMessages chatbots
     function LoadTempMedicineReport(){
         $("#DashMedicineReport").html('');
-        $("#DashMedicineReport").load("@Url.Action("MedicineReport","Home")");
+        $("#DashMedicineReport").load("/Report/Medicine/MedicineReport");
     };
 </script>
 <style>

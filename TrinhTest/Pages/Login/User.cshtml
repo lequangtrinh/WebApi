@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@page
 @{
     Layout = null;
 }
@@ -42,12 +40,12 @@
                             <tbody data-languagedyn="grid" id="dtContentEditUserBody">
                             </tbody>
                         </table>
+                         <div class="card-footer p-3">
+                        <div class="ui pagination menu justify-content-end" id="Users_Pagination">
+                        </div>
                     </div>
-                    <nav class="dataTable-pagination d-flex justify-content-end">
-                        <ul class="pagination" id="PageUser">
-                            
-                        </ul>
-                    </nav>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -58,30 +56,43 @@
          LoadDataUser();
           if (document.getElementById('status1')) {
           const countUp = new CountUp('status1', document.getElementById("status1").getAttribute("countTo"));
-          if (!countUp.error) {
-            countUp.start();
-          } else {
-            console.error(countUp.error);
-          }
+          if (!countUp.error) {countUp.start();} 
         }
      });
-    function LoadDataUser(){
-         AjaxLoad(url = "/api/Login/LoadUser"
-            , data = {
-            }, async = true, error = null
-            , success = function (result) {
-                if (result != "") {
-                   UserRenderList(JSON.parse(result),"dtContentEditUserBody")
+    function LoadDataUser() {
+        $.ajax({
+                url: '/api/User/LoadUser',
+                type: 'POST',
+                data: JSON.stringify({
+                'UserID':""
+            }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data, textStatus, xhr) {
+                        if(data!== "[]" && data !== undefined){
+                            var res=JSON.parse(data);
+                            $('#Users_Pagination').pagination({
+                            dataSource:res,
+                            pageSize: 2,
+                            autoHidePrevious: true,
+                            autoHideNext: true,
+                            callback: function (res, pagination) {
+                                UserRenderList(res,"dtContentEditUserBody");
+                                notiSuccess();
+                            }
+                        });
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    notiError_SW();
                 }
             });
-    }
+    };
     function UserRenderList(data, id) {
         let buttons = [];
         let myNode = document.getElementById(id);
         if (myNode != null) {
             myNode.innerHTML = '';
             let stringContent = '';
-            RenderPageUser(data);
             if (data && data.length > 0) {
                 for (let i = 0; i < data.length; i++) {
                     let item = data[i];
@@ -90,7 +101,7 @@
                         + '<td class="vt-number-order"></td>'
                         + '<td>'
                         + '<div class="icon icon-shape icon-sm me-2 text-center" >'
-                        + '<img class="avatar mt-2" src="./Assets/img/'+item.Image+'" alt="label-image">'
+                        + '<img class="avatar mt-2" src="/Assets/img/'+item.Image+'" alt="label-image">'
                         + '</div>'
                         +'</td>'
                         + '<td><a href="#" class="text-decoration-underline fw-bold buttonEditClass">' + item.UserName + '</a></td>'
@@ -108,49 +119,9 @@
                     stringContent = stringContent + '<tr class="vt-number" role="row">' + tr + '</tr>';
                 }
             }
-
             document.getElementById(id).innerHTML = stringContent;
         }
     }
-
-    function RenderPageUser(data){
-        let id="PageUser";
-        let page=ResCountPage(data);
-        RenderPageData(id,3);
-        let ele=document.querySelectorAll('.page-item');
-         RemoveClassActive(ele,3);
-    }
-
-    function RemoveClassActive(ele,page){
-          ele.forEach(node=>{ 
-             node.addEventListener("click", e =>{
-                removeAddActive(ele,e);
-                 if(e.target.innerText !=1){
-                     $("#PageUserPrev").removeClass("disabled");
-                     $("#PageUserNext").removeClass("disabled");
-                     if(e.target.innerText == page){
-                      $("#PageUserNext").addClass("disabled");
-                   }
-               }
-                else{
-                    $("#PageUserPrev").addClass("disabled");
-                };
-                LoadDataUser();
-             });
-         });
-    }
-    function removeAddActive(element,e){
-       
-        element.forEach((node) => {
-            if(node.classList.contains('active')){
-               node.classList.remove('active');
-               e.currentTarget.classList.add("active");
-            }
-            else{
-                e.currentTarget.classList.add("active");
-            }
-        });
-    };
 
     // document.getElementById(id+"Prev").addEventListener("click", function() { 
     //         RemoveClassActive(ele,3,id);

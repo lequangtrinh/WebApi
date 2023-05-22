@@ -1,4 +1,4 @@
-﻿@page "/Login/Login"
+﻿@page
 @{
     Layout = "~/Pages/Shared/_Layout_Login.cshtml";
 }
@@ -6,13 +6,10 @@
 <html lang="en">
 <head>
     <title>Login</title>
-    <script src="./js/Common/initialize_setting.js"></script>
+    <script src="/js/Common/initialize_setting.js"></script>
     <link rel="icon" type="image/x-icon" href="/Assets/img/l">
     <meta charset="UTF-8">
-    <script src="/Assests/library/jquery-2.1.4.min.js" type="text/javascript"></script>
-    <script src="/js/Preload/preload.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="/Assests/js/ajax.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <link href="/Assets/css/nucleo-icons.css" rel="stylesheet" />
     <link href="/Assets/css/nucleo-svg.css" rel="stylesheet" />
@@ -150,9 +147,9 @@
         </div>
     </footer>
 </body>
-<script src="./Assets/js/plugins/threejs.js"></script>
-<script src="./Assets/js/plugins/orbit-controls.js"></script>
-<script src="./js/Common/globe.js"></script>
+<script src="/Assets/js/plugins/threejs.js"></script>
+<script src="/Assets/js/plugins/orbit-controls.js"></script>
+<script src="/js/Common/globe.js"></script>
 <script type="text/javascript">
     let userId=localStorage.getItem("X-UserID");
      var Token =localStorage.getItem("X-Access-Token");
@@ -221,7 +218,7 @@
                 if(data != null)
                 {
                     notiSuccess();
-                    window.location.href="@Url.Action("DashBoards", "Home")"+"?CurrentID="+window.btoa(userId);
+                    window.location.href="/Dash/Dash_Master";
                 }
                 else
                 {
@@ -259,7 +256,7 @@
                   localStorage.setItem("X-UserID",$('#username').val());
                   localStorage.setItem("X-Access-Token",data.token);
                   notiSuccess();
-                  window.location.href="@Url.Action("DashBoards", "Home")"+"?code="+data.token+"&CurrentID="+window.btoa($('#username').val());
+                  window.location.href="/Dash/Dash_Master";
                 }
                 else{
                     notiError_SW();
@@ -298,7 +295,7 @@
             , success = function (result) {
                 if (result != "[]") {
                     notiSuccess();
-                   window.location.href="@Url.Action("DashBoards", "Home")"+"?code="+data.token+"&CurrentID="+window.btoa($('#username').val());
+                   window.location.href="/Dash/Dash_Master";
                 }
             }
             , before = function (e) {
@@ -314,9 +311,10 @@
     // show popup
     function PopUpDetail(){
            $("#DetailModal_Content").html('');
-           $("#DetailModal_Content").load("@Url.Action("RestPassWord","Login")");
+           $("#DetailModal_Content").load("/Login/ChangePassword");
            $('#DetailModal').modal('show');
             return false;
-        }
+        };
+
 </script>
 </html>

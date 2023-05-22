@@ -8,16 +8,7 @@
     <EnableDefaultContentItems>false</EnableDefaultContentItems>
 		<StaticWebAssetBasePath Condition="$(StaticWebAssetBasePath) == ''">/cl</StaticWebAssetBasePath>
 	</PropertyGroup>
-  <ItemGroup>
-    <Compile Remove="wwwroot\Assests\**" />
-    <Compile Remove="wwwroot\Assets\**" />
-    <Content Remove="wwwroot\Assests\**" />
-    <Content Remove="wwwroot\Assets\**" />
-    <EmbeddedResource Remove="wwwroot\Assests\**" />
-    <EmbeddedResource Remove="wwwroot\Assets\**" />
-    <None Remove="wwwroot\Assests\**" />
-    <None Remove="wwwroot\Assets\**" />
-  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="AspNetCoreRateLimit" Version="4.0.2" />
     <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />

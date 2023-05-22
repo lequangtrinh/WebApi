@@ -1,4 +1,5 @@
 ﻿using LibTrinh.Common;
+using LibTrinh.Models;
 
 namespace LibTrinh.Api
 {
@@ -11,6 +12,6 @@ namespace LibTrinh.Api
         /// ILoadUser
         /// </summary>
         /// <returns></returns>
-        Task<string> LoadUser();
+        Task<string> LoadUser(CFaSerachUserDTO cFaSerachUserDTO);
     }
 }

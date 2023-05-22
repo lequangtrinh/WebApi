@@ -186,23 +186,12 @@ namespace TrinhTest
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                  name: "default",
-                  pattern: "{controller}/{action}/{id?}",
-                  defaults: new { controller = "Home", action = "Index" }
-                );
                 if (env.IsDevelopment())
                 {
-                    //endpoints.MapControllerRoute(
-                    //    name: "default",
-                    //    pattern: "{controller}/{action}/{id?}",
-                    //    defaults: new { controller = "Home", action = "Index" });
-                    //endpoints.MapControllerRoute(
-                    //  name: "api",
-                    //  pattern: "api/{controller}/{action}/{id?}",
-                    //  defaults: new { controller = "Home", action = "Index" }
-                    //);
-
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller}/{action}/{id?}",
+                        defaults: new { controller = "Home", action = "Index" });
                 }
                 else
                 {
