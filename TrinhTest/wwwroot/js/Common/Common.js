@@ -11,6 +11,95 @@ function validateAuthor(role) {
     }
     return count;
 }
+// tab control author
+function Checking_TabControl_Permission() {
+    x = document.getElementsByClassName("_tab_control_");
+    if (x != undefined && x.length != 0) {
+        for (i = x.length - 1; i >= 0; i--) {
+            console.log(x[i])
+            let datatab = x[i].attributes["data-tab"].value;
+
+            if (datatab != "" && datatab != "undefined") {
+                switch (x[i].nodeName.toLowerCase()) {
+                    case 'td':
+                        switch (datatab) {
+                            case "confirm_using_service":
+                                x[i].innerHTML = "<i class='green check icon'></i>";
+                                break;
+                            case "phone_customer":
+                                if (x[i].innerHTML.length > 0) {
+                                    x[i].innerHTML = secret_phone(x[i].innerHTML);
+                                } else {
+                                    x[i].innerHTML = "";
+                                }
+                                break;
+                            default: x[i].innerHTML = "*********";
+                        }
+                        break;
+                    case 'a':
+                        switch (datatab) {
+                            case "phone_customer":
+                                if (x[i].dataset.info != 0) {
+                                    x[i].innerHTML = secret_phone(x[i].innerHTML);
+                                } else {
+                                    x[i].remove();
+                                }
+                                break;
+                            default: x[i].remove();
+                        }
+                        break;
+
+                    case 'button':
+                        x[i].remove();
+                        break;
+                    case 'div':
+                        switch (datatab) {
+                            case "phone_customer":
+                                if (x[i].dataset.info != 0) {
+                                    x[i].innerHTML = secret_phone(x[i].innerHTML);
+                                } else {
+                                    x[i].remove();
+                                }
+                                break;
+                            //default: x[i].innerHTML = "";
+                            default: x[i].remove();
+                        }
+                        break;
+                    case 'i':
+                        x[i].remove();
+                        break;
+                    case 'span':
+                        switch (datatab) {
+                            case "phone_customer":
+                                if (x[i].dataset.info != 0) {
+                                    x[i].innerHTML = secret_phone(x[i].innerHTML);
+                                } else {
+                                    x[i].remove();
+                                }
+                                break;
+                            default: x[i].innerHTML = "";
+                        }
+                        break;
+                    case 'tr':
+                        x[i].remove();
+                        break;
+                    case 'input':
+                        if (x[i].value != "") {
+                            //x[i].value = "00000000000";
+                            x[i].setAttribute("type", "password");
+                            x[i].setAttribute("disabled", "true");
+                        }
+                        break;
+                }
+            }
+        }
+    }
+}
+function secret_phone(phone) {
+    let value = "*******";
+    value = value + phone.substring(phone.length - 3, phone.length)
+    return value;
+}
 //render page data
 function RenderPageData(id, page) {
     let myNode = document.getElementById(id);

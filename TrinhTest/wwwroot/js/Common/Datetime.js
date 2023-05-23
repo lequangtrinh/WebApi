@@ -145,9 +145,12 @@ function secondsToHms(totalSeconds) {
 
 // Server to show client dd-mm
 function yyyyMMddHHMMM_ddMMyyyy(date) {
-    var x = date.split(" ");
-    var y = x[0].split("-");
-    return y[2] + "-" + y[1] + "-" + y[0];
+    if (date.length >8) {
+        var x = date.split(" ");
+        var y = x[0].split("-");
+        return y[2] + "-" + y[1] + "-" + y[0];
+    }
+    return '';
 }
 
 // Server to show client dd-mm

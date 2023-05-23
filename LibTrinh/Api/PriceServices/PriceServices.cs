@@ -2,6 +2,7 @@
 using LibTrinh.Common;
 using LibTrinh.Models;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using System.Data;
 using System.Text.Json;
 
@@ -27,32 +28,17 @@ namespace LibTrinh.Api.PriceServices
         /// </summary>
         /// <param name="Pagination"></param>
         /// <returns></returns>
-        public async Task<CFaPaginPriceServicesDTO> LoadPriceServices()
+        public async Task<string> LoadPriceServices(CFaSearchPriceServicesDTO searchPrice)
         {
             try
             {
                 using (var uow = await _context.CreateAsync())
                 {
-                    CFaPaginPriceServicesDTO cFaPaginPriceServicesDTO = new CFaPaginPriceServicesDTO();
-                    List<CFaPriceServicesDTO> lstPriceServices = new List<CFaPriceServicesDTO>();
-                    var CheckData = await uow.ExecuteDataTable("[YYY_sp_Load_T_PriceServices]", CommandType.StoredProcedure
-                        , "@COUNT", SqlDbType.Int, 0
+                    var DataPrice = await uow.ExecuteDataTable("[YYY_sp_Load_T_PriceServices]", CommandType.StoredProcedure
+                        , "@UserID", SqlDbType.NVarChar, searchPrice.UserUpdate
                        );
-                    foreach (DataRow row in CheckData.Rows)
-                    {
-                        lstPriceServices.Add(new CFaPriceServicesDTO
-                        {
-                            CodeServices= row["CodeServices"].ToString().Trim(),
-                            Name = row["Name"].ToString().Trim(),
-                            Price  = row["Price"].ToString().Trim(),
-                            Images = row["Images"].ToString().Trim(),
-                            CreateDate = row["CreateDate"].ToString().Trim()
-                        });
-                    }
-                    cFaPaginPriceServicesDTO.lstPriceServicesDTO = lstPriceServices;
-                    cFaPaginPriceServicesDTO.CountData = 10;
                     uow.Commit();
-                    return cFaPaginPriceServicesDTO;
+                    return JsonConvert.SerializeObject(DataPrice);
                 };
             }
             catch (Exception ex)

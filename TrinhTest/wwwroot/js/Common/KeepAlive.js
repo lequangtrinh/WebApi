@@ -18,5 +18,5 @@
 
 $(function () {
     heartBeat();
-    setInterval("heartBeat()", 1000 * 300);
+    setInterval("heartBeat()", 1000 * 1000);
 }); 

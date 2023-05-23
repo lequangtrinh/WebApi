@@ -1,5 +1,6 @@
 ﻿using LibTrinh;
 using LibTrinh.Api;
+using LibTrinh.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -7,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace TrinhTest.Controllers.API
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class PriceServicesController : ControllerBase
+    public class ServicesController : ControllerBase
     {
         private readonly IConfiguration _config;
         private readonly IPriceServices _IPriceServices;
@@ -19,7 +20,7 @@ namespace TrinhTest.Controllers.API
         /// <summary>
         /// Custrustor
         /// </summary>
-        public PriceServicesController(IConfiguration config, IPriceServices PriceServices, IRedisCacheService IRedisCache)
+        public ServicesController(IConfiguration config, IPriceServices PriceServices, IRedisCacheService IRedisCache)
         {
             _config = config;
             _IPriceServices = PriceServices;
@@ -28,10 +29,10 @@ namespace TrinhTest.Controllers.API
         }
         [Route("LoadPriceServices")]
         [HttpPost]
-        public async Task<IActionResult> LoadPriceServices()
+        public async Task<IActionResult> LoadPriceServices(CFaSearchPriceServicesDTO searchPrice)
         {
-            var res = await _IPriceServices.LoadPriceServices();
-            return Ok(Newtonsoft.Json.JsonConvert.SerializeObject(res));
+            var res = await _IPriceServices.LoadPriceServices(searchPrice);
+            return Ok(res);
         }
     }
 }

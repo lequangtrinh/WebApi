@@ -29,16 +29,17 @@
                                 <th class="d-none">ID</th>
                                 <th data-languagestatic="no">#</th>
                                 <th data-languagestatic="Image">Image</th>
-                                <th data-languagestatic="name">Tên</th>
-                                <th data-languagestatic="Price">Giá</th>
-                                <th data-languagestatic="CreateDate">Ngày Tạo</th>
+                                <th data-languagestatic="name"><a class="dataTable-sorter"  data-sortable >Tên</a></th>
+                                <th data-languagestatic="Price"><a class="dataTable-sorter" data-sortable >Giá</a></th>
+                                <th data-languagestatic="handlelname">Người Sửa</th>
+                                <th data-languagestatic="delete">Xóa</th>
                             </tr>
                         </thead>
                         <tbody data-languagedyn="grid" id="dtContentPriceServicesBody">
                         </tbody>
                     </table>
                     <div class="card-footer p-3">
-                        <div class="ui pagination menu justify-content-end" id="generalInfo_anampage">
+                        <div class="ui pagination menu justify-content-end" id="SettingPricePagin">
                         </div>
                     </div>
                 </div>
@@ -50,7 +51,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         LoadataPriceServices();
-        RenderLayoutPaggin("SettingPriceSerPaggin","10");
         if(window.location.pathname==="/DashBoards"){
             $("#btnNewSetPriSer").addClass('d-none');
         }
@@ -59,25 +59,36 @@
         }
     });
     function LoadataPriceServices(){
-           AjaxLoad(url = "/api/PriceServices/LoadPriceServices"
-            ,data= JSON.stringify({})
-            ,async = true
-            , error = function () { notiError_SW() }
-            , success = function (result) {
-                if (result != null && result!='') {
-                    data=JSON.parse(result);
-                    $('#generalInfo_anampage').pagination({
-                            dataSource: data.lstPriceServicesDTO,
-                            pageSize: 2,
+         $('#SettingPricePagin').addClass('d-none');
+         $.ajax({url: '/api/Services/LoadPriceServices',
+                type: 'POST',
+                data: JSON.stringify({
+                'UserUpdate':""
+            }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (data, textStatus, xhr) {
+                        if(data!== "[]" && data !== undefined){
+                            var res=JSON.parse(data);
+                            $('#SettingPricePagin').pagination({
+                            dataSource:res,
+                            pageSize: @ViewData["NumberPage"],
                             autoHidePrevious: true,
                             autoHideNext: true,
-                            callback: function (data, pagination) {
-                                Render_Dash_Master_Price_Services("dtContentPriceServicesBody",data);
+                            callback: function (res, pagination) {
+                                if(JSON.parse(data).length > @ViewData["NumberPage"]){
+                                     $('#SettingPricePagin').removeClass('d-none');
+                                }
+                                Render_Dash_Master_Price_Services("dtContentPriceServicesBody",res);
+                                Checking_TabControl_Permission();
+                                $("#button_Anamnesis_Print").show();
                             }
                         });
-                        $("#button_Anamnesis_Print").show();
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    notiError_SW();
                 }
-            })
+            });       
        };
     function Render_Dash_Master_Price_Services(id,data){
         let myNode = document.getElementById(id);
@@ -90,17 +101,33 @@
                     let item = data[i];
                     sumPrice=sumPrice+parseInt(item.Price);
                     let tr =
-                        '<td class="d-none">' + item.CodeServices + '</td>'
+                        '<td class="d-none">' + item.id + '</td>'
                         + '<td class="vt-number-order"></td>'
                         + '<td>'
                         + '<div class="icon icon-shape icon-sm me-2 text-center" >'
-                        + '<img class="avatar m-2" src="./Assets/img/'+item.Images+'" alt="label-image">'
+                        + '<img class="avatar m-2" src="/Assets/img/'+item.Images+'" alt="label-image">'
                         + '</div>'
                         +'</td>'
                         + '<td><a href="#" class="ms-3 my-auto text-bold buttonEditClass">' + item.Name + '</a></td>'
                         + '<td class="text-sm text-dark">' + ConvertNumberWithCommas(item.Price) + ' VNĐ</td>'
-                        + '<td data-name="date" class="text-sm text-dark">' + yyyyMMddHHMMM_ddMMyyyy(item.CreateDate) + '</td>'
-                        +'<td data-name="is_show_app">'
+                        + '<td>'
+                        + '<div class="d-flex">'
+                        + '<div class="icon icon-shape icon-sm me-2 text-center" >'
+                        + '<img class="avatar avatar-xs mt-2" src="/Assets/img/'+ item.ImageUser + ' " alt="label-image">'
+                        + '</div>'
+                        + '<div class="d-flex flex-column">'
+                        + '<h6 class="text-dark text-sm mb-0">' + item.UserName + '</h6>'
+                        + '<span class="text-xs">'+yyyyMMddHHMMM_ddMMyyyy(item.UpdateDate)+ '</span>'
+                        + '</div>'
+                        + '</div>'
+                        + '</td>'
+                        + '<td>'
+                        + ((1 === 1)
+                            ? Render_Button_Grid(['<button class="buttonGrid" value="'
+                                + item.id
+                                + '"><i class="buttonDeleteClass fa fa-trash"></i></button>'])
+                            : '')
+                        + '</td>'
                     stringContent = stringContent + '<tr class="vt-number" role="row">' + tr + '</tr>';
                 }
             };

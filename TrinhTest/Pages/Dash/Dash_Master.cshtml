@@ -3,6 +3,7 @@
     Layout = "_Layout";
 }
 @Html.AntiForgeryToken()
+<script src="/js/Common/initialize_setting.js"></script>
 <div class="container-fluid py-4" id="divMainSettingDetail">
     <div class="row">
         <div class="col-12 position-relative z-index-2">
@@ -338,13 +339,14 @@
                       ,"Img":""
                       ,"Url":""
                   }
+                  
                   ,{
-                      "Name":"Orders"
+                      "Name":"Services"
                       ,"ChildNode":[
                          {
-                            "Name":"Order List"
+                            "Name":"Price"
                             ,"ChildNode":[]
-                            ,"Url":""
+                            ,"Url":"/Setting/Services/SettingPriceServices"
                           }
                           ,{
                             "Name":"Order Details"
@@ -360,12 +362,6 @@
                       ,"Img":""
                       ,"Url":""
                   }
-                  ,{
-                      "Name":"Referral"
-                      ,"ChildNode":[]
-                      ,"Img":""
-                      ,"Url":""
-                  }
               ]
           }]
     const iconNavbarSidenav = document.getElementById('iconNavbarSidenav');
@@ -374,7 +370,6 @@
     let body = document.getElementsByTagName('body')[0];
     let className = 'g-sidenav-pinned';
     $(document).ready(function (){
-        js_require_notasync('/Assests/Library/jquery-ui.js', true);
         ShowMenuMater();
         CloseMneuMater();
         LoadDataUser();
@@ -409,21 +404,21 @@
          //$("#parent_Dashboards").children(0).addClass('bg-gradient-light');
          $("#parent_Dashboards").children()[0].classList.add('bg-gradient-light');
         var ele=document.querySelectorAll('.settingCollapse');
-        //ele.forEach((node) => {
-        //    node.addEventListener("click", e => {
-        //    if($("#collapse_"+e.target.children[1].innerText).hasClass("show")){
-        //        $("#collapse_"+e.target.children[1].innerText).removeClass("show");
-        //        document.getElementById(e.target.id).setAttribute("aria-expanded", false);
-        //        e.target.querySelector('div').classList.remove("bg-gradient-light");
-        //    }
-        //    else
-        //        {
-        //            document.getElementById(e.target.id).setAttribute("aria-expanded", true);
-        //            $("#collapse_"+e.target.children[1].innerText).addClass("show");
-        //            e.target.querySelector('div').classList.add("bg-gradient-light");
-        //        }
-        //    })
-        //});
+        ele.forEach((node) => {
+            node.addEventListener("click", e => {
+            if($("#collapse_"+e.target.children[1].innerText).hasClass("show")){
+                $("#collapse_"+e.target.children[1].innerText).removeClass("show");
+                document.getElementById(e.target.id).setAttribute("aria-expanded", false);
+                e.target.querySelector('div').classList.remove("bg-gradient-light");
+            }
+            else
+                {
+                    document.getElementById(e.target.id).setAttribute("aria-expanded", true);
+                    $("#collapse_"+e.target.children[1].innerText).addClass("show");
+                    e.target.querySelector('div').classList.add("bg-gradient-light");
+                }
+            })
+        });
         $('#sidenav-collapse-main').on('click', '.Settingitem__item', function (e) {
                 e.preventDefault();
                 $('#sidenav-collapse-main .Settingitem__item').removeClass('active');
@@ -547,7 +542,7 @@
     //LoadDataPriceServices
     function LoadDataPriceServices(){
          $("#DashPriceServices").html('');
-          $("#DashPriceServices").load("/Setting/PriceServices/SettingPriceServices");
+          $("#DashPriceServices").load("/Setting/Services/SettingPriceServices");
        };
     //LoadTempMessages chatbots
     function LoadTempMedicineReport(){

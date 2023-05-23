@@ -16,14 +16,16 @@ namespace LibTrinh.Models
         public string Price { get; set; }
         public string Images { get; set; }
         public string CreateDate { get; set; }
+        public string UpdateDate { get; set; }
+        public string UserUpdate { get; set; }
     }
 
-    /// <summary>
-    /// PriceServicesDTO    
-    /// </summary>
-    public class CFaPaginPriceServicesDTO
+    public class CFaSearchPriceServicesDTO
     {
-        public List<CFaPriceServicesDTO> lstPriceServicesDTO = new List<CFaPriceServicesDTO>();
-        public int CountData { get; set; }
+        //public string CodeServices { get; set; }
+        //public string Name { get; set; }
+        //public string Price { get; set; }
+        //public string CreateDate { get; set; }
+        public string UserUpdate { get; set; }
     }
 }

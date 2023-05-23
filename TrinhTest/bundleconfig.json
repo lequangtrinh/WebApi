@@ -18,25 +18,25 @@
       "wwwroot/Assests/dist/Paginationjs/paginationjs.min.css"
     ],
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/site.js",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/js/Common/Common.js",
+      "wwwroot/js/Common/Datetime.js",
+      "wwwroot/js/Common/initialize_setting.js",
+      "wwwroot/js/Common/LoadLanguages_Packege.js",
+      "wwwroot/js/Common/noti_function.js",
+      "wwwroot/js/Common/Popup.js",
+      "wwwroot/js/Common/countup.min.js",
+      "wwwroot/js/Common/tablesort.js",
+      "wwwroot/js/Preload/preload.js",
+      "wwwroot/js/Preload/basket.min.js",
+      "wwwroot/js/Common/KeepAlive.js"
+    ],
+    "sourceMap": false
   }
-  ////{
-  ////  "outputFileName": "wwwroot/js/site.js",
-  ////  // An array of relative input file paths. Globbing patterns supported
-  ////  "inputFiles": [
-  ////    "wwwroot/js/Common/Common.js",
-  ////    "wwwroot/js/Common/Datetime.js",
-  ////    "wwwroot/js/Common/initialize_setting.js",
-  ////    "wwwroot/js/Common/LoadLanguages_Packege.js",
-  ////    "wwwroot/js/Common/noti_function.js",
-  ////    "wwwroot/js/Common/Popup.js",
-  ////    "wwwroot/js/Common/tablesort.js",
-  ////    "wwwroot/js/Common/preload.js",
-  ////    "wwwroot/Assets/js/plugins/datatables.js"
-  ////  ],
-  ////  "minify": {
-  ////    "enabled": false
-  ////  }
-  ////},
   ////{
   ////  "outputFileName": "wwwroot/js/site.min.js",
   ////  "inputFiles": [

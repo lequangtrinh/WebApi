@@ -44,5 +44,15 @@
                 }
             });
         return dataLanguages;
+    };
+    function ChangeLanguage_Detect_Dynamic_File() {
+        var xhttp_d = new XMLHttpRequest();
+        xhttp_d.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                xmlLang_dynamic = this.responseXML;
+            }
+        };
+        xhttp_d.open("GET", xmlLang_dynamic_Url, false);
+        xhttp_d.send();
     }
 })(jQuery);

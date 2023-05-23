@@ -21,23 +21,14 @@ namespace LibTrinh.Common
             {
                 var path = context.HttpContext.Request.Path;
                 if (path != "/Login/Login" && path != "/Shared/_Layout")
-                    //{
-                    //    if (Session.GetSession(context.HttpContext.Session, "Token") == null)
-                    //    {
-                    //        isPass = false;
-                    //    }
-                    //    else
-                    //    {
-                    //        if (CheckPermission(path, context.HttpContext))
-                    //        {
-                    //            isPass = false;
-                    //        }
-                    //    }
-                    //}
+                {
                     if (CheckPermission(path, context.HttpContext))
                     {
                         isPass = false;
                     }
+                    
+                }
+
             }
             if (isPass) await next.Invoke();
             else return;

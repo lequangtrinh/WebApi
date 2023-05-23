@@ -13,6 +13,6 @@ namespace LibTrinh.Api
         /// </summary>
         /// <param name="Pagination"></param>
         /// <returns></returns>
-        Task<CFaPaginPriceServicesDTO> LoadPriceServices();
+        Task<string> LoadPriceServices(CFaSearchPriceServicesDTO searchPrice);
     }
 }
