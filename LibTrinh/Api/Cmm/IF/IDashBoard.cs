@@ -12,5 +12,10 @@ namespace LibTrinh.Api
         /// LoadDataHeardDashBoard
         /// </summary>
         Task<string> LoadDataHeardDashBoard();
+        /// <summary>
+        /// LoadDataMenu
+        /// </summary>
+        /// <returns></returns>
+        Task<string> LoadDataMenu();
     }
 }

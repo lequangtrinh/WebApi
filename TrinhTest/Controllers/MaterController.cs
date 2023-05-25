@@ -32,5 +32,13 @@ namespace TrinhTest.Controllers
             var res = await _iDashBoard.LoadDataHeardDashBoard();
             return Ok(res);
         }
+
+        [Route("LoadDataMenu")]
+        [HttpPost]
+        public async Task<IActionResult> LoadDataMenu()
+        {
+            var res = await _iDashBoard.LoadDataMenu();
+            return Ok(res);
+        }
     }
 }

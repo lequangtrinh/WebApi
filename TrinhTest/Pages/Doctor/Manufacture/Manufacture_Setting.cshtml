@@ -1,0 +1,62 @@
+﻿@page
+
+@{
+    Layout = null;
+}
+@Html.AntiForgeryToken()
+<script src="/js/Common/initialize_setting.js"></script>
+<div class="container-fluid py-3 px-0 ">
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-3">
+                <div class="card-header pb-0">
+                    <div class="d-lg-flex">
+                        <div class="w-50 col-auto my-auto">
+                            <div class="h-100">
+                                <h6 data-languagedyn="div" id="headerBranch" class="mb-0">Cơ Sở Hạ Tầng</h6>
+                                <p data-languagestatic="" class="text-sm mb-0">
+                                    Some text of detail sub
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body pt-2">
+                    <div class="col-12 p-1">
+                        <div class="field col-12 p-1">
+                            <label data-languagestatic="branch">Chi Nhánh</label>
+                            <div class="ui fluid search selection dropdown form-control" id="ManuBranchID" onchange="event.preventDefault(); Manu_OnChange_Load_Room_List();">
+                                <input type="hidden" name="branchwarehouse" />
+                                <i class="dropdown icon"></i>
+                                <input class="search" autocomplete="off" tabindex="0" />
+                                <div class="default text"></div>
+                                <div id="cbbMSBranch" class="menu" tabindex="-1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-1 row">
+                            <div class="col-12 col-md-2 col-xl-1 flex-grow-1 me-5 ">
+                                <div class="btn-group">
+                                    <a class="_tab_control_ btn btn-dark border-start border-light btn-sm px-3" onclick="event.preventDefault(); return Manu_LevelAdd()" data-tab="add_tab_payment_return">
+                                        <i class="ni text-white vtt-icon vttech-icon-add"></i>
+                                    </a>
+                                    <a class="_tab_control_ btn btn-dark border-start border-light btn-sm px-3 text-sm text-secondar" onclick="event.preventDefault(); return Manu_ShowTreeItemAll()" data-tab="add_tab_payment_service">
+                                        ALL
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-10 col-xl-10 flex-grow-1" id="Manu_Floor">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="ms-2 p-1 col-12" id="tree_item">
+                        <div class="timeline timeline-one-side" id="Manu_TreeDetail">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
