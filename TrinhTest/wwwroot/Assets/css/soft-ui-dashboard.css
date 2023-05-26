@@ -2868,10 +2868,11 @@ textarea.form-control-lg {
 .btn-outline-dark {
   color: #344767;
   border-color: #344767; }
-  .btn-outline-dark:hover {
-    color: #fff;
-    background-color: #344767;
-    border-color: #344767; }
+    .btn-outline-dark:hover {
+        color: #fff;
+        background-color: #000;
+        border-color: #344767;
+    }
   .btn-check:focus + .btn-outline-dark, .btn-outline-dark:focus {
     box-shadow: 0 0 0 0.2rem rgba(52, 71, 103, 0.5); }
   .btn-check:checked + .btn-outline-dark,

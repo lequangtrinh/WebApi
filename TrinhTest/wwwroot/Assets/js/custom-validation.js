@@ -1,76 +1,76 @@
 ﻿//validation settings in formvalidation page
 'use strict'
-$('.ui.form1').form({
-    fields: {
-        name: {
-            identifier: 'name',
-            rules: [{
-                type: 'empty',
-                prompt: 'Please enter your name'
-            }]
-        },
-        skills: {
-            identifier: 'skills',
-            rules: [{
-                type: 'minCount[2]',
-                prompt: 'Please select at least two skills'
-            }]
-        },
-        branchwarehouse: {
-            identifier: 'branchwarehouse',
-            rules: [{
-                type: 'minCount[1]',
-                prompt: 'Please select at least two skills'
-            }]
-        },
-        gender: {
-            identifier: 'gender',
-            rules: [{
-                type: 'empty',
-                prompt: 'Please select a gender'
-            }]
-        },
-        username: {
-            identifier: 'username',
-            rules: [{
-                type: 'empty',
-                prompt: 'Please enter a username'
-            }]
-        },
-        password: {
-            identifier: 'password',
-            rules: [{
-                type: 'empty',
-                prompt: 'Please enter a password'
-            }, {
-                type: 'minLength[6]',
-                prompt: 'Your password must be at least {ruleValue} characters'
-            }]
-        },
-        terms: {
-            identifier: 'terms',
-            rules: [{
-                type: 'checked',
-                prompt: 'You must agree to the terms and conditions'
-            }]
-        }
-    }
-});
-$('.ui.form2').form({
-    fields: {
-        field1: {
-            rules: [{
-                type: 'empty'
-            }]
-        },
-        field2: {
-            rules: [{
-                type: 'exactly[dog]',
-                prompt: '{name} is set to "{value}" that is totally wrong. It should be {ruleValue}'
-            }]
-        }
-    }
-});
+//$('.ui.form1').form({
+//    fields: {
+//        name: {
+//            identifier: 'name',
+//            rules: [{
+//                type: 'empty',
+//                prompt: 'Please enter your name'
+//            }]
+//        },
+//        skills: {
+//            identifier: 'skills',
+//            rules: [{
+//                type: 'minCount[2]',
+//                prompt: 'Please select at least two skills'
+//            }]
+//        },
+//        branchwarehouse: {
+//            identifier: 'branchwarehouse',
+//            rules: [{
+//                type: 'minCount[1]',
+//                prompt: 'Please select at least two skills'
+//            }]
+//        },
+//        gender: {
+//            identifier: 'gender',
+//            rules: [{
+//                type: 'empty',
+//                prompt: 'Please select a gender'
+//            }]
+//        },
+//        username: {
+//            identifier: 'username',
+//            rules: [{
+//                type: 'empty',
+//                prompt: 'Please enter a username'
+//            }]
+//        },
+//        password: {
+//            identifier: 'password',
+//            rules: [{
+//                type: 'empty',
+//                prompt: 'Please enter a password'
+//            }, {
+//                type: 'minLength[6]',
+//                prompt: 'Your password must be at least {ruleValue} characters'
+//            }]
+//        },
+//        terms: {
+//            identifier: 'terms',
+//            rules: [{
+//                type: 'checked',
+//                prompt: 'You must agree to the terms and conditions'
+//            }]
+//        }
+//    }
+//});
+//$('.ui.form2').form({
+//    fields: {
+//        field1: {
+//            rules: [{
+//                type: 'empty'
+//            }]
+//        },
+//        field2: {
+//            rules: [{
+//                type: 'exactly[dog]',
+//                prompt: '{name} is set to "{value}" that is totally wrong. It should be {ruleValue}'
+//            }]
+//        }
+//    }
+//});
 
 // AppointmentDetail, CustomerDetail,EmplopyeeDetail,UserDetail
 // Customer HistoryDetail,Customer StatusDetail,Customer TabDetail,Customer TreatmentDetail,Customer PaymentDetail
@@ -201,7 +201,7 @@ $('.form3').form({
             rules: [{
                 type: 'regExp',
                 value: /^$|^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-            }]
+                }]
         },
         phonenumber: {
             identifier: 'phonenumber',

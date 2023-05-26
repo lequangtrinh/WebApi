@@ -1,8 +1,10 @@
 ﻿@page
 @{
-    Layout = "~/Views/Shared/_Layout_Login.cshtml";
+    Layout = null;
 }
-<div class="container-fluid py-3 px-0">
+<script src="/js/Common/initialize_setting.js"></script>
+
+<div class="container-fluid px-0">
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -22,19 +24,19 @@
                             <div class="card-body p-0">
                                 <div class="field col-12 col-sm-6 p-1">
                                     <label data-languagestatic="name">Tên Nhân Viên</label>
-                                    <input id="signInName" name="name" type="text" placeholder="3 characters, first addition, no editing" class="form-control" />
+                                    <input id="signInName" name="username" type="text" placeholder="username" class="form-control" />
                                 </div>
                                 <div class="field col-12 col-sm-6 p-1">
                                     <label data-languagestatic="password">Mật Khẩu</label>
-                                    <input id="signInPass" type="text" name="" placeholder="Website" class="form-control" />
+                                    <input id="signInPass" type="text" name="passwordUser" placeholder="Password" class="form-control" />
                                 </div>
                                 <div class="field col-12 col-sm-6 p-1">
                                     <label data-languagestatic="phone">HotLine</label>
-                                    <input id="signInHotline" name="" type="text" placeholder="1-3 characters, Only contains letters and numbers" class="form-control" />
+                                    <input id="signInHotline" name="phonenumber" type="text" placeholder="Hot Line" class="form-control" />
                                 </div>
                                 <div class="field col-12 col-sm-6 p-1">
                                     <label data-languagestatic="Email">Email</label>
-                                    <input id="signInEmail" type="text" name="" placeholder="Email" class="form-control" />
+                                    <input id="signInEmail" type="text" name="emailValidate" placeholder="Email" class="form-control" />
                                 </div>
                                 <div class="field col-12 p-1">
                                     <label data-languagestatic="address">Địa Chỉ</label>
@@ -62,7 +64,8 @@
                     <div class="action_Save">
                         <div class="text-danger text-gradient text-sm font-weight-bold" data-languagedyn="textShowMessage" id="textShowMessage"></div>
                         <div class="action_Save-Content">
-                            <button data-languagestatic="button_ok" id="SignInSave" form="formCompany" type="button" class="btn bg-gradient-primary mt-2 me-2 _tab_control_" data-tab="edit_tab_customer" onclick="event.preventDefault(); SignIn_Excute()">Save</button>
+                            <button data-languagestatic="button_cancel" class="btn btn-secondary" form="formSignIn" onclick="event.preventDefault();return CloseModal()">Cancel</button>
+                            <button data-languagestatic="button_ok" id="SignInSave" form="formSignIn" type="button" class="btn bg-gradient-primary mt-2 me-2 _tab_control_" data-tab="edit_tab_customer" onclick="event.preventDefault(); SignIn_Excute()">Save</button>
                         </div>
                     </div>
                 </div>
@@ -105,9 +108,29 @@
     function SignIn_Excute(){
         $('#formSingIn').form('validate form');
         if ($('#formSingIn').form('is valid')) {
-             return true;
+             AjaxApi(url = "/api/Author/RegisUser"
+                ,data= JSON.stringify({
+                    menu: "1",
+                    IDMenu: "1",
+                    flags: "1",
+                    userID: $('#username').val(),
+                    PassWord:$('#password').val(),
+                    PassWordNew: "123"
+                })
+                ,async = true
+                , error = function () { notiError_SW() }
+                , success = function (result) {
+                    if (result != "[]") {
+                        notiSuccess();
+                       //window.location.href="/Dash/Dash_Master";
+                    }
+                }
+                , before = function (e) {
+
+                 }
+            );
         };
          return false;
     }
 </script>
-<script src="./Assets/js/custom-validation.js"></script>
+<script src="/Assets/js/custom-validation.js"></script>
