@@ -66,7 +66,7 @@
         <div class="p-3 pb-0 d-flex">
             <div class="col-auto my-auto">
                 <div class="d-flex justify-content-end">
-                    <img id="Apptem_Avatar" class="avatar avatar-md me-3" src="#" alt="label-image" onerror="Master_OnLoad_Error_Image(this)" />
+                    @*<img id="Apptem_Avatar" class="avatar avatar-md me-3" src="#" alt="label-image" onerror="Master_OnLoad_Error_Image(this)" />*@
                     <div class="mt-1">
                         <h6 id="Apptem_CustName" class="text-sm fw-bold text-white mb-0 "></h6>
                         <p id="Apptem_Code" class="d-inline-flex mt-1 text-xs text-white mb-1"></p>
@@ -191,7 +191,7 @@
                     e.start = new Date(y, m, d,1,30);
                     e.end = new Date(y, m, d,2,00);
                     e.allDay = false;
-                    e.description = "fdgfdgfdg";
+                    e.description = Calendar_Description(i);
                     e.sourceId = i;
                     e.className ='bg-dark';
                     //e.className = (item.ClassName != undefined ? item.ClassName : 'bg-dark') + ' text-white';
@@ -202,7 +202,6 @@
             eventClick: function (info) {
                 if (info != undefined) {
                     let id = info.event.id;
-                    console.log(id)
                    // callvtt_action(id);
                 }
             },
@@ -250,6 +249,38 @@
         });
         calendar.render();
     };
+    function Calendar_Description (id) {
+        let result = "";
+        //let data = Object_Schedule_Calendars[id] != undefined ? Object_Schedule_Calendars[id] : [];
+        //if (data.length != 0) {
+        //    var Service = "";
+        //    var type = "";
+        //    if (data.TypeID == 1) {
+        //        type = "Appointment Consultation";
+        //        Service = "Service care: " + Fun_GetString_ByToken(DataServiceCare, data.ServiceCare_ID);
+        //    } else {
+        //        type = "Appointment Treatment";
+        //        Service = "Service: " + Fun_GetString_ByToken(DataService, data.ServiceTreat_ID);
+        //    }
+
+            //result = '<div class="text-start">'
+            //    + ((data.CustCode != "") ? ("Customer Code: " + data.Cust_Code) : (''))
+            //    + " <br/>Customer Name: " + data.CustomerName
+            //    + " <br/>" + Service
+            //    + ' <br/>Appointment in place: ' + data.BranchName
+            //    + '<br/>Content: ' + data.Content
+            //    + '</div>';
+                result = '<div class="text-start">'
+                //+ ((data.CustCode != "") ? ("Customer Code: " + data.Cust_Code) : (''))
+                + " <br/>Customer Name: " + 'trinh test name'
+                + " <br/>" + '123'
+                + ' <br/>Appointment in place: ' + 'trinh test branch name'
+                + '<br/>Content: ' + 'trinh testđen dung gio'
+                + '</div>';
+
+        return result;
+
+    }
     function Calendar_TriggerDate () {
         $(".fc-prev-button").on('click', function () {
             calendar.prev();
