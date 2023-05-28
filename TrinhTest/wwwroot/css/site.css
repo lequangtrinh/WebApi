@@ -701,13 +701,6 @@ a.logo.software {
 
 }
 
-.bntAuthor:hover {
-    background-color: rgba(8, 3, 57, 0.9);
-    box-shadow: 0px 15px 20px rgba(8, 3, 57, 0.9);
-    color: #fff;
-    transform: translateY(-7px);
-}
-
 /*#region // Dropdown Semantic */
 .ui.dropdown {
     cursor: pointer;

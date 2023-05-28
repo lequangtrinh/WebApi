@@ -1,0 +1,330 @@
+﻿@page
+
+@{
+    Layout = null;
+}
+@Html.AntiForgeryToken()
+<script src="/js/Common/initialize_setting.js"></script>
+<div id="Loader_Calendar" style="display: none; position: relative; height: calc(100vh - 80px)">
+    <div class="ui active inverted dimmer">
+        <div class="ui large text loader"></div>
+    </div>
+</div>
+
+<div class="col-12 position-relative">
+    <!--Master-->
+    <div class="card" id="vtt_master">
+        <div class="card-header pb-0">
+            <div class="d-lg-flex">
+                <div class="w-50 col-auto my-auto">
+                    <div class="h-100">
+                        <!-- #region header -->
+                        <h6 data-languagestatic="" class="mb-0">Calendar</h6>
+                        <p data-languagestatic="*****" class="text-sm mb-0">Some text of detail sub</p>
+                        <!-- #endregion -->
+                    </div>
+                </div>
+                <div class="ms-auto my-auto mt-1">
+                    <div class="fc fc-media-screen fc-direction-ltr fc-theme-standard">
+                        <div class="fc-header-toolbar fc-toolbar mb-0">
+                            <div class="fc-toolbar-chunk me-3">
+                                <h2 class="fc-toolbar-title">December 2020</h2>
+                            </div>
+                            <div class="fc-toolbar-chunk">
+                                <div class="fc-button-group">
+                                    <button class="fc-dayGridMonth-button fc-button fc-button-primary fc-button-active" type="button">month</button>
+                                    <button class="fc-timeGridWeek-button fc-button fc-button-primary" type="button">week</button>
+                                    <button class="fc-today-button fc-button fc-button-primary" type="button">today</button>
+                                </div>
+                                <div class="fc-button-group">
+                                    <button class="fc-prev-button fc-button fc-button-primary" type="button" aria-label="prev">
+                                        <span class="fc-icon fc-icon-chevron-left"></span>
+                                    </button>
+                                    <button class="fc-next-button fc-button fc-button-primary" type="button" aria-label="next">
+                                        <span class="fc-icon fc-icon-chevron-right"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="card-body pt-2 ">
+            <div id="LoaderCalendar" class="waitingdiv position-absolute top-50 start-50 translate-middle" style="display:none">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <div class="calendar" data-bs-toggle="calendar" id="calendarAppointmentSchedule"></div>
+        </div>
+    </div>
+
+    <div id="vtt_actiontarea" class="position-absolute top-50 start-50 translate-middle bg-gradient-dark text-white shadow-lg card d-none">
+        <div class="p-3 pb-0 d-flex">
+            <div class="col-auto my-auto">
+                <div class="d-flex justify-content-end">
+                    <img id="Apptem_Avatar" class="avatar avatar-md me-3" src="#" alt="label-image" onerror="Master_OnLoad_Error_Image(this)" />
+                    <div class="mt-1">
+                        <h6 id="Apptem_CustName" class="text-sm fw-bold text-white mb-0 "></h6>
+                        <p id="Apptem_Code" class="d-inline-flex mt-1 text-xs text-white mb-1"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="ms-auto my-auto d-flex justify-content-end">
+                <span id="Apptem_Doctor" class="fw-bold mx-1"></span>
+                <span id="Apptem_Room" class="fw-bold me-1"></span>
+
+            </div>
+        </div>
+        <hr class="horizontal light">
+        <div class="card-body border-radius-lg  text-sm p-3 pt-0">
+            <div>
+                <span id="Apptem_Cancel" class="badge bg-gradient-danger text-white cursor-pointer" style="display: none;">
+                </span>
+                <span id="Apptem_btnroom" onclick="event.preventDefault(); Apptem_ChangeRoom();"
+                      class="badge bg-gradient-light text-dark  cursor-pointer d-none">Room</span>
+                <span onclick="event.preventDefault(); Apptem_Sms();"
+                      class="badge bg-gradient-light text-dark  cursor-pointer d-none">SMS</span>
+                <span onclick="event.preventDefault(); Apptem_Call();"
+                      class="badge bg-gradient-light text-dark  cursor-pointer d-none">Call</span>
+
+                <span id="Apptem_btnprint" onclick="event.preventDefault(); Apptem_Print();"
+                      data-languagestatic="print" class="badge bg-gradient-light text-dark  cursor-pointer">In</span>
+
+                <span onclick="event.preventDefault(); Apptem_CustLink();"
+                      data-languagestatic="button_app_tocust"
+                      class="badge bg-gradient-light text-dark  cursor-pointer">Đến Khách Hàng</span>
+            </div>
+            <div class="mt-3">
+                <span data-languagestatic="app_time">Thời Gian</span>
+                <span id="Apptem_DateFrom" class="fw-bold mx-1 border-bottom"></span>
+                <span id="Apptem_Status" class="fw-bold mx-1 border-bottom"></span>
+
+            </div>
+            <span class="d-block mt-2">
+                <span data-languagestatic="branch">Chi Nhánh</span>
+                <span id="Apptem_Branch" class="fw-bold mx-1 border-bottom"></span>
+                <span id="Apptem_Service" class="fw-bold mx-1 border-bottom"></span>
+            </span>
+            <span class="d-block mt-2">
+                <span id="Apptem_Content" class="text-white"></span>
+            </span>
+
+        </div>
+        <hr class="horizontal light">
+        <div class="card-footer pt-0">
+            <div class="mb-3 me-1 d-flex justify-content-end">
+                <svg id="Apptem_Code2D"></svg>
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="d-flex">
+                    <button id="Apptem_btncancel" data-languagestatic="button_app_cancel" class="btn btn-sm bg-gradient-danger d-none mb-0 "
+                            onclick="Apptem_DestroyApp()">
+                        Hủy Lịch
+                    </button>
+                    <button id="Apptem_btnEdit" data-languagestatic="button_edit_app" class="btn btn-sm bg-gradient-info d-none mb-0 ms-1"
+                            onclick="Apptem_Edit()">
+                        Sửa Lịch
+                    </button>
+                    <button data-languagestatic="button_cancel" class="btn btn-sm bg-gradient-secondary mb-0 ms-1"
+                            onclick="Apptem_Cancel()">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/Assets/js/plugins/fullcalendar.min.js"></script>
+<script type="text/javascript">
+    var Object_Schedule_Calendars = [];
+    var calendar;
+     $(document).ready(function (){
+        RenderCalendar();
+        Calendar_TriggerDate();
+        $('.fc-daygrid-day-bottom').addClass('text-center');
+        $('.fc-daygrid-more-link')[0].childNodes[0].nodeValue='';
+        $('.fc-daygrid-more-link').append('<i class="fa fa-chevron-down" aria-hidden="true"></i>');
+     });
+    function RenderCalendar(){
+
+        var today = new Date();
+        var y = today.getFullYear();
+        var m = today.getMonth();
+        var d = today.getDate();
+        calendar = new FullCalendar.Calendar(document.getElementById("calendarAppointmentSchedule"), {
+            locale:'EN',
+            headerToolbar: false,
+            initialView: "dayGridMonth",
+            eventTimeFormat: {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            },
+            selectable: true,
+            editable: true,
+            stickyHeaderDates: false,
+            dayMaxEventRows: true,
+            fixedWeekCount: false,
+            lazyFetching: true,
+            eventDisplay: 'block',
+            eventDidMount: function (info) {
+                var tooltip = new bootstrap.Tooltip(info.el, {
+                    title: info.event.extendedProps.description,
+                    placement: 'top',
+                    trigger: 'hover',
+                    container: 'body',
+                    html: true
+                });
+            },
+            events: function (info, successCallback, failureCallback){
+                let dataEvents = [];
+                for (let i = 0; i < 10; i++) {
+                    //let item = data[i];
+                    Object_Schedule_Calendars[i] ="dfgfdg";
+                    let e = {};
+                    e.id = i;
+                    e.title = 'trinh test';
+                    e.start = new Date(y, m, d,1,30);
+                    e.end = new Date(y, m, d,2,00);
+                    e.allDay = false;
+                    e.description = "fdgfdgfdg";
+                    e.sourceId = i;
+                    e.className ='bg-dark';
+                    //e.className = (item.ClassName != undefined ? item.ClassName : 'bg-dark') + ' text-white';
+                    dataEvents.push(e);
+                }
+                successCallback(dataEvents)
+            },
+            eventClick: function (info) {
+                if (info != undefined) {
+                    let id = info.event.id;
+                    console.log(id)
+                   // callvtt_action(id);
+                }
+            },
+            eventDragStart: function (info) {
+            },
+            views: {
+                month: {
+                    titleFormat: {
+                        month: "long",
+                        year: "numeric"
+                    }
+                },
+                agendaWeek: {
+                    titleFormat: {
+                        month: "long",
+                        year: "numeric",
+                        day: "numeric"
+                    }
+                },
+                agendaDay: {
+                    titleFormat: {
+                        month: "short",
+                        year: "numeric",
+                        day: "numeric"
+                    }
+                }
+            },
+        });
+        calendar.render();
+    };
+    function Calendar_TriggerDate () {
+        $(".fc-prev-button").on('click', function () {
+            calendar.prev();
+        });
+        $(".fc-next-button").on('click', function () {
+            calendar.next();
+        });
+        $(".fc-today-button").on('click', function () {
+            $(this).addClass("fc-button-active").siblings().removeClass("fc-button-active");
+            calendar.today();
+            $(".fc-toolbar-title").html(calendar.view.title);
+        });
+        $(".fc-dayGridMonth-button").on('click', function () {
+            $(this).addClass("fc-button-active").siblings().removeClass("fc-button-active");
+            calendar.changeView('dayGridMonth');
+            $(".fc-toolbar-title").html(calendar.view.title);
+        });
+        $(".fc-timeGridWeek-button").on('click', function () {
+            $(this).addClass("fc-button-active").siblings().removeClass("fc-button-active");
+            calendar.changeView('timeGridWeek');
+            $(".fc-toolbar-title").html(calendar.view.title);
+        });
+    };
+    function callvtt_filldata (data) {
+        if (data != undefined && data != null) {
+            let avatar = (data.Avatar != '') ? data.Avatar : Master_circleAvatar;
+            $('#Apptem_Avatar').attr('src', 'data:image/png;base64, ' + avatar);
+            customer_status_app = data.StatusApp;
+            customer_id_app = data.CustomerID;
+            $('#Apptem_CustName').html(data.CustomerName);
+            $('#Apptem_Branch').html(data.BranchName);
+            $('#Apptem_Content').html(data.Content);
+            $('#Apptem_Service').html(((Number(data.TypeID) == 1)
+                ? (Fun_GetString_ByToken(DataServiceCare, data.ServiceCare))
+                : (Fun_GetString_ByToken(DataService, data.ServiceTreat))));
+            $('#Apptem_Doctor').html(data.DoctorName);
+            $("#Apptem_Status").html(data.StatusName);
+
+
+            customer_phone_app = data.Phone;
+            JsBarcode("#Apptem_Code2D", data.Schedule_Code, {
+                lineColor: "#3A416F",
+                textMargin: 0,
+                width: 1,
+                height: 30,
+                displayValue: false
+            });
+            $('#Apptem_Code').html(data.Cust_Code);
+            if (data.Room != '') $("#Apptem_Room").html(data.Level + ' - ' + data.Room);
+            else $("#Apptem_Room").html('');
+            if (data.IsCancel != "0") {
+                $('#Apptem_Cancel').html(data.ReasonCancel)
+                $("#Apptem_Cancel").show();
+            }
+            else $("#Apptem_Cancel").hide();
+            $('#Apptem_DateFrom').html(data.Time_From + ' - ' + data.Time_To + ' ' + ConvertDateTimeToString_DOW(data.Date_From) + ' ' + formatDateClient(data.Date_From));
+            //JsBarcode(".barcodeApppoinment").init();
+            if (data.State != 0 && data.StatusApp == 1) {
+                $("#Apptem_btnEdit").removeClass("d-none");
+                $("#Apptem_btncancel").removeClass("d-none");
+                $("#Apptem_btnprint").removeClass("d-none");
+                $("#Apptem_btnroom").removeClass("d-none");
+            }
+            else {
+                $("#Apptem_btnEdit").addClass("d-none");
+                $("#Apptem_btncancel").addClass("d-none");
+                $("#Apptem_btnprint").addClass("d-none");
+                $("#Apptem_btnroom").addClass("d-none");
+            }
+        }
+    }
+</script>
+<style>
+    .fc .fc-more-popover .fc-popover-body {
+        max-height: 500px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .fc .fc-daygrid-more-link {
+        color: #344767;
+        font-size: 12px;
+    }
+
+    .fa .fa-chevron-down {
+        color: #344767;
+        font-size: 15px;
+    }
+    .tooltip-inner {
+        box-shadow: 0 0.25rem 0.375rem -0.0625rem rgb(20 20 20 / 12%), 0 0.125rem 0.25rem -0.0625rem rgb(20 20 20 / 7%) !important;
+        background-image: linear-gradient( 310deg,#141727,#3a416f);
+        max-width: 350px;
+        padding: 10px 15px;
+    }
+</style>

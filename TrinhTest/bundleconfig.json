@@ -33,7 +33,8 @@
       "wwwroot/js/Common/tablesort.js",
       "wwwroot/js/Preload/preload.js",
       "wwwroot/js/Preload/basket.min.js",
-      "wwwroot/js/Common/KeepAlive.js"
+      "wwwroot/js/Common/KeepAlive.js",
+      "wwwroot/js/Common/Detect_Calendar_Type"
     ],
     "sourceMap": false
   }

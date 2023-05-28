@@ -9,8 +9,9 @@ using MimeKit;
 using MailKit.Net.Smtp;
 using Newtonsoft.Json;
 using System.Text;
+using LibTrinh.Common;
 
-namespace LibTrinh.Common.Api.AuthenService
+namespace LibTrinh.Api.AuthenService
 {
     /// <summary>
     /// AuthenService
@@ -80,7 +81,6 @@ namespace LibTrinh.Common.Api.AuthenService
         {
             try
             {
-                UserDTO userDto = new UserDTO();
                 CFaTokenLoginDTO token = new CFaTokenLoginDTO();
                 CFaUserDTO cFaUserDTO = new CFaUserDTO();
                 using (var uow = await _context.CreateAsync())
@@ -89,22 +89,15 @@ namespace LibTrinh.Common.Api.AuthenService
                     var CheckUser = await uow.ExecuteDataTable("[YYY_sp_CheckLoginUser]", CommandType.StoredProcedure,
                         "@UserID", SqlDbType.NVarChar, pUserLoginInf.userID
                     );
-                    foreach (DataRow row in CheckUser.Rows)
-                    {
-                        userDto.UserID = row["UserID"].ToString();
-                        userDto.UserName = row["UserName"].ToString();
-                        userDto.Password = row["Password"].ToString();
-                        userDto.IP = "123.123.123";
-                        userDto.Role = row["Role"].ToString();
-                    }
-                    bool checkPass = verifyPass(strPwd, userDto.Password.Trim());
+                    var dataUser = GlobalBase.ConvertDataTable<UserDTO>(CheckUser)[0];
+                    bool checkPass = verifyPass(strPwd, dataUser.Password.Trim());
                     if (!checkPass)
                     {
                         return null;
                     }
-                    _generatedToken = _tokenService.BuildToken(userDto, _config["JWT:Issuer"].ToString());
+                    _generatedToken = _tokenService.BuildToken(dataUser, _config["JWT:Issuer"].ToString());
                     token.token = _generatedToken;
-                    token.PublicKey=_tokenService.ReadKeyToken(userDto.UserID,Constant.Constant.PUBLICKEY).ToString();
+                    token.PublicKey=_tokenService.ReadKeyToken(dataUser.UserID,Constant.Constant.PUBLICKEY).ToString();
                     //DataTable dt = new DataTable();
                     //dt = await uow.ExecuteDataTable("[YYY_sp_LoadDashboard]", CommandType.StoredProcedure,
                     //    "@UserID", SqlDbType.NVarChar, "00001"
@@ -212,7 +205,6 @@ namespace LibTrinh.Common.Api.AuthenService
         {
             try
             {
-                UserDTO userDto = new UserDTO();
                 using (var uow = await _context.CreateAsync())
                 {
                     if (!_tokenService.IsTokenValid(token, userId, _config["JWT:Issuer"].ToString()))
@@ -221,14 +213,9 @@ namespace LibTrinh.Common.Api.AuthenService
                         var CheckUser = await uow.ExecuteDataTable("[YYY_sp_CheckLoginUser]", CommandType.StoredProcedure,
                             "@UserID", SqlDbType.NVarChar, userId.Trim()
                         );
-                        foreach (DataRow row in CheckUser.Rows)
-                        {
-                            userDto.UserName = row["UserName"].ToString();
-                            userDto.Password = row["Password"].ToString();
-                            userDto.IP = "123.123.123";
-                            userDto.Role = row["Role"].ToString();
-                        }
-                        _generatedToken = _tokenService.BuildToken(userDto, _config["JWT:Issuer"].ToString());
+                        var dataUser = GlobalBase.ConvertDataTable<UserDTO>(CheckUser)[0];
+               
+                        _generatedToken = _tokenService.BuildToken(dataUser, _config["JWT:Issuer"].ToString());
                     }
                     #region validate token google,FaceBook
                     //-----------------------google---------------------------------------

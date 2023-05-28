@@ -21,12 +21,9 @@ namespace LibTrinh.Models
     /// </summary>
     public class CFaUserInfoDTO
     {
-        public string menu { get; set; }
-        public string IDMenu { get; set; }
         public string flags { get; set; }
         public string userID { get; set; }
         public string PassWord { get; set; }
-        public string PassWordNew { get; set; }
     }
     /// <summary>
     /// CFaTokenLoginDTO

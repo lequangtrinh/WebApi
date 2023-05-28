@@ -12,35 +12,6 @@ namespace LibTrinh.Common
     {
         void Commit();
         void Rollback();
-
-        /// <summary>
-        /// ExecuteDatabaseLog
-        /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
-        public string ExecuteDatabaseLog(string s);
-
-        /// <summary>
-        /// ExecuteDatabaseNoLog
-        /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
-        public string ExecuteDatabaseNoLog(string s);
-
-        /// <summary>
-        /// LoadDataSource_Table
-        /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
-        public DataTable LoadDataSource_Table(string s);
-
-        /// <summary>
-        /// LoadDataSource_DataSet
-        /// </summary>
-        /// <param name="s"></param>
-        /// <returns></returns>
-        public DataSet LoadDataSource_DataSet(string s);
-
         /// <summary>
         /// ExecuteDataSet
         /// </summary>
