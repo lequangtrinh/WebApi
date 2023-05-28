@@ -230,6 +230,23 @@
                     }
                 }
             },
+            eventMouseEnter: function (info) {
+                    
+                },
+            eventMouseLeave: function (info) {
+
+            },
+            loading: function (isComplete) {
+                if (isComplete) {
+                    $("#LoaderCalendar").show();
+                    $("#calendar").addClass("opacity-5");
+                }
+                else {
+                    $("#LoaderCalendar").hide();
+                    $("#calendar").removeClass("opacity-5");
+                    $(".fc-toolbar-title").html(calendar.view.title);
+                }
+            },
         });
         calendar.render();
     };
