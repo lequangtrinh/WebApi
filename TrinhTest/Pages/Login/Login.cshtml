@@ -235,7 +235,7 @@
             contentType: 'application/json; charset=utf-8',
             success: function (data, textStatus, xhr) {
                     if(data!== "[]" && data !== undefined){
-                       //window.location.href="/Dash/Dash_Master";
+                       window.location.href="/Dash/Dash_Master";
                     }
                     else{validateLogin();};
                 },
@@ -266,7 +266,7 @@
                             localStorage.setItem("X-PublicKey",res.PublicKey);
                             localStorage.setItem("X-UserID",$('#username').val());
                             localStorage.setItem("X-Access-Token",res.token);
-                            //window.location.href="/Dash/Dash_Master";
+                            window.location.href="/Dash/Dash_Master";
                         } else {notiError_SW()};
                 },
                 error: function (xhr, textStatus, errorThrown) {
