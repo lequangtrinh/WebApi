@@ -8,12 +8,6 @@
 		<GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <Compile Remove="Models\Master\**" />
-	  <EmbeddedResource Remove="Models\Master\**" />
-	  <None Remove="Models\Master\**" />
-	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="log4net" Version="2.0.15" />
 		<PackageReference Include="MailKit" Version="3.4.3" />
@@ -26,7 +20,7 @@
 		<PackageReference Include="System.Drawing.Common" Version="7.0.0" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
 		<PackageReference Include="AutoMapper" Version="10.1.1" />
-		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />	
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
 	</ItemGroup>
 
 </Project>

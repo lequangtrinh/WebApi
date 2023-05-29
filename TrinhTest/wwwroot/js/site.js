@@ -1340,7 +1340,6 @@ function Distance_Year_2Date(d1, d2) {
 
 }(jQuery));
 (function ($) {
-
     //init Language page
     if (typeof LanguageVTT !== 'undefined') {
         LanguageVTT.Refresh();
@@ -1383,17 +1382,6 @@ function Distance_Year_2Date(d1, d2) {
     //#endregion
 })(jQuery);
 
-"use strict";
-(function ($) {
-    $("#Languagesdropdown").click(function (e) {
-        if ($("#CkeckLanguages").hasClass('show')) {
-            $("#CkeckLanguages").removeClass('show');
-        }
-        else {
-            $("#CkeckLanguages").addClass('show');
-            ClickSettingLanguages();
-        }
-    });
     // #region // Load Data Language
     var xmlLang_static_Url;
     function ClickSettingLanguages () {
@@ -1401,14 +1389,17 @@ function Distance_Year_2Date(d1, d2) {
             node.addEventListener("click", e => {
                 switch (node.childNodes[1].innerText) {
                     case "VietNam": {
+                        localStorage.setItem("Languages", 'vn');
                         xmlLang_static_Url ="/Language/VN/static.xml"
                         break;
                     }
                     case "JanPan": {
+                        localStorage.setItem("Languages", 'jpn');
                         xmlLang_static_Url = "/Language/JP/static.xml"
                         break;
                     }
                     case "US-UK": {
+                        localStorage.setItem("Languages", 'en');
                         xmlLang_static_Url = "/Language/ENG/static.xml"
                         break;
                     }
@@ -1440,7 +1431,6 @@ function Distance_Year_2Date(d1, d2) {
         xhttp_d.open("GET", xmlLang_dynamic_Url, false);
         xhttp_d.send();
     }
-})(jQuery);
 
 
 //#region //success,info,danger,warning,other

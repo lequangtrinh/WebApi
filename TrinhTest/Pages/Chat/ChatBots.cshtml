@@ -324,9 +324,7 @@
             }
             function deleteDataItemMessagerUser(value){
                 $('#ChatItemUsers').on('click', '.buttonDeleteClass', function () {
-                    console.log(value);
                     let index=Number($(this).closest('div')[0].childNodes[0].value);
-                    console.log(index);
                     data=value.filter(function(value, n, arr) {
                         return n != index;
                     });

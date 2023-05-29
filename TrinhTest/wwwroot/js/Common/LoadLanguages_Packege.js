@@ -1,29 +1,21 @@
-﻿"use strict";
-(function ($) {
-    $("#Languagesdropdown").click(function (e) {
-        if ($("#CkeckLanguages").hasClass('show')) {
-            $("#CkeckLanguages").removeClass('show');
-        }
-        else {
-            $("#CkeckLanguages").addClass('show');
-            ClickSettingLanguages();
-        }
-    });
-    // #region // Load Data Language
+﻿    // #region // Load Data Language
     var xmlLang_static_Url;
     function ClickSettingLanguages () {
         document.querySelectorAll('.LanguagesSetting').forEach(node => {
             node.addEventListener("click", e => {
                 switch (node.childNodes[1].innerText) {
                     case "VietNam": {
+                        localStorage.setItem("Languages", 'vn');
                         xmlLang_static_Url ="/Language/VN/static.xml"
                         break;
                     }
                     case "JanPan": {
+                        localStorage.setItem("Languages", 'jpn');
                         xmlLang_static_Url = "/Language/JP/static.xml"
                         break;
                     }
                     case "US-UK": {
+                        localStorage.setItem("Languages", 'en');
                         xmlLang_static_Url = "/Language/ENG/static.xml"
                         break;
                     }
@@ -55,4 +47,3 @@
         xhttp_d.open("GET", xmlLang_dynamic_Url, false);
         xhttp_d.send();
     }
-})(jQuery);

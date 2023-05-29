@@ -1,5 +1,4 @@
 ﻿@page
-
 @{
     Layout = null;
 }
@@ -145,9 +144,9 @@
      $(document).ready(function (){
         RenderCalendar();
         Calendar_TriggerDate();
-        $('.fc-daygrid-day-bottom').addClass('text-center');
-        $('.fc-daygrid-more-link')[0].childNodes[0].nodeValue='';
-        $('.fc-daygrid-more-link').append('<i class="fa fa-chevron-down" aria-hidden="true"></i>');
+        //$('.fc-daygrid-day-bottom').addClass('text-center');
+        //$('.fc-daygrid-more-link')[0].childNodes[0].nodeValue='';
+        //$('.fc-daygrid-more-link').append('<i class="fa fa-chevron-down" aria-hidden="true"></i>');
      });
     function RenderCalendar(){
 
@@ -156,7 +155,7 @@
         var m = today.getMonth();
         var d = today.getDate();
         calendar = new FullCalendar.Calendar(document.getElementById("calendarAppointmentSchedule"), {
-            locale:'EN',
+            locale:localStorage.getItem("Languages"),
             headerToolbar: false,
             initialView: "dayGridMonth",
             eventTimeFormat: {
@@ -243,7 +242,7 @@
                 else {
                     $("#LoaderCalendar").hide();
                     $("#calendar").removeClass("opacity-5");
-                    $(".fc-toolbar-title").html(calendar.view.title);
+                    //$(".fc-toolbar-title").html(calendar.view.title);
                 }
             },
         });

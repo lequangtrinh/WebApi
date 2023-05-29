@@ -411,7 +411,6 @@
                 }
             }
         for(let j=0;j< MasterDataMenu.length;j++){
-            console.log(MasterDataMenu[j].ChildNode.length)
               //dataChoose.push(ExeDataChildNode(MasterDataMenu[j].ChildNode,itemChildNode));
               dataChoose.push({"Name": MasterDataMenu[j].Name
                         ,"checked": 1
@@ -420,12 +419,10 @@
                         ,"Url":""
                       });
         }
-         //dataChoose=ExeDataChildNode(MasterDataMenu,itemChildNode);
-        console.log(dataChoose);
+
     }
    }
    function ExeDataChildNode(dataParent,dataChild){
-       console.log(dataParent.length);
        var res=[];
        if(dataParent.length>0){
            for(let j=0;j<dataParent.length;j++){
