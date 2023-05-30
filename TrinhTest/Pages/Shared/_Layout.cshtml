@@ -222,12 +222,7 @@
     let body = document.getElementsByTagName('body')[0];
     let className = 'g-sidenav-pinned';
     $(document).ready(function (){
-        LoadDataMenu();
-        ShowMenuMater();
-        CloseMneuMater();
-        LoadDataUser();
-        LoadDataPriceServices();
-        LoadTempMedicineReport();
+        PromisesDash();
     });
     //Load head dashboard
     function LoadDataUser(){
@@ -294,7 +289,6 @@
                         success: function (data) {
                             $("#MainRenderBody").empty();
                             $("#MainRenderBody_Manual").html(data);
-                            console.log(hreflayoutnone)
                             window.history.pushState(href, 'Title', hreflayoutnone);
                            // MS_SetHeaderNavi();
                         }
@@ -326,16 +320,27 @@
            , error = function () { notiError_SW(); }
             , success = function (result) {
                 if (result != "") {
-                    let data=JSON.parse(result);
-                     RenderDataMenuMater(data,"sidenav-collapse-main");
-                     eleClickMenuDash();
-                    notiSuccess();
+                  let data=JSON.parse(result);
+                    RenderDataMenuMater(data,"sidenav-collapse-main");
+                    eleClickMenuDash();
+                    ShowMenuMater();
+                    CloseMenuMater();
                 }
                 else{
                     notiError_SW();
                 }
             });
     }
+    function PromisesDash(){
+        var promises = [];
+            let i = 1;
+            promises.push(LoadDataMenu());
+            promises.push(LoadDataUser());
+            promises.push(LoadDataPriceServices());
+            promises.push(LoadTempMedicineReport());
+            Promise.all(promises).then((values) => {
+            });
+    };
     ///
     function RenderDataMenuMater(data,id){
         let stringContent = '';
@@ -386,7 +391,7 @@
             iconNavbarSidenav.addEventListener("click", toggleSidenav);
         }
     }
-    function CloseMneuMater(){
+    function CloseMenuMater(){
         if (iconSidenav) {
             iconSidenav.addEventListener("click", toggleSidenav);
         }

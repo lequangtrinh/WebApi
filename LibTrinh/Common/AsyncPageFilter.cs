@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using System.Text;
@@ -7,7 +8,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace LibTrinh.Common
 {
-    public class AsyncPageFilter : IAsyncActionFilter
+    public class AsyncPageFilter  :IAsyncActionFilter
     {
         private readonly IConfiguration _config;
         public AsyncPageFilter(IConfiguration config)
@@ -26,9 +27,8 @@ namespace LibTrinh.Common
                     {
                         isPass = false;
                     }
-                    
-                }
 
+                }
             }
             if (isPass) await next.Invoke();
             else return;

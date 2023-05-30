@@ -11,7 +11,7 @@ namespace LibTrinh.Common
         {
             try
             {
-                return false;
+                return true;
                 //if (CheckMenuIsHideFromServer(pageAbsoulte))
                 //{
                 //    if (CheckCurrentPageIsPageWithoutPermission(pageAbsoulte))
