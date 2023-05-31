@@ -127,5 +127,14 @@ namespace TrinhTest.Controllers
             if (!res) return Content("0");
             else return Content("1");
         }
+        [Route("SendMail")]
+        [HttpPost]
+        public async Task<IActionResult> SendMail(string email)
+        {
+            var res = _AuthenService.ReqOTPPassWord(email);
+            return Ok(res);
+
+
+        }
     }
 }

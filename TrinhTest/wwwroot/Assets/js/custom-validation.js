@@ -191,7 +191,7 @@ $('.form3').form({
             identifier: 'emailValidate',
             rules: [
                 {
-                    type: 'emailValidate',
+                    type: 'empty',
                     prompt: 'Please enter a valid e-mail'
                 }
             ]

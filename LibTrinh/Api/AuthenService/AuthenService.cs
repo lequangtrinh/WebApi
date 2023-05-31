@@ -3,13 +3,11 @@ using Microsoft.Extensions.Configuration;
 using LibTrinh.Models;
 using Microsoft.AspNetCore.Http;
 using System.Data;
-using MailKit.Security;
-using MimeKit.Text;
-using MimeKit;
-using MailKit.Net.Smtp;
 using Newtonsoft.Json;
 using System.Text;
 using LibTrinh.Common;
+using System.Net.Mail;
+using System.Net;
 
 namespace LibTrinh.Api.AuthenService
 {
@@ -318,8 +316,15 @@ namespace LibTrinh.Api.AuthenService
                 string subject, body = string.Empty;
                 if (numVerify == _NumBerOTP)
                 {
-                    subject = "Mật khẩu mới của bạn là: 11111";
-                    body = "Xác thực thành công mật khẩu mới của bạn ";
+                    subject = "Mật khẩu mới của bạn";
+                    body = body = string.Format(@"<H1>Hey Alice,<H1>
+                        <p>Cảm ơn bạn đã sử dụng hệ thống O2O
+                        Saturday and I was hoping you could make it.<br>
+                        <p>Mật khẩu mới của bạn la :11111<br>
+                        <p>-- Joey<br>
+                        <center><img src=""cid:{C:\New folder\WebApi\TrinhTest\wwwroot\Assets\img\doctor.jpg}""></center><br>
+                        <p>----------------------------------------------------------------------"); ;
+                    SendMail(email, subject, body);
                 }
                 else return false;
 
@@ -339,18 +344,31 @@ namespace LibTrinh.Api.AuthenService
         {
             try
             {
-                var emailData = new MimeMessage();
-                emailData.From.Add(MailboxAddress.Parse(_config["EmailSettings:EmailId"].ToString()));
-                emailData.To.Add(MailboxAddress.Parse(email.Trim()));
-                emailData.Subject = subject;
-                emailData.Body = new TextPart(TextFormat.Plain) { Text = body };
 
+                //var emailData = new MimeMessage();
+                //emailData.From.Add(MailboxAddress.Parse(_config["EmailSettings:EmailId"].ToString()));
+                //emailData.To.Add(MailboxAddress.Parse(email.Trim()));
+                //emailData.Subject = subject;
+                //emailData.Body = new TextPart("html") { Text = body };
+                var mailMessage = new MailMessage
+                {
+                    From = new MailAddress(_config["EmailSettings:EmailId"].ToString()),
+                    Subject = subject,
+                    Body = body,
+                    IsBodyHtml = true,
+                };
+                mailMessage.To.Add(email);
                 // send email
-                var smtp = new SmtpClient();
-                smtp.Connect(_config["EmailSettings:Host"].ToString(), Convert.ToInt32(_config["EmailSettings:Port"]), SecureSocketOptions.StartTls);
-                smtp.Authenticate(_config["EmailSettings:EmailId"].ToString(), _config["EmailSettings:Password"].ToString());
-                smtp.Send(emailData);
-                smtp.Disconnect(true);
+                var smtpClient = new SmtpClient(_config["EmailSettings:Host"].ToString())
+                {
+                    Port = 587,
+                    UseDefaultCredentials = false,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    Credentials = new NetworkCredential(_config["EmailSettings:EmailId"].ToString()
+                                                        ,_config["EmailSettings:Password"].ToString()),
+                    EnableSsl = true,
+            };
+                smtpClient.Send(mailMessage);
                 return true;
             }
             catch (Exception ex)
@@ -358,7 +376,6 @@ namespace LibTrinh.Api.AuthenService
                 _fileLogger.Error(ex.Message);
                 return false;
             }
-            return false;
         }
 
         /// <summary>
@@ -374,8 +391,11 @@ namespace LibTrinh.Api.AuthenService
                 Random rnd = new Random();
                 _NumBerOTP = rnd.Next(1, 10000);
                 string subject, body = string.Empty;
-                subject = "Mã xác thực của bạn là:";
-                body = "Mã xác thực ";
+                subject = "Mã xác thực của bạn";
+                body = "<H1>Hey Alice,<H1><p>Cảm ơn bạn đã sử dụng hệ thống O2O.<br>"
+                        +"<p>Mã OTP Của bạn là :"+ _NumBerOTP + "<br>"
+                        +"<p>Joey<br>"
+                        +"<center><span>trinh test mail</span></center>";
                 SendMail(email, subject, body);
                 return _NumBerOTP.ToString();
             }

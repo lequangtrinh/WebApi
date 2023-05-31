@@ -38,7 +38,7 @@
                             <div class="col-12 col-md-2 col-xl-1 flex-grow-1 me-5 ">
                                 <div class="btn-group">
                                     <a class="_tab_control_ btn btn-dark border-start border-light btn-sm px-3" onclick="event.preventDefault(); return Manu_LevelAdd()" data-tab="add_tab_payment_return">
-                                        <i class="ni text-white vtt-icon vttech-icon-add"></i>
+                                        <i class="ni text-white fa fa-plus"></i>
                                     </a>
                                     <a class="_tab_control_ btn btn-dark border-start border-light btn-sm px-3 text-sm text-secondar" onclick="event.preventDefault(); return Manu_ShowTreeItemAll()" data-tab="add_tab_payment_service">
                                         ALL
@@ -134,7 +134,7 @@
             let tr = '<div class="cursor-pointer floor border-dashed border-1 border-secondary border-radius-md d-inline-flex align-items-center justify-content-center me-2 mb-2 buttonShowClick" data-id="' + item.ID + '" data-floor="' + item.ID + '">'
                 + '<i dataid=' + item.ID + ' class="fas fa-cog text-dark text-xs mx-2 levelDetail" title="Chi Tiết Tầng"></i>'
                 + '<h6 class="font-weight-bold my-2"><a class="text-primary" id="fl' + item.ID + '">' + item.Bed_Number + '</a></h6>'
-                + '<i dataid=' + item.ID + ' class="vtt-icon vttech-icon-add text-dark mx-2 text-xs addroom" title="Thêm Phòng"></i>'
+                + '<i dataid=' + item.ID + ' class="fa fa-plus text-dark mx-2 text-xs addroom" title="Thêm Phòng"></i>'
                 + '</div>'
             stringcontent += tr;
         }
@@ -153,14 +153,14 @@
                     let tr = '<div class="timeline-block mb-3 mx-2">'
                         + '<span class="timeline-step">'
                         + '<div class="icon icon-shape icon-sm ms-n2 me-0 bg-gradient-dark shadow text-center">'
-                        + '<i class="text-lg fab fa-servicestack"></i>'
+                        + '<i class="text-lg fa fa-user-md"></i>'
                         + '</div>'
                         + '</span>'
                         + '<div class="timeline-content" style="max-width:100%;">'
                         + '<div class="d-flex">'
                         + '<i dataid=' + item_room.ID + ' class="cursor-pointer fas fa-cog text-dark mx-2 text-xs mt-1 roomDetail" title="Chi Tiết Phòng"></i>'
                         + '<h6 class="text-dark font-weight-bold mb-2"><a id="fl' + item_room.ID + '">' + item_room.Bed_Number + '</a></h6>'
-                        + '<i dataid=' + item_room.ID + ' class="cursor-pointer vtt-icon vttech-icon-add mx-2 text-dark text-xs addchair" title="Thêm Giường/Ghế"></i>'
+                        + '<i dataid=' + item_room.ID + ' class="cursor-pointer fa fa-plus mx-2 mt-1 text-dark text-xs addchair" title="Thêm Giường/Ghế"></i>'
                         + '</div>'
                         + '<div class="row">'
                         + Manufacture_Render_Chair_Layout(chairByroom)
