@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TrinhTest.Controllers.API
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ServicesController : ControllerBase

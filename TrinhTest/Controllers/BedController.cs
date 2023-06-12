@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using LibTrinh;
 using LibTrinh.Api;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrinhTest.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class BedController : ControllerBase

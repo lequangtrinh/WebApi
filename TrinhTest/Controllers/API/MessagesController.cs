@@ -11,7 +11,7 @@ namespace TrinhTest.Controllers.API
     [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    public class ApiMessages:ControllerBase
+    public class MessagesController:ControllerBase
     {
         private readonly IConfiguration _config;
         private readonly IMessages _Imessages;
@@ -20,7 +20,7 @@ namespace TrinhTest.Controllers.API
         /// <summary>
         /// Custrustor
         /// </summary>
-        public ApiMessages(IConfiguration config, IMessages messages, IRedisCacheService IRedisCache)
+        public MessagesController(IConfiguration config, IMessages messages, IRedisCacheService IRedisCache)
         {
             _config = config;
             _Imessages = messages;

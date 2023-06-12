@@ -1,11 +1,13 @@
 ﻿using LibTrinh;
 using LibTrinh.Api;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 
 namespace TrinhTest.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class MaterController : ControllerBase

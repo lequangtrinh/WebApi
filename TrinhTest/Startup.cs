@@ -5,7 +5,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using AspNetCoreRateLimit;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using WebMarkupMin.AspNetCore6;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,7 +13,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-//using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using System;
+using System.Threading.Tasks;
+
 namespace TrinhTest
 {
     /// <summary>
@@ -56,13 +57,13 @@ namespace TrinhTest
             #endregion
             services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false).AddNewtonsoftJson();
             services.AddResponseCaching();
-            var xx = Configuration.GetSection("Authentication:ClientID");
+            //using RSA rsa = RSA.Create();
+            //rsa.ImportRSAPrivateKey(Convert.FromBase64String(configuration["jwt:privateKey"]), out int _);
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-             .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
              .AddJwtBearer(
                  options =>
                  {
@@ -70,13 +71,16 @@ namespace TrinhTest
                      {
                          ValidateIssuerSigningKey = true,
                          IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("Jwt").GetSection("SecretKey").Value)),
+                         //when check author api login
+                         //IssuerSigningKey = new RsaSecurityKey(rsa),
                          ValidateIssuer = true,
                          ValidateAudience = true,
                          ValidateLifetime = true,
                          ValidIssuer = Configuration.GetSection("JWT").GetSection("Issuer").Value,
                          ValidAudience = Configuration.GetSection("JWT").GetSection("Issuer").Value
                      };
-                 });
+                 }
+            );
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;
@@ -149,6 +153,12 @@ namespace TrinhTest
             services.AddSingleton<IIpPolicyStore, DistributedCacheIpPolicyStore>();
             services.AddSingleton<IRateLimitCounterStore, DistributedCacheRateLimitCounterStore>();
             #endregion
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
             services.AddRazorPages().AddRazorPagesOptions(options => { }).AddNewtonsoftJson().AddMvcOptions(options =>
             {
                 options.Filters.Add(new AsyncPageFilter(Configuration));
@@ -173,7 +183,7 @@ namespace TrinhTest
                 app.UseWebMarkupMin();
             }
             app.UseIpRateLimiting();
-            //app.UseSession();
+            app.UseSession();
             if (env.IsDevelopment()){app.UseDeveloperExceptionPage();}
             else{app.UseExceptionHandler("/Error");app.UseHsts();};
             //pLoggerFactory.AddLog4Net();
@@ -186,20 +196,16 @@ namespace TrinhTest
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                if (env.IsDevelopment())
-                {
-                    endpoints.MapControllerRoute(
-                        name: "default",
-                        pattern: "{controller}/{action}/{id?}",
-                        defaults: new { controller = "Home", action = "Index" });
-                }
-                else
-                {
-                    endpoints.MapControllerRoute(
-                      name: "default",
-                      pattern: "{controller}/{action}/{id?}",
-                      defaults: new { controller = "Home", action = "Index" });
-                }
+                endpoints.MapControllerRoute(
+                  name: "default",
+                  pattern: "{controller}/{action}/{id?}",
+                  defaults: new { controller = "Home", action = "Index" }
+                );
+                endpoints.MapControllerRoute(
+                  name: "api",
+                  pattern: "api/{controller}/{action}/{id?}",
+                  defaults: new { controller = "Home", action = "Index" }
+                );
                 endpoints.MapRazorPages();
                 endpoints.MapHub<MessagesHub>("/MessagesHub");
 

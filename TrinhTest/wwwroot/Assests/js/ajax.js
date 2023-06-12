@@ -17,18 +17,18 @@
             if (result != undefined)
                 if (success != undefined && success != null && success.length != 0) success(result);
         },
-        //beforeSend: function (xhr) {
-        //    xhr.setRequestHeader("XSRF-TOKEN",
-        //        $('input:hidden[name="__RequestVerificationToken"]').val());
-        //    if (before != undefined && before != null && before.length != 0) before();
-        //    if (sender != undefined && sender != null && sender.length != 0)
-        //        sender.css('pointer-events', 'none');
-        //},
-        //complete: function (e) {
-        //    if (complete != undefined && complete != null && complete.length != 0) complete(e);
-        //    if (sender != undefined && sender != null && sender.length != 0)
-        //        sender.css('pointer-events', 'auto');
-        //}
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("XSRF-TOKEN",
+                $('input:hidden[name="__RequestVerificationToken"]').val());
+            if (before != undefined && before != null && before.length != 0) before();
+            if (sender != undefined && sender != null && sender.length != 0)
+                sender.css('pointer-events', 'none');
+        },
+        complete: function (e) {
+            if (complete != undefined && complete != null && complete.length != 0) complete(e);
+            if (sender != undefined && sender != null && sender.length != 0)
+                sender.css('pointer-events', 'auto');
+        }
     });
 }
 function AjaxJWT (url, data, async, success) {
@@ -44,7 +44,7 @@ function AjaxJWT (url, data, async, success) {
                     success(result);
         }
         , beforeSend: function (xhr) {
-            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("WebToken"));
+            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("X-Access-Token"));
         },
     });
 }

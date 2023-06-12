@@ -39,6 +39,47 @@
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="bundleconfig.json" />
+		<None Include="wwwroot\Assests\dist\jssip\callexecute.js" />
+		<None Include="wwwroot\Assests\dist\jssip\dist\jssip.js" />
+		<None Include="wwwroot\Assests\dist\jssip\dist\jssip.min.js" />
+		<None Include="wwwroot\Assests\dist\jssip\jssip-3.0.7-custom.js" />
+		<None Include="wwwroot\Assests\dist\jssip\jssip-3.0.7.min.js" />
+		<None Include="wwwroot\Assests\dist\jssip\jssip-3.3.11.min.js" />
+		<None Include="wwwroot\Assests\dist\jssip\jssip-3.7.0-custom.js" />
+		<None Include="wwwroot\Assests\dist\jssip\libcall.js" />
+		<None Include="wwwroot\Assests\dist\jssip\libcall1.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Config.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Constants.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Dialog.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Dialog\RequestSender.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\DigestAuthentication.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Exceptions.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Grammar.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Grammar.pegjs" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\JsSIP.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Message.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\NameAddrHeader.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Parser.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Registrator.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\RequestSender.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\RTCSession.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\RTCSession\DTMF.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\RTCSession\Info.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\RTCSession\ReferNotifier.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\RTCSession\ReferSubscriber.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\sanityCheck.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\SIPMessage.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Socket.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Timers.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Transactions.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Transport.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\UA.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\URI.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\Utils.js" />
+		<None Include="wwwroot\Assests\dist\jssip\lib\WebSocketInterface.js" />
+		<None Include="wwwroot\Assests\dist\jssip\README.md" />
+		<None Include="wwwroot\Assests\dist\jssip\require.js" />
+		<None Include="wwwroot\Assests\dist\jssip\sip-0.11.6.min.js" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\LibTrinh\LibTrinh.csproj" />

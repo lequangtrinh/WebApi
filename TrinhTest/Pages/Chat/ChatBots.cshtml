@@ -148,7 +148,7 @@
         }
         // load data Messages Friend User
         function LoadDataFriendChat(){
-                AjaxLoad(url = "/api/ApiMessages/loadFriendChat?UserID="+localStorage.getItem("X-UserID")+""
+                AjaxLoad(url = "/api/Messages/loadFriendChat?UserID="+localStorage.getItem("X-UserID")+""
                 ,data= {}
                 ,async = true
                 ,error = null
@@ -243,7 +243,7 @@
             }
             //load data Messages Item User
             function LoadDataMessagesUser(UserIdTo){
-              AjaxLoad(url = "/api/ApiMessages/LoadDataMessages"
+              AjaxLoad(url = "/api/Messages/LoadDataMessages"
                 ,data= JSON.stringify({
                     UserID:localStorage.getItem("X-UserID"),
                     UserIDTo:UserIdTo

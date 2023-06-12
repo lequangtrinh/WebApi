@@ -1,6 +1,6 @@
 ﻿@page
 @{
-    Layout = null;
+   Layout = null;
 }
 @Html.AntiForgeryToken()
 <script src="/js/Common/initialize_setting.js"></script>
@@ -84,6 +84,13 @@
                             }
                         });
                     }
+                },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                    //if (before != undefined && before != null && before.length != 0);
+                    //if (sender != undefined && sender != null && sender.length != 0)
+                    //    sender.css('pointer-events', 'none');
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     notiError_SW();

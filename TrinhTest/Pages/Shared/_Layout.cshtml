@@ -17,17 +17,19 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/rsvp@4/dist/rsvp.min.js"></script>
     <script src="/Assests/js/ajax.min.js" type="text/javascript"></script>
     <script src="/Assets/js/core/bootstrap.js"></script>
     <script src="/js/site.js"></script>
+    <script src="/js/Preload/basket.min.min.js"></script>
     <script src="/lib/jquery-validation/dist/semantic.min.js"></script>
     <script src="/Assets/js/plugins/datatables.js"></script>
     <script src='/Assests/dist/Paginationjs/paginationjs.min.js'></script>
-     <script src="/Assets/js/plugins/chartjs.min.js"></script>
-     <script src="/Assests/dist/components/visibility.js"></script>
-     <script src="/Assests/dist/components/visibility.min.js"></script>
-      <script src="/Assests/dist/ColorPicker/spectrum.js"></script>
-      <link href="/Assests/dist/ColorPicker/spectrum.css" rel="stylesheet"/>
+    <script src="/Assets/js/plugins/chartjs.min.js"></script>
+    <script src="/Assests/dist/components/visibility.js"></script>
+    <script src="/Assests/dist/components/visibility.min.js"></script>
+    <script src="/Assests/dist/ColorPicker/spectrum.js"></script>
+    <link href="/Assests/dist/ColorPicker/spectrum.css" rel="stylesheet" />
 </head>
 <body class="g-sidenav-show bg-gray-100 " id="BodyMain">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 ps ps--active-y ps--collapsing-y" id="sidenav-main">
@@ -46,7 +48,7 @@
         </div>
         <div class="sidenav-footer mx-3 mt-3 pt-3">
             <div class="card card-background shadow-none card-background-mask-secondary" id="sidenavCard">
-                <div class="full-background" style="background-image: url('Assets/img/curved-images/white-curved.jpg')"></div>
+                <div class="full-background" style="background-image: url('/Assets/img/curved-images/white-curved.jpeg')"></div>
                 <div class="card-body text-start p-3 w-100">
                     <div class="icon icon-shape icon-sm bg-white shadow text-center mb-3 d-flex align-items-center justify-content-center border-radius-md">
                         <i class="ni ni-diamond text-dark text-gradient text-lg top-0" aria-hidden="true" id="sidenavCardIcon"></i>
@@ -112,7 +114,7 @@
                                                 <img src="/Assets/img/icons/flags/vietnam.png" class="avatar avatar-sm bg-gradient-dark  me-3 " alt="logo spotify">
                                             </div>
                                             <h6 class="text-sm font-weight-normal mb-1">
-                                                <span class="font-weight-bold">VietNam</span> 
+                                                <span class="font-weight-bold">VietNam</span>
                                             </h6>
                                         </div>
                                     </a>
@@ -186,247 +188,310 @@
         <div id="MainRenderBody_Manual" class="pusher  mx-3 border-radius-lg  px-0">
         </div>
     </main>
-        <div class="position-fixed bottom-1 end-1 z-index-2" id="MS_Notification">
+    <div class="position-fixed bottom-1 end-1 z-index-2" id="MS_Notification">
+    </div>
+    <div class="position-absolute top-0 start-50 translate-middle-x z-index-2" id="MS_NotificationTop">
+        <div id="CallCenter_Area" class="toast fade show p-2 mt-2 bg-gradient-info d-none" role="alert" aria-live="assertive" aria-atomic="true">
+            <audio id="audio_callcenter" autoplay="autoplay" loop></audio>
+            <div class="toast-header bg-transparent border-0">
+                <i class="fab fa-stumbleupon-circle fa-spin text-md text-white me-3" aria-hidden="true"></i>
+                <span id="CallCenter_Header" class="me-auto text-white font-weight-bold">Incomming Call</span>
+
+            </div>
+            <hr class="horizontal light m-0">
+            <div class="toast-body text-white">
+                <div class="d-flex align-items-center">
+                    <div class="icon icon-shape icon-sm me-3 shadow text-center">
+                        <img id="CallCenter_Avatar" alt="avatar" src="/Assets/img/gray.png"
+                             class="call-animation avatar avatar-sm" />
+                    </div>
+                    <div class="d-flex flex-column">
+                        <h6 id="CallCenter_Phone" class="text-md text-white mb-0"></h6>
+                        <h6 id="CallCenter_Name" class="mb-1 text-sm text-white"></h6>
+
+                    </div>
+
+                </div>
+                <div class="d-flex ms-5" id="CallCenter_MultiPhone">
+                </div>
+                <div class="d-flex mt-4" id="CallCenter_HangDiv">
+                    <div class="text-center">
+                        <button class="btn bg-gradient-light btn-sm my-0"
+                                onclick="event.preventDefault();return CCF_Incom_Decline()">
+                            Decline
+                        </button>
+                    </div>
+                    <div class="d-flex flex-column ms-auto">
+                        <button class="btn bg-gradient-success btn-sm my-0"
+                                onclick="event.preventDefault();return CCF_Incom_Accept();">
+                            Accept
+                        </button>
+                    </div>
+                </div>
+                <div id="CallCenter_ProgressingArea" class="d-flex mt-4 d-none">
+                    <div class="text-center">
+                        <div id="CallCenter_ProgressingTime"></div>
+                    </div>
+                    <div class="d-flex ms-auto">
+
+                        <div id="CallCenter_ProgressingMute" class=" cursor-pointer  icon-shape icon-xs shadow border-radius-lg blur text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="fas fa-microphone text-dark  text-md pt-2" style=" font-size: 14px;"></i>
+                        </div>
+                        <div id="CallCenter_ProgressingUnMute" class="cursor-pointer  icon icon-shape icon-xs shadow border-radius-lg bg-gradient-danger text-center me-2 d-flex align-items-center justify-content-center d-none">
+                            <i class="text-white fas fa-microphone-slash text-md pt-2" style=" font-size: 14px;"></i>
+                        </div>
+                        <span id="CallCenter_ProgressingEndCall" class="cursor-pointer badge bg-gradient-danger">End call</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        @await RenderSectionAsync("Scripts", required: false)
-        <script src="/Assests/dist/signalr/dist/browser/signalr.js"></script>
-         <script src="/Assests/dist/components/visibility.js"></script>
-      <script src="/Assests/dist/components/visibility.min.js"></script>
-       <script src="/js/Common/main.js"></script>
-<script>
-    document.getElementById("LogOutUser").addEventListener("click",ClickLogOutUser);
-    localStorage.setItem("Languages",'en');
-    function ClickLogOutUser(){
-        localStorage.removeItem("X-UserID");
-        localStorage.removeItem("X-Access-Token");
-        localStorage.removeItem("X-PublicKey");
-        var urlPath=window.location.href.replace(window.location.pathname,("/Login/Login" + "?first=1&ver=" + (new Date().getTime())));
-        window.history.pushState('urlPath','Title', urlPath);
-        window.location.reload();
-    };
-     $("#Languagesdropdown").click(function (e) {
-        if ($("#CkeckLanguages").hasClass('show')) {
-            $("#CkeckLanguages").removeClass('show');
-        }
-        else {
-            $("#CkeckLanguages").addClass('show');
-            ClickSettingLanguages();
-        }
-    });
- </script>
- <script type="text/javascript">
-
-    const iconNavbarSidenav = document.getElementById('iconNavbarSidenav');
-    const iconSidenav = document.getElementById('iconSidenav');
-    const sidenav = document.getElementById('sidenav-main');
-    let body = document.getElementsByTagName('body')[0];
-    let className = 'g-sidenav-pinned';
-    $(document).ready(function (){
-        PromisesDash();
-    });
-    //Load head dashboard
-    function LoadDataUser(){
-         AjaxLoad(url = "/api/Mater/LoadDataHeardDashBoard"
-            , data = {
-            }, async = true
-           , error = function () { notiError_SW(); }
-            , success = function (result) {
-                if (result != "") {
-                    let data=JSON.parse(result);
-                    DashMasterCountUpNumber("Dash_User_Doctor",data[0].APPOINTMENT_COUNT);
-                    DashMasterCountUpNumber("Dash_Price_Patient",data[0].DOCTOR_COUNT);
-                    DashMasterCountUpNumber("Dash_User_Prescription",data[0].PATIENT_COUNT);
-                    DashMasterCountUpNumber("Dash_User_Appointment",data[0].PRESCRIPTION_COUNT);
-                    notiSuccess();
-                }
-                else{
-                    notiError_SW();
-                }
-            });
-    }
-     // execute click child node menu dash
-    function eleClickMenuDash(){
-         $("#collapse_Dashboards").addClass('show');
-         $("#parent_Dashboards").children()[0].classList.add('bg-gradient-light');
-        var ele=document.querySelectorAll('.settingCollapse');
-        ele.forEach((node) => {
-            node.addEventListener("click", e => {
-                let countClick=0;
-                if(e.target.children[1] != undefined){
-                    countClick=1;
-                }
-            if($("#collapse_"+e.target.children[countClick].innerText).hasClass("show")){
-                $("#collapse_"+e.target.children[countClick].innerText).removeClass("show");
-                document.getElementById(e.target.id).setAttribute("aria-expanded", false);
-                e.target.querySelector('div').classList.remove("bg-gradient-light");
+    </div>
+    <script>
+        var Incommingaudio = new Audio('/Assets/img/Call/incommingCall.mp3');
+         var Messagegaudio = new Audio('/Assets/img/Call/message.mp3');
+         js_require("/js/Common/main.js");
+           js_require("/Assests/Library/jquery-ui.js");
+           js_require_notasync('/Assests/dist/HightLight/dist/jquery.mark.js');
+           js_require_notasync('/Assests/Library/jquery.signalR-2.4.1.min.js');
+           js_require_notasync('/Assests/dist/signalr/dist/browser/signalr.js');
+           js_require_notasync('/js/Common/KeepAlive.js');
+           js_require_notasync('/js/Common/Callcenter.js', true);
+           js_require('/Assests/dist/jssip/jssip-3.0.7-custom.js');
+           js_require('/Assests/dist/jssip/callexecute.js');
+        document.getElementById("LogOutUser").addEventListener("click",ClickLogOutUser);
+        localStorage.setItem("Languages",'en');
+        function ClickLogOutUser(){
+            localStorage.removeItem("X-UserID");
+            localStorage.removeItem("X-Access-Token");
+            localStorage.removeItem("X-PublicKey");
+            var urlPath=window.location.href.replace(window.location.pathname,("/Login/Login" + "?first=1&ver=" + (new Date().getTime())));
+            window.history.pushState('urlPath','Title', urlPath);
+            window.location.reload();
+        };
+         $("#Languagesdropdown").click(function (e) {
+            if ($("#CkeckLanguages").hasClass('show')) {
+                $("#CkeckLanguages").removeClass('show');
             }
-            else
-                {
-                    document.getElementById(e.target.id).setAttribute("aria-expanded", true);
-                    $("#collapse_"+e.target.children[countClick].innerText).addClass("show");
-                    e.target.querySelector('div').classList.add("bg-gradient-light");
-                }
-            })
+            else {
+                $("#CkeckLanguages").addClass('show');
+                ClickSettingLanguages();
+            }
         });
-        $('#sidenav-collapse-main').on('click', '.Settingitem__item', function (e) {
-                e.preventDefault();
-                $('#sidenav-collapse-main .Settingitem__item').removeClass('active');
-                let namechild = '', namegroup = '';
-                namechild = $(this).attr("data-name");
-                $(this).addClass('active');
-                let objparent = $(this).parent().parent();
-                if (objparent != undefined) {
-                    objparent.addClass('active');
-                    namegroup = objparent.attr("data-name");
-                }
-                let href = $(this).attr('href');
-                let hreflayoutnone = href + '?layout=none' + '&ver=' + versionofWebApplication;
-                MS_UrlRoot = namegroup;
-                MS_UrlChild = namechild;
-                if (href != '#') {
-                    $.ajax({
-                        url: hreflayoutnone,
-                        success: function (data) {
-                            $("#MainRenderBody").empty();
-                            $("#MainRenderBody_Manual").html(data);
-                            window.history.pushState(href, 'Title', hreflayoutnone);
-                           // MS_SetHeaderNavi();
-                        }
-                    })
-                }
-    });
-    }
-    function DashMasterCountUpNumber(id,valueCount){
-        if (document.getElementById(id).hasAttribute("countTo")) {
-                     document.getElementById(id).setAttribute("countTo", valueCount);
-             };
-        if (document.getElementById(id)) {
-          const countUp = new CountUp(id, document.getElementById(id).getAttribute("countTo"));
-          if (!countUp.error) {
-            countUp.start();
-          }
-        }
-    }
-    ////
-    function ExecuteText(){
-         $('#form_Career').form('validate form');
-         if ($('#accountDetail').form('is valid')) {
-         }
-    }
-    function LoadDataMenu(){
-         AjaxLoad(url = "/api/Mater/LoadDataMenu"
-            , data = {
-            }, async = true
-           , error = function () { notiError_SW(); }
-            , success = function (result) {
-                if (result != "") {
-                  let data=JSON.parse(result);
-                    RenderDataMenuMater(data,"sidenav-collapse-main");
-                    eleClickMenuDash();
-                    ShowMenuMater();
-                    CloseMenuMater();
-                }
-                else{
-                    notiError_SW();
-                }
-            });
-    }
-    function PromisesDash(){
-        var promises = [];
-            let i = 1;
-            promises.push(LoadDataMenu());
-            promises.push(LoadDataUser());
-            promises.push(LoadDataPriceServices());
-            promises.push(LoadTempMedicineReport());
-            Promise.all(promises).then((values) => {
-            });
-    };
-    ///
-    function RenderDataMenuMater(data,id){
-        let stringContent = '';
-        for(let i=0;i<data.length;i++){
-            let item=data[i];
-            let replaceDataCollapse='';
-            if(item.Childs.length >0){
-                replaceDataCollapse='data-bs-toggle="collapse" aria-controls='+item.Name+' role="button" aria-expanded="false"'
-            }
-            let tr ='<li class="nav-item settingCollapse">'
-                    +'<a '+replaceDataCollapse+' href="#" id="parent_'+item.Name+'" class="nav-link cursor-pointer">'
-                    +'<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2">'
-                    +'<i class="'+item.Img+' text-secondary"></i>'
-                    +'</div>'
-                    +'<span class="text-dark">'+item.Name+'</span>'
-                    +'</a>'
-                    + RenderDataChildMasterMenu(item.Childs,item.Name)
-                    +'</li>';
-          stringContent=stringContent+tr;
-        }
-         document.getElementById(id).innerHTML = stringContent;
-    }
-    function RenderDataChildMasterMenu(dataChild,id){
-        let resulf  = '';
-        if(dataChild.length >0){
-            let tr ='<div class="collapse" id=collapse_'+id+'>'
-                     +'<ul class="nav ms-2 ps-3 me-2">'
-            for(let i=0;i<dataChild.length;i++){
-                var item=dataChild[i];
-                 let coll='href="' + item.Url + '"';
-                 if(dataChild[i].ChildNode.length>0){
-                     coll='data-bs-toggle="collapse" href="#"'
-                 }
+    </script>
+    <script type="text/javascript">
 
-                tr += '<li class="nav-item cursor-pointer">'
-                    +'<a class="nav-link Settingitem__item"'+coll+'id="Layout_'+item.Name+'">'
-                    +'<span class="sidenav-normal">'+item.Name+'</span>'
-                    +'</a>'
-                    +RenderDataChildMasterMenu(dataChild[i].ChildNode,item.Name)
-                    +'</li>'
+        const iconNavbarSidenav = document.getElementById('iconNavbarSidenav');
+        const iconSidenav = document.getElementById('iconSidenav');
+        const sidenav = document.getElementById('sidenav-main');
+        let body = document.getElementsByTagName('body')[0];
+        let className = 'g-sidenav-pinned';
+        $(document).ready(function (){
+            PromisesDash();
+            CCF_OutcomCall("0354709903", 0, 0, 0);
+        });
+        //Load head dashboard
+        function LoadDataUser(){
+             AjaxJWT(url = "/api/Mater/LoadDataHeardDashBoard"
+                , data = {
+                }, async = true
+               , error = function () { notiError_SW(); }
+                , success = function (result) {
+                    if (result != "") {
+                        let data=JSON.parse(result);
+                        DashMasterCountUpNumber("Dash_User_Doctor",data[0].APPOINTMENT_COUNT);
+                        DashMasterCountUpNumber("Dash_Price_Patient",data[0].DOCTOR_COUNT);
+                        DashMasterCountUpNumber("Dash_User_Prescription",data[0].PATIENT_COUNT);
+                        DashMasterCountUpNumber("Dash_User_Appointment",data[0].PRESCRIPTION_COUNT);
+                        notiSuccess();
+                    }
+                    else{
+                        notiError_SW();
+                    }
+                });
+        }
+         // execute click child node menu dash
+        function eleClickMenuDash(){
+             $("#collapse_Dashboards").addClass('show');
+             $("#parent_Dashboards").children()[0].classList.add('bg-gradient-light');
+            var ele=document.querySelectorAll('.settingCollapse');
+            ele.forEach((node) => {
+                node.addEventListener("click", e => {
+                    let countClick=0;
+                    if(e.target.children[1] != undefined){
+                        countClick=1;
+                    }
+                if($("#collapse_"+e.target.children[countClick].innerText).hasClass("show")){
+                    $("#collapse_"+e.target.children[countClick].innerText).removeClass("show");
+                    document.getElementById(e.target.id).setAttribute("aria-expanded", false);
+                    e.target.querySelector('div').classList.remove("bg-gradient-light");
+                }
+                else
+                    {
+                        document.getElementById(e.target.id).setAttribute("aria-expanded", true);
+                        $("#collapse_"+e.target.children[countClick].innerText).addClass("show");
+                        e.target.querySelector('div').classList.add("bg-gradient-light");
+                    }
+                })
+            });
+            $('#sidenav-collapse-main').on('click', '.Settingitem__item', function (e) {
+                    e.preventDefault();
+                    $('#sidenav-collapse-main .Settingitem__item').removeClass('active');
+                    let namechild = '', namegroup = '';
+                    namechild = $(this).attr("data-name");
+                    $(this).addClass('active');
+                    let objparent = $(this).parent().parent();
+                    if (objparent != undefined) {
+                        objparent.addClass('active');
+                        namegroup = objparent.attr("data-name");
+                    }
+                    let href = $(this).attr('href');
+                    let hreflayoutnone = href + '?layout=none' + '&ver=' + versionofWebApplication;
+                    MS_UrlRoot = namegroup;
+                    MS_UrlChild = namechild;
+                    if (href != '#') {
+                        $.ajax({
+                            url: hreflayoutnone,
+                            success: function (data) {
+                                $("#MainRenderBody").empty();
+                                $("#MainRenderBody_Manual").html(data);
+                                window.history.pushState(href, 'Title', hreflayoutnone);
+                               // MS_SetHeaderNavi();
+                            }
+                        })
+                    }
+        });
+        }
+        function DashMasterCountUpNumber(id,valueCount){
+            if (document.getElementById(id).hasAttribute("countTo")) {
+                         document.getElementById(id).setAttribute("countTo", valueCount);
+                 };
+            if (document.getElementById(id)) {
+              const countUp = new CountUp(id, document.getElementById(id).getAttribute("countTo"));
+              if (!countUp.error) {
+                countUp.start();
+              }
             }
-            resulf=resulf+tr+'</ul>'+'</div>';
         }
-        return resulf;
-    }
-    function ShowMenuMater(){
-        if (iconNavbarSidenav) {
-            iconNavbarSidenav.addEventListener("click", toggleSidenav);
+        ////
+        function ExecuteText(){
+             $('#form_Career').form('validate form');
+             if ($('#accountDetail').form('is valid')) {
+             }
         }
-    }
-    function CloseMenuMater(){
-        if (iconSidenav) {
-            iconSidenav.addEventListener("click", toggleSidenav);
+        function LoadDataMenu(){
+             AjaxLoad(url = "/api/Mater/LoadDataMenu"
+                , data = {
+                }, async = true
+               , error = function () { notiError_SW(); }
+                , success = function (result) {
+                    if (result != "") {
+                      let data=JSON.parse(result);
+                        RenderDataMenuMater(data,"sidenav-collapse-main");
+                        eleClickMenuDash();
+                        ShowMenuMater();
+                        CloseMenuMater();
+                    }
+                    else{
+                        notiError_SW();
+                    }
+                });
         }
-    }
-    function PopUpDetail(){
-            $("#DetailModal_Content").html('');
-            $("#DetailModal_Content").load("/Login/ChangePassword");
-            $('#DetailModal').modal('show');
-            return false;
-    }
-    function toggleSidenav() {
-        if (body.classList.contains(className)) {
-        body.classList.remove(className);
-        setTimeout(function() {
-            sidenav.classList.remove('bg-white');
-        }, 100);
-        sidenav.classList.remove('bg-transparent');
+        function PromisesDash(){
+            var promises = [];
+                let i = 1;
+                promises.push(LoadDataMenu());
+                promises.push(LoadDataUser());
+                promises.push(LoadDataPriceServices());
+                promises.push(LoadTempMedicineReport());
+                Promise.all(promises).then((values) => {
+                });
+        };
+        ///
+        function RenderDataMenuMater(data,id){
+            let stringContent = '';
+            for(let i=0;i<data.length;i++){
+                let item=data[i];
+                let replaceDataCollapse='';
+                if(item.Childs.length >0){
+                    replaceDataCollapse='data-bs-toggle="collapse" aria-controls='+item.Name+' role="button" aria-expanded="false"'
+                }
+                let tr ='<li class="nav-item settingCollapse">'
+                        +'<a '+replaceDataCollapse+' href="#" id="parent_'+item.Name+'" class="nav-link cursor-pointer">'
+                        +'<div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center d-flex align-items-center justify-content-center me-2">'
+                        +'<i class="'+item.Img+' text-secondary"></i>'
+                        +'</div>'
+                        +'<span class="text-dark">'+item.Name+'</span>'
+                        +'</a>'
+                        + RenderDataChildMasterMenu(item.Childs,item.Name)
+                        +'</li>';
+              stringContent=stringContent+tr;
+            }
+             document.getElementById(id).innerHTML = stringContent;
+        }
+        function RenderDataChildMasterMenu(dataChild,id){
+            let resulf  = '';
+            if(dataChild.length >0){
+                let tr ='<div class="collapse" id=collapse_'+id+'>'
+                         +'<ul class="nav ms-2 ps-3 me-2">'
+                for(let i=0;i<dataChild.length;i++){
+                    var item=dataChild[i];
+                     let coll='href="' + item.Url + '"';
+                     if(dataChild[i].ChildNode.length>0){
+                         coll='data-bs-toggle="collapse" href="#"'
+                     }
 
-        } else {
-        body.classList.add(className);
-        sidenav.classList.add('bg-white');
-        sidenav.classList.remove('bg-transparent');
-        iconSidenav.classList.remove('d-none');
+                    tr += '<li class="nav-item cursor-pointer">'
+                        +'<a class="nav-link Settingitem__item"'+coll+'id="Layout_'+item.Name+'">'
+                        +'<span class="sidenav-normal">'+item.Name+'</span>'
+                        +'</a>'
+                        +RenderDataChildMasterMenu(dataChild[i].ChildNode,item.Name)
+                        +'</li>'
+                }
+                resulf=resulf+tr+'</ul>'+'</div>';
+            }
+            return resulf;
         }
-    };
-    //LoadDataPriceServices
-    function LoadDataPriceServices(){
-         $("#DashPriceServices").html('');
-          $("#DashPriceServices").load("/Setting/Services/SettingPriceServices");
-       };
-    //LoadTempMessages chatbots
-    function LoadTempMedicineReport(){
-        $("#DashMedicineReport").html('');
-        $("#DashMedicineReport").load("/Report/Medicine/MedicineReport");
-    };
-</script>
+        function ShowMenuMater(){
+            if (iconNavbarSidenav) {
+                iconNavbarSidenav.addEventListener("click", toggleSidenav);
+            }
+        }
+        function CloseMenuMater(){
+            if (iconSidenav) {
+                iconSidenav.addEventListener("click", toggleSidenav);
+            }
+        }
+        function PopUpDetail(){
+                $("#DetailModal_Content").html('');
+                $("#DetailModal_Content").load("/Login/ChangePassword");
+                $('#DetailModal').modal('show');
+                return false;
+        }
+        function toggleSidenav() {
+            if (body.classList.contains(className)) {
+            body.classList.remove(className);
+            setTimeout(function() {
+                sidenav.classList.remove('bg-white');
+            }, 100);
+            sidenav.classList.remove('bg-transparent');
+
+            } else {
+            body.classList.add(className);
+            sidenav.classList.add('bg-white');
+            sidenav.classList.remove('bg-transparent');
+            iconSidenav.classList.remove('d-none');
+            }
+        };
+        //LoadDataPriceServices
+        function LoadDataPriceServices(){
+             $("#DashPriceServices").html('');
+              $("#DashPriceServices").load("/Setting/Services/SettingPriceServices");
+           };
+        //LoadTempMessages chatbots
+        function LoadTempMedicineReport(){
+            $("#DashMedicineReport").html('');
+            $("#DashMedicineReport").load("/Report/Medicine/MedicineReport");
+        };
+    </script>
 </body>
 </html>

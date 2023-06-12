@@ -270,7 +270,7 @@ function Fun_GetArray_ByJson (data, json) {
 //#region // Javascript and css
 function js_require_notasync (url, loadnormal) {
     
-    if (VDMINIFY == "true" && !url.includes('/assests/') && !url.includes('/assets/') ) url = url.replace('.js', '.min.js');
+    if (VDMINIFY == "true" && !url.includes('/Assests/') && !url.includes('/Assets/') ) url = url.replace('.js', '.min.js');
     if (loadnormal != true) {
         try {
             let key = '[' + VDNAME + ']' + url;
@@ -359,7 +359,7 @@ function js_require_notasync (url, loadnormal) {
 }
 
 function js_require(_url, callback, _skipCache) {
-    if (VDMINIFY == "true" && !_url.includes('/assests/') && !_url.includes('/assets/')) _url = _url.replace('.js', '.min.js');
+    if (VDMINIFY == "true" && !_url.includes('/Assests/') && !_url.includes('/Assets/')) _url = _url.replace('.js', '.min.js');
     basket
         .require({
             url: _url

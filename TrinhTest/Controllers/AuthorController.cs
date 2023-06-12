@@ -84,8 +84,6 @@ namespace TrinhTest.Controllers
             //Response.Cookies.Delete("X-UserID");
             return Ok();
         }
-
-        
         [Route("ValidateToken")]
         [HttpPost]
         public async Task<IActionResult>ValidateToken(CFaAuthorValidateToken value)
@@ -118,7 +116,6 @@ namespace TrinhTest.Controllers
             return Content(res);
         }
 
-        [Authorize]
         [Route("ResetPassWord")]
         [HttpPost]
         public async Task<IActionResult> ResetPassWord(string emailUser, int num)
@@ -127,6 +124,7 @@ namespace TrinhTest.Controllers
             if (!res) return Content("0");
             else return Content("1");
         }
+
         [Route("SendMail")]
         [HttpPost]
         public async Task<IActionResult> SendMail(string email)
