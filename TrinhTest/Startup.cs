@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace TrinhTest
 {
@@ -44,10 +45,6 @@ namespace TrinhTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<SetupOptions>(Configuration.GetSection("Setup"));
-            //services.Configure<KestrelServerOptions>(
-            //    op => op.Limits.MaxRequestBodySize = 300000000);
-            //services.Configure<IISServerOptions>(
-            //    op=>op.MaxRequestBodySize=300000000);
             #region Regis Service Design 
             services.AddTransient<ITokenService, TokenService>();
             services.AddScoped<IBaseDbContext, BaseDbContext>();

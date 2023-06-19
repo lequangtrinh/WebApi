@@ -11,6 +11,15 @@ function validateAuthor(role) {
     }
     return count;
 }
+// check reload page error
+function ErrorPage(status) {
+    let url = "";
+    switch (status) {
+        case 401: url = "/Error/Error404"; break;
+        case 500: url = "/Error/Error500"; break;
+    }
+    return url;
+}
 // tab control author
 function Checking_TabControl_Permission() {
     x = document.getElementsByClassName("_tab_control_");
