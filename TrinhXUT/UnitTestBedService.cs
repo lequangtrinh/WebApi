@@ -69,6 +69,8 @@ namespace TrinhXUT
             /// Act
             var result = (NoContentResult)await sut.LoadBed(0);
             /// Assert
+            Assert.IsType<NoContentResult>(result);
+            /// Assert
             result.StatusCode.Should().Be(204);
             BedService.Verify(_ => _.LoadBed(0), Times.Exactly(1));
         }

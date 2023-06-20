@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Http;
 using System.Data;
 using Newtonsoft.Json;
 using System.Text;
-using LibTrinh.Common;
 using System.Net.Mail;
 using System.Net;
+using LibTrinh.Common;
 
 namespace LibTrinh.Api.AuthenService
 {
@@ -83,12 +83,12 @@ namespace LibTrinh.Api.AuthenService
                 CFaUserDTO cFaUserDTO = new CFaUserDTO();
                 using (var uow = await _context.CreateAsync())
                 {
-                    string strPwd = Encrypt.EncryptString(pUserLoginInf.PassWord, _config["DATA:ROOTCODE"].ToString());
+                    string strPwd = BCrypt.HashPassword(Encoding.UTF8.GetString(Convert.FromBase64String(pUserLoginInf.PassWord)), BCrypt.GenerateSalt(8));
                     var CheckUser = await uow.ExecuteDataTable("[YYY_sp_CheckLoginUser]", CommandType.StoredProcedure,
                         "@UserID", SqlDbType.NVarChar, pUserLoginInf.userID
                     );
                     var dataUser = GlobalBase.ConvertDataTable<UserDTO>(CheckUser)[0];
-                    bool checkPass = verifyPass(strPwd, dataUser.Password.Trim());
+                    bool checkPass = BCrypt.Verify(strPwd, dataUser.Password.Trim());
                     if (!checkPass)
                     {
                         return null;
@@ -266,25 +266,21 @@ namespace LibTrinh.Api.AuthenService
                 using (var uow = await _context.CreateAsync())
                 {
                     UserDTO userDto = new UserDTO();
-                    // refersh token
+                    objUser.Password= BCrypt.HashPassword(Encoding.UTF8.GetString(Convert.FromBase64String(objUser.Password)), BCrypt.GenerateSalt(8));
                     var regisUser = await uow.ExecuteDataTable("[YYY_sp_InsertUser]", CommandType.StoredProcedure,
-                        "@UserID", SqlDbType.NVarChar, objUser.UserID
-                        , "@UserName", SqlDbType.NVarChar, objUser.UserName
+                         "@UserName", SqlDbType.NVarChar, objUser.UserName
                         , "@Password", SqlDbType.NVarChar, objUser.Password
-                        , "@Image", SqlDbType.NVarChar, objUser.Image
+                        , "@Image", SqlDbType.NVarChar, objUser.Extension
                         , "@PassReissueKey", SqlDbType.NVarChar, objUser.PassReissueKey
                         , "@Email", SqlDbType.NVarChar, objUser.Email
                         , "@Role", SqlDbType.NVarChar, objUser.Role
                     );
-                    if (!File.Exists(_PathImg))
-                    {
-                        File.Copy(objUser.Image, _PathImg);
-                    }
-                    else
-                    {
-                        uow.Rollback();
-                        return false;
-                    }
+                    var base64Data = objUser.Image.Substring(objUser.Image.IndexOf(',') + 1);
+                    if (!Directory.Exists(_PathImg)) Directory.CreateDirectory(_PathImg);
+                    string pathImg = Path.Combine(_PathImg, objUser.Extension);
+                    if (Directory.Exists(pathImg)) return false;
+                    var imgConvert = Convert.FromBase64String(base64Data);
+                    File.WriteAllBytes(pathImg, Convert.FromBase64String(base64Data));
                     if (regisUser.Rows.Count == 0)
                     {
                         uow.Rollback();

@@ -4,7 +4,11 @@ using System.Text;
 //Here we specify the Rabbit MQ Server. we use rabbitmq docker image and use it
 var factory = new ConnectionFactory
 {
-    Uri = new Uri("amqp://guest:guest@localhost:5672")
+    UserName = "guest",
+    Password= "guest",
+    HostName= "127.0.0.1",
+    VirtualHost = "/",
+    Port = 15672
 };
 //Create the RabbitMQ connection using connection factory details as i mentioned above
 var connection = factory.CreateConnection();
