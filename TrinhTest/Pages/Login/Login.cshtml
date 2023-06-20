@@ -63,7 +63,7 @@
                                     <p class="mb-0 text-sm text-dark">Enter your username and password to login</p>
                                 </div>
                                 <div class="card-body">
-                                    <form role="form" class="text-start">
+                                    <form role="form" class="text-start form3" id="formLogin">
                                         <label>UserName</label>
                                         <div class="mb-3">
                                             <div class="form-group">
@@ -71,7 +71,7 @@
                                                     <span class="input-group-text">
                                                         <i class="fas fa-user-alt"></i>
                                                     </span>
-                                                    <input id="username" autocomplete="off" type="text" class="inforlogin ps-2 form-control" placeholder="eg .username">
+                                                    <input id="username" name="username" autocomplete="off" type="text" class="inforlogin ps-2 form-control" placeholder="eg .username">
                                                 </div>
                                             </div>
                                         </div>
@@ -82,7 +82,7 @@
                                                     <span class="input-group-text">
                                                         <i class="fas fa-eye-slash show_pass_icon"></i>
                                                     </span>
-                                                    <input id="password" type="text" autocomplete="off" class="inforlogin ps-2  sercu form-control" placeholder="eg .password">
+                                                    <input id="password" name="passwordUser" type="text" autocomplete="off" class="inforlogin ps-2  sercu form-control" placeholder="eg .password">
                                                 </div>
                                             </div>
 
@@ -251,12 +251,14 @@
             $('#loader').hide();
     };
     function Login_LoadInforUser () {
-        $.ajax({url: '/api/Author/login',
-                type: 'POST',
-                data: JSON.stringify({
-                'flags': "0",
-                'userID': $('#username').val(),
-                'PassWord':$('#password').val()
+        $('#formLogin').form('validate form');
+        if ($('#formLogin').form('is valid')) {
+            $.ajax({url: '/api/Author/login',
+                    type: 'POST',
+                    data: JSON.stringify({
+                    'flags': "0",
+                    'userID': $('#username').val(),
+                    'PassWord':window.btoa($('#password').val())
             }),
             contentType: 'application/json; charset=utf-8',
             success: function (data, textStatus, xhr) {
@@ -273,6 +275,7 @@
                     notiError_SW();
                 }
             });
+        }
     };
     function showTextPassWord(){
                 $(".show_pass_icon").unbind().on("click", function () {
