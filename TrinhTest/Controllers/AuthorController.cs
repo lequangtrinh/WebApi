@@ -1,5 +1,6 @@
 ﻿using LibTrinh;
 using LibTrinh.Api.UploadImage;
+using LibTrinh.Common;
 using LibTrinh.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-using TrinhTest;
 
-namespace SourceMain
+namespace TrinhTest
 {
     public class Program
     {

@@ -56,11 +56,7 @@ namespace TrinhTest
             services.AddResponseCaching();
             //using RSA rsa = RSA.Create();
             //rsa.ImportRSAPrivateKey(Convert.FromBase64String(configuration["jwt:privateKey"]), out int _);
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
              .AddJwtBearer(
                  options =>
                  {
@@ -150,15 +146,9 @@ namespace TrinhTest
             services.AddSingleton<IIpPolicyStore, DistributedCacheIpPolicyStore>();
             services.AddSingleton<IRateLimitCounterStore, DistributedCacheRateLimitCounterStore>();
             #endregion
-            services.AddSession(options =>
-            {
-                options.IdleTimeout = TimeSpan.FromMinutes(20);
-                options.Cookie.HttpOnly = true;
-                options.Cookie.IsEssential = true;
-            });
             services.AddRazorPages().AddRazorPagesOptions(options => { }).AddNewtonsoftJson().AddMvcOptions(options =>
             {
-                options.Filters.Add(new AsyncPageFilter(Configuration));
+              // options.Filters.Add(new AsyncPageFilter(Configuration));
             });
             services.Configure<IISServerOptions>(options => { options.AllowSynchronousIO = true; });
             services.AddSignalR();
@@ -180,7 +170,6 @@ namespace TrinhTest
                 app.UseWebMarkupMin();
             }
             app.UseIpRateLimiting();
-            app.UseSession();
             if (env.IsDevelopment()){app.UseDeveloperExceptionPage();}
             else{app.UseExceptionHandler("/Error");app.UseHsts();};
             //pLoggerFactory.AddLog4Net();
@@ -216,7 +205,7 @@ namespace TrinhTest
         private async void Initialize_Application()
         {
             var KEYCODE = Configuration.GetValue<string>("DATA:KEYCODE");
-            if (KEYCODE != null) await GlobalBase.System_Start(KEYCODE.ToString(), Configuration);
+            if (KEYCODE != null) await GlobalBase.Global.System_Start(KEYCODE.ToString(), Configuration);
         }
     }
 }

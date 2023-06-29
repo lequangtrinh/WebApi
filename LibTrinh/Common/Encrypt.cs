@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using LibTrinh.ExceptionHandler;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 

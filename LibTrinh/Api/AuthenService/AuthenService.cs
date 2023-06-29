@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using LibTrinh.Models;
-using Microsoft.AspNetCore.Http;
 using System.Data;
 using Newtonsoft.Json;
 using System.Text;
@@ -75,7 +76,7 @@ namespace LibTrinh.Api.AuthenService
         /// <param name="pUserLoginInf"></param>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<CFaTokenLoginDTO> LoginUserAsync(CFaUserInfoDTO pUserLoginInf)
+        public  async Task<CFaTokenLoginDTO> LoginUserAsync(CFaUserInfoDTO pUserLoginInf)
         {
             try
             {
@@ -83,7 +84,7 @@ namespace LibTrinh.Api.AuthenService
                 CFaUserDTO cFaUserDTO = new CFaUserDTO();
                 using (var uow = await _context.CreateAsync())
                 {
-                    string strPwd = BCrypt.HashPassword(Encoding.UTF8.GetString(Convert.FromBase64String(pUserLoginInf.PassWord)), BCrypt.GenerateSalt(8));
+                    string strPwd = Encoding.UTF8.GetString(Convert.FromBase64String(pUserLoginInf.PassWord));
                     var CheckUser = await uow.ExecuteDataTable("[YYY_sp_CheckLoginUser]", CommandType.StoredProcedure,
                         "@UserID", SqlDbType.NVarChar, pUserLoginInf.userID
                     );
