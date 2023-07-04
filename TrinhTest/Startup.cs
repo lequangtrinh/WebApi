@@ -46,7 +46,10 @@ namespace TrinhTest
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<SetupOptions>(Configuration.GetSection("Setup"));
+            services.Configure<SetupOptions>(Configuration.GetSection("Setup"));        
+            services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false).AddNewtonsoftJson();          
+            services.AddAuthentication("BearerAuthentication")
+             .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BearerAuthentication", null);
             #region Regis Service Design 
             services.AddTransient<ITokenService, TokenService>();
             services.AddScoped<IBaseDbContext, BaseDbContext>();
@@ -54,12 +57,7 @@ namespace TrinhTest
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddBussiness();
             #endregion
-            services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false).AddNewtonsoftJson();
-            services.AddResponseCaching();
-
-            services.AddAuthentication("BearerAuthentication")
-             .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BearerAuthentication", null)
-             #region login authen google and facabook
+            #region login authen google and facabook
             //.AddGoogle(options =>
             //{
             //    IConfigurationSection googleAuthNSection =
@@ -112,9 +110,10 @@ namespace TrinhTest
                 options.MinificationSettings.EmptyTagRenderMode = WebMarkupMin.Core.HtmlEmptyTagRenderMode.Slash;
 
             }).AddHttpCompression();
-            services.AddOutputCaching();
             #region execute cache 
+            services.AddOutputCaching();
             services.AddDistributedMemoryCache();
+            services.AddResponseCaching();
             services.AddOptions();
             services.AddStackExchangeRedisCache(options =>
             {
