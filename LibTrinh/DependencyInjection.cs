@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
-using System.Linq;
 
 namespace LibTrinh
 {
@@ -30,7 +29,6 @@ namespace LibTrinh
 
             return pServices;
         }
-
 
     }
 }

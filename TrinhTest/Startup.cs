@@ -16,6 +16,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Razor;
+using static LibTrinh.Common.GlobalBase;
+using Microsoft.AspNetCore.Authentication;
 
 namespace TrinhTest
 {
@@ -54,26 +56,27 @@ namespace TrinhTest
             #endregion
             services.AddControllers(options => options.SuppressAsyncSuffixInActionNames = false).AddNewtonsoftJson();
             services.AddResponseCaching();
-            //using RSA rsa = RSA.Create();
-            //rsa.ImportRSAPrivateKey(Convert.FromBase64String(configuration["jwt:privateKey"]), out int _);
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-             .AddJwtBearer(
-                 options =>
-                 {
-                     options.TokenValidationParameters = new TokenValidationParameters
-                     {
-                         ValidateIssuerSigningKey = true,
-                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("Jwt").GetSection("SecretKey").Value)),
-                         //when check author api login
-                         //IssuerSigningKey = new RsaSecurityKey(rsa),
-                         ValidateIssuer = true,
-                         ValidateAudience = true,
-                         ValidateLifetime = true,
-                         ValidIssuer = Configuration.GetSection("JWT").GetSection("Issuer").Value,
-                         ValidAudience = Configuration.GetSection("JWT").GetSection("Issuer").Value
-                     };
-                 }
-            );
+
+            services.AddAuthentication("BearerAuthentication")
+             .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BearerAuthentication", null)
+             #region login authen google and facabook
+            //.AddGoogle(options =>
+            //{
+            //    IConfigurationSection googleAuthNSection =
+            //    Configuration.GetSection("Authentication:Google");
+            //    options.ClientId = googleAuthNSection[Configuration.GetSection("Authentication:ClientID").ToString()];
+            //    options.ClientSecret = googleAuthNSection[Configuration.GetSection("Authentication:ClientSecret").ToString()];
+            //    //options.CallbackPath=""
+            //});
+
+            //.AddFacebook(options =>
+            //{
+            //    IConfigurationSection FBAuthNSection =
+            //    config.GetSection("Authentication:FB");
+            //    options.ClientId = FBAuthNSection["ClientId"];
+            //    options.ClientSecret = FBAuthNSection["ClientSecret"];
+            //});
+            #endregion;
             services.AddResponseCompression(options =>
             {
                 options.EnableForHttps = true;
@@ -110,24 +113,6 @@ namespace TrinhTest
 
             }).AddHttpCompression();
             services.AddOutputCaching();
-            #region login authen google and facabook
-            //.AddGoogle(options =>
-            //{
-            //    IConfigurationSection googleAuthNSection =
-            //    Configuration.GetSection("Authentication:Google");
-            //    options.ClientId = googleAuthNSection[Configuration.GetSection("Authentication:ClientID").ToString()];
-            //    options.ClientSecret = googleAuthNSection[Configuration.GetSection("Authentication:ClientSecret").ToString()];
-            //    //options.CallbackPath=""
-            //});
-
-            //.AddFacebook(options =>
-            //{
-            //    IConfigurationSection FBAuthNSection =
-            //    config.GetSection("Authentication:FB");
-            //    options.ClientId = FBAuthNSection["ClientId"];
-            //    options.ClientSecret = FBAuthNSection["ClientSecret"];
-            //});
-            #endregion
             #region execute cache 
             services.AddDistributedMemoryCache();
             services.AddOptions();
@@ -150,6 +135,7 @@ namespace TrinhTest
             {
               // options.Filters.Add(new AsyncPageFilter(Configuration));
             });
+
             services.Configure<IISServerOptions>(options => { options.AllowSynchronousIO = true; });
             services.AddSignalR();
             services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
