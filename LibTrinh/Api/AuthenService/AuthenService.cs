@@ -96,7 +96,7 @@ namespace LibTrinh.Api.AuthenService
                     }
                     _generatedToken = _tokenService.BuildToken(dataUser, _config["JWT:Issuer"].ToString());
                     token.token = _generatedToken;
-                    token.PublicKey=_tokenService.ReadKeyToken(dataUser.UserID,Constant.Constant.PUBLICKEY).ToString();
+                    token.PublicKey= GlobalBase.ReadKeyToken(dataUser.UserID,Constant.Constant.PUBLICKEY).ToString();
                     //DataTable dt = new DataTable();
                     //dt = await uow.ExecuteDataTable("[YYY_sp_LoadDashboard]", CommandType.StoredProcedure,
                     //    "@UserID", SqlDbType.NVarChar, "00001"

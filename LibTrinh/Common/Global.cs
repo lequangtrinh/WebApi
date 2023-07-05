@@ -17,6 +17,7 @@ namespace LibTrinh.Common
     /// </summary>
     public class GlobalBase
     {
+        private static string _pathConsKey = Path.Combine(AppDomain.CurrentDomain.BaseDirectory.Replace("bin\\Debug\\net6.0\\", "") + Constant.Constant.ForderToken);
         #region Global custrustor
         public class Global
         {
@@ -43,7 +44,6 @@ namespace LibTrinh.Common
                 sys_DB_Name = Encrypt.DecryptString(_config.GetValue<string>("DBStringConn:RNAME").ToString(), ROOTCODE);
                 sys_DB_User = Encrypt.DecryptString(_config.GetValue<string>("DBStringConn:RUSER").ToString(), ROOTCODE);
                 sys_DB_Pass = Encrypt.DecryptString(_config.GetValue<string>("DBStringConn:RPASSWORD").ToString(),ROOTCODE);
-                //var task_startclient = client.StartClient(keycode);
             }
         }
         #endregion
@@ -92,7 +92,7 @@ namespace LibTrinh.Common
                 if (!string.IsNullOrEmpty(Request.Headers?["Authorization"].ToString()))
                 {
                     var authHeader = Request.Headers?["Authorization"].ToString();
-                    string userID = Request.Cookies["X-UserID"].ToString();
+                    string userID = Request.Cookies?["X-UserID"].ToString();
                     if (string.IsNullOrEmpty(authHeader))
                     {
                         return AuthenticateResult.Fail("Invalid Authorization Header");
@@ -110,36 +110,50 @@ namespace LibTrinh.Common
                     var token = authHeader.Substring("Bearer".Length).Trim();
 
                     var jwtToken = new JwtSecurityToken(token);
-                    //if (jwtToken.ValidTo > DateTime.UtcNow)
-                    //{
-                    //    return AuthenticateResult.Fail("Token Time Out");
-                    //};
-                    var rsaSecurityKey = new RsaSecurityKey(ReadKeyToken(userID, "PUBLICKEY"));
-                    var tokenHandler = new JwtSecurityTokenHandler();
-                    ClaimsPrincipal principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+                    if (jwtToken.ValidTo > DateTime.UtcNow)
                     {
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuer = true,
-                        ValidIssuer = _config["Jwt:Issuer"],
-                        ValidAudience = _config["Jwt:Issuer"],
-                        IssuerSigningKey = rsaSecurityKey,
-                    }, out SecurityToken validatedToken);
-                    return AuthenticateResult.Success(new AuthenticationTicket(new ClaimsPrincipal(principal.Identity), "Authorization"));
+                        return AuthenticateResult.Fail("Token Time Out");
+                    };
+                    try
+                    {
+                        var rsaSecurityKey = new RsaSecurityKey(ReadKeyToken(userID, "PUBLICKEY"));
+                        var tokenHandler = new JwtSecurityTokenHandler();
+                        ClaimsPrincipal principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
+                        {
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuer = true,
+                            ValidIssuer = _config["Jwt:Issuer"],
+                            ValidAudience = _config["Jwt:Issuer"],
+                            IssuerSigningKey = rsaSecurityKey,
+                        }, out SecurityToken validatedToken);
+                        return AuthenticateResult.Success(new AuthenticationTicket(new ClaimsPrincipal(principal.Identity), "Authorization"));
+                    }
+                    catch (Exception ex)
+                    {
+                        return AuthenticateResult.Fail(ex);
+                    }
                 }
                 else
                 {
                     var claims = new List<Claim> { new Claim("user", "o2o") };
                     return AuthenticateResult.Success(new AuthenticationTicket(new ClaimsPrincipal(new ClaimsIdentity(claims)), "Authorization"));
                 }
-
             }
-            private RSA ReadKeyToken(string userID, string nameKey)
-            {
-                var rsa = RSA.Create();
-                rsa.FromXmlString(System.IO.File.ReadAllText(Path.Combine("C:\\New folder\\SimpleWebApps\\src\\JwtAuthentication\\TokenGeneratorWebApi", "Token") + "\\" + userID.Trim() + "_" + nameKey.Trim()).ToString());
-                return rsa;
-            }
+        }
+        #endregion
+        #region read Key token
+        /// <summary>
+        /// ReadKeyToken
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="nameKey"></param>
+        /// <returns></returns>
+        public static RSA ReadKeyToken(string userID, string nameKey)
+        {
+            var rsa = RSA.Create();
+            rsa.FromXmlString(System.IO.File.ReadAllText(Path.Combine(_pathConsKey, userID) + "\\" + userID.Trim() + "_" + nameKey.Trim()).ToString());
+            return rsa;
         }
         #endregion
     }

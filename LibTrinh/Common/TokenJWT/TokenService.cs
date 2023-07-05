@@ -32,7 +32,7 @@ namespace LibTrinh.Common
                 new Claim(ClaimTypes.Role, user.Role),
                 new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
             };
-                var rsaSecurityKey = new RsaSecurityKey(ReadKeyToken(user.UserID, Constant.Constant.PRIVATEKEY));
+                var rsaSecurityKey = new RsaSecurityKey(GlobalBase.ReadKeyToken(user.UserID, Constant.Constant.PRIVATEKEY));
                 rsaSecurityKey.KeyId = user.UserName;
                 var credentials = new SigningCredentials(rsaSecurityKey, SecurityAlgorithms.RsaSha256);
                 var tokenDescriptor = new JwtSecurityToken(issuer
@@ -63,7 +63,7 @@ namespace LibTrinh.Common
             #region rsa validtoken
             if (jwtToken.ValidTo > DateTime.UtcNow)
             {
-                var rsaSecurityKey = new RsaSecurityKey(ReadKeyToken(UserID, Constant.Constant.PUBLICKEY));
+                var rsaSecurityKey = new RsaSecurityKey(GlobalBase.ReadKeyToken(UserID, Constant.Constant.PUBLICKEY));
                 var tokenHandler = new JwtSecurityTokenHandler();
                 try
                 {
@@ -116,21 +116,6 @@ namespace LibTrinh.Common
                 return false;
             }
         }
-        #endregion
-
-        #region read Key token
-        /// <summary>
-        /// ReadKeyToken
-        /// </summary>
-        /// <param name="userID"></param>
-        /// <param name="nameKey"></param>
-        /// <returns></returns>
-        public RSA ReadKeyToken(string userID, string nameKey)
-        {
-            var rsa = RSA.Create();
-            rsa.FromXmlString(System.IO.File.ReadAllText(Path.Combine(_pathConsKey, userID) + "\\"+userID.Trim() + "_" + nameKey.Trim()).ToString());
-            return rsa;
-        } 
         #endregion
     }
 }
