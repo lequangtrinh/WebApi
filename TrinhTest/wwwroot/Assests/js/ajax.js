@@ -38,6 +38,9 @@ function AjaxJWT (url, data, async, success) {
         data: data,
         contentType: 'application/json; charset=utf-8',
         async: async,
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            window.location.href = ErrorPage(XMLHttpRequest.status);
+        },
         success: function (result) {
             if (result != undefined)
                 if (success != undefined && success != null && success.length != 0)

@@ -52,7 +52,6 @@
                     </div>
                     <div class="ms-2 p-1 col-12" id="tree_item">
                         <div class="timeline timeline-one-side" id="Manu_TreeDetail">
-
                         </div>
                     </div>
                 </div>
@@ -60,170 +59,158 @@
         </div>
     </div>
 </div>
-  <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="/js/Common/main.js"></script>
 <script type="text/javascript">
-    var Current_Branch = 0;
-    var dataBedApp=[];
-     $(document).ready(function () { 
-         ManuLoaddataBedApp();
-         LoadDataComboBox();
-     });
-     function LoadDataComboBox(){
-          $.ajax({url: '/api/Bed/LoadComboboxRoom',
-                type: 'POST',
-                data: JSON.stringify({}),
-            contentType: 'application/json; charset=utf-8',
-            success: function (data, textStatus, xhr) {
-                        if(data!== "[]" && data !== undefined){
+        var Current_Branch = 0;
+        var dataBedApp=[];
+         $(document).ready(function () {
+             ManuLoaddataBedApp();
+             LoadDataComboBox();
+         });
+         function LoadDataComboBox(){
+            AjaxJWT(url = "/api/Bed/LoadComboboxRoom"
+                , data = {
+                }, async = true
+                , error = function () { notiError_SW(); }
+                , success = function (result) {
+                    if (result != "") {
                             var res=JSON.parse(data);
                             Load_Combo(res, "cbbMSBed", true);
                             $("#ManuBranchID").dropdown("refresh");
                             $("#ManuBranchID").dropdown("set selected", Number(1));
+                        notiSuccess();
                     }
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    window.location.href=ErrorPage(xhr.status);
+                });
+         };
+          function Manu_OnChange_Load_Room_List() {
+                Current_Branch = Number($('#ManuBranchID').dropdown('get value')) ? Number($('#ManuBranchID').dropdown('get value')) : 0;
+                console.log(Current_Branch)
+                ManuLoadTreeNode(Current_Branch);
+                //Manufecture_LoadDetail_Item(0);
+        };
+         function ManuLoadTreeNode(id) {
+                AjaxJWT(url = '/api/Bed/LoadBed?Id='+id+''
+            , data = {}
+            , async = true
+            , error = function () { notiError_SW(); }
+            , success = function (result) {
+                if (result != "") {
+                        var res=JSON.parse(result);
+                             Manufacture_Render_Level_Floor(res, "#Manu_Floor");
+                             RenderDetail_Tree(res, "Manu_TreeDetail");
+                    notiSuccess();
                 }
             });
-     };
-      function Manu_OnChange_Load_Room_List() {
-            Current_Branch = Number($('#ManuBranchID').dropdown('get value')) ? Number($('#ManuBranchID').dropdown('get value')) : 0;
-            console.log(Current_Branch)
-            ManuLoadTreeNode(Current_Branch);
-            //Manufecture_LoadDetail_Item(0);
-    };
-     function ManuLoadTreeNode(id) {
-          $.ajax({url: '/api/Bed/LoadBed?Id='+id+'',
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data:{},
-            async:true,
-            success: function (data, textStatus, xhr) {
-                        if(data.length >3 && data !== undefined){
-                           var res=JSON.parse(data);
-                         Manufacture_Render_Level_Floor(res, "#Manu_Floor");
-                         RenderDetail_Tree(res, "Manu_TreeDetail");
-                    }
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    window.location.href=ErrorPage(xhr.status);
+        };
+        function ManuLoaddataBedApp() {
+           AjaxJWT(url = "/api/Bed/LoadBedAlotment"
+            , data = {}
+            , async = true
+            , error = function () { notiError_SW(); }
+            , success = function (result) {
+                if (result != "") {
+                   var res=JSON.parse(result);
+                   dataBedApp.push(res);
                 }
             });
-    };
-    function ManuLoaddataBedApp() {
-          $.ajax({url: '/api/Bed/LoadBedAlotment',
-            type: 'POST',
-            contentType: 'application/json; charset=utf-8',
-            data:{},
-            async:false,
-            success: function (data, textStatus, xhr) {
-                        if(data.length >3 && data !== undefined){
-                           var res=JSON.parse(data);
-                           dataBedApp.push(res);
-                    }
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    window.location.href=ErrorPage(xhr.status);
-                }
-            });
-    };
-    function Manufacture_Render_Level_Floor(data, id) {
-        $(id).empty();
-        let stringcontent = "";
-        for (let i = 0; i < data.length; i++) {
-            let item = data[i];
-            let tr = '<div class="cursor-pointer floor border-dashed border-1 border-secondary border-radius-md d-inline-flex align-items-center justify-content-center me-2 mb-2 buttonShowClick" data-id="' + item.ID + '" data-floor="' + item.ID + '">'
-                + '<i dataid=' + item.ID + ' class="fas fa-cog text-dark text-xs mx-2 levelDetail" title="Chi Tiết Tầng"></i>'
-                + '<h6 class="font-weight-bold my-2"><a class="text-primary" id="fl' + item.ID + '">' + item.Bed_Number + '</a></h6>'
-                + '<i dataid=' + item.ID + ' class="fa fa-plus text-dark mx-2 text-xs addroom" title="Thêm Phòng"></i>'
-                + '</div>'
-            stringcontent += tr;
-        }
-        $(id).html(stringcontent);
-    };
-    function RenderDetail_Tree(data1, id) {
-        let myNode = document.getElementById(id);
-        if (myNode != null) {
-            myNode.innerHTML = '';
-            let stringContent = '';
-            if (data1 && data1.length > 0) {
-                for (let i = 0; i < data1.length; i++) {
-                    let item_room = data1[i];
-                    console.log(dataBedApp[0].filter(word => word["Bed_ID"] == data1[i].ID))
-                    let chairByroom = dataBedApp[0].filter(word => word["Bed_ID"] == data1[i].ID);
-                    let tr = '<div class="timeline-block mb-3 mx-2">'
-                        + '<span class="timeline-step">'
-                        + '<div class="icon icon-shape icon-sm ms-n2 me-0 bg-gradient-dark shadow text-center">'
-                        + '<i class="text-lg fa fa-user-md"></i>'
-                        + '</div>'
-                        + '</span>'
-                        + '<div class="timeline-content" style="max-width:100%;">'
-                        + '<div class="d-flex">'
-                        + '<i dataid=' + item_room.ID + ' class="cursor-pointer fas fa-cog text-dark mx-2 text-xs mt-1 roomDetail" title="Chi Tiết Phòng"></i>'
-                        + '<h6 class="text-dark font-weight-bold mb-2"><a id="fl' + item_room.ID + '">' + item_room.Bed_Number + '</a></h6>'
-                        + '<i dataid=' + item_room.ID + ' class="cursor-pointer fa fa-plus mx-2 mt-1 text-dark text-xs addchair" title="Thêm Giường/Ghế"></i>'
-                        + '</div>'
-                        + '<div class="row">'
-                        + Manufacture_Render_Chair_Layout(chairByroom)
-                        + '</div>'
-                        + '</div>'
-                        + '</div>';
-                    stringContent = stringContent + tr;
-                }
+        };
+        function Manufacture_Render_Level_Floor(data, id) {
+            $(id).empty();
+            let stringcontent = "";
+            for (let i = 0; i < data.length; i++) {
+                let item = data[i];
+                let tr = '<div class="cursor-pointer floor border-dashed border-1 border-secondary border-radius-md d-inline-flex align-items-center justify-content-center me-2 mb-2 buttonShowClick" data-id="' + item.ID + '" data-floor="' + item.ID + '">'
+                    + '<i dataid=' + item.ID + ' class="fas fa-cog text-dark text-xs mx-2 levelDetail" title="Chi Tiết Tầng"></i>'
+                    + '<h6 class="font-weight-bold my-2"><a class="text-primary" id="fl' + item.ID + '">' + item.Bed_Number + '</a></h6>'
+                    + '<i dataid=' + item.ID + ' class="fa fa-plus text-dark mx-2 text-xs addroom" title="Thêm Phòng"></i>'
+                    + '</div>'
+                stringcontent += tr;
             }
-
-                document.getElementById(id).innerHTML = stringContent;
-        }
-        //Manu_Event_Detail_Tree();
-    };
-      function Manufacture_Render_Chair_Layout(item_room) {
-        let res = '';
-        if (item_room && item_room.length > 0) {
-            for (let i = 0; i < item_room.length; i++) {
-                let item = item_room[i];
-                let tr =
-                    '<div class="text-dark col col mt-lg-0 my-3" data-id="' + item.ChairID + '" id="room_' + item.ChairID + '">'
-                    + '<div class="roomContent p-2 w-100 border-dashed border-1 border-secondary border-radius-md h-100">'
-                    + '<div class="d-flex align-items-center justify-content-center">'
-                    + '<i dataid=' + item.Patient_Id + ' class="fas fa-cog text-dark text-xs me-2 chairDetail" title="title="Chi Tiết Giường/Ghế""></i>'
-                    + '<p class="mb-0 font-weight-bold">' + item.NamePatient + '</p>'
-                    + '</div>'
-                    + '<span class="d-block text-sm font-weight-bold " id="room_cust_' + item.ChairID + '"></span>'
-                    + '<hr class="horizontal dark my-1 d-none">'
-                    + '<div class="author align-items-center">'
-                    + '<img class="avatar avatar-sm" id="room_doctor_img_' + item.Doctor_Id + '" src="/Assets/img/'+(item.Images !==null?item.Images:'Telesale.png')+'">'
-                    + '<div class="name ps-3">'
-                    + '<div class="stats">'
-                    + '<span class="d-block text-sm" id="room_doctor_name_' + item.Doctor_Id + '"></span>'
-                    + '<span class="room_time" id="room_time_' + item.Doctor_Id + '"> </span>'
-                    + '</div>'
-                    + '</div>'
-                    + '</div>'
-                    + '</div></div>';
-                res = res + tr;
-            }}
-        return res;
-    };
-     function Load_Combo(dt, id, isRequire) {
-        let data = dt;
-        if (isRequire != undefined) {
+            $(id).html(stringcontent);
+        };
+        function RenderDetail_Tree(data1, id) {
             let myNode = document.getElementById(id);
             if (myNode != null) {
                 myNode.innerHTML = '';
                 let stringContent = '';
-                if (data && data.length > 0) {
-                    for (let i = 0; i < data.length; i++) {
-                        let item = data[i];
-                        let icon = '<i class="fa fa-bed me-1"></i>';
-                        let tr =
-                            '<div class="item" data-value=' + item.ID + '>' + icon + item.RoomName + '</div>'
+                if (data1 && data1.length > 0) {
+                    for (let i = 0; i < data1.length; i++) {
+                        let item_room = data1[i];
+                        console.log(dataBedApp[0].filter(word => word["Bed_ID"] == data1[i].ID))
+                        let chairByroom = dataBedApp[0].filter(word => word["Bed_ID"] == data1[i].ID);
+                        let tr = '<div class="timeline-block mb-3 mx-2">'
+                            + '<span class="timeline-step">'
+                            + '<div class="icon icon-shape icon-sm ms-n2 me-0 bg-gradient-dark shadow text-center">'
+                            + '<i class="text-lg fa fa-user-md"></i>'
+                            + '</div>'
+                            + '</span>'
+                            + '<div class="timeline-content" style="max-width:100%;">'
+                            + '<div class="d-flex">'
+                            + '<i dataid=' + item_room.ID + ' class="cursor-pointer fas fa-cog text-dark mx-2 text-xs mt-1 roomDetail" title="Chi Tiết Phòng"></i>'
+                            + '<h6 class="text-dark font-weight-bold mb-2"><a id="fl' + item_room.ID + '">' + item_room.Bed_Number + '</a></h6>'
+                            + '<i dataid=' + item_room.ID + ' class="cursor-pointer fa fa-plus mx-2 mt-1 text-dark text-xs addchair" title="Thêm Giường/Ghế"></i>'
+                            + '</div>'
+                            + '<div class="row">'
+                            + Manufacture_Render_Chair_Layout(chairByroom)
+                            + '</div>'
+                            + '</div>'
+                            + '</div>';
                         stringContent = stringContent + tr;
                     }
                 }
-                document.getElementById(id).innerHTML = stringContent;
+
+                    document.getElementById(id).innerHTML = stringContent;
             }
-        }
-}
+            //Manu_Event_Detail_Tree();
+        };
+          function Manufacture_Render_Chair_Layout(item_room) {
+            let res = '';
+            if (item_room && item_room.length > 0) {
+                for (let i = 0; i < item_room.length; i++) {
+                    let item = item_room[i];
+                    let tr =
+                        '<div class="text-dark col col mt-lg-0 my-3" data-id="' + item.ChairID + '" id="room_' + item.ChairID + '">'
+                        + '<div class="roomContent p-2 w-100 border-dashed border-1 border-secondary border-radius-md h-100">'
+                        + '<div class="d-flex align-items-center justify-content-center">'
+                        + '<i dataid=' + item.Patient_Id + ' class="fas fa-cog text-dark text-xs me-2 chairDetail" title="title="Chi Tiết Giường/Ghế""></i>'
+                        + '<p class="mb-0 font-weight-bold">' + item.NamePatient + '</p>'
+                        + '</div>'
+                        + '<span class="d-block text-sm font-weight-bold " id="room_cust_' + item.ChairID + '"></span>'
+                        + '<hr class="horizontal dark my-1 d-none">'
+                        + '<div class="author align-items-center">'
+                        + '<img class="avatar avatar-sm" id="room_doctor_img_' + item.Doctor_Id + '" src="/Assets/img/'+(item.Images !==null?item.Images:'Telesale.png')+'">'
+                        + '<div class="name ps-3">'
+                        + '<div class="stats">'
+                        + '<span class="d-block text-sm" id="room_doctor_name_' + item.Doctor_Id + '"></span>'
+                        + '<span class="room_time" id="room_time_' + item.Doctor_Id + '"> </span>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div></div>';
+                    res = res + tr;
+                }}
+            return res;
+        };
+         function Load_Combo(dt, id, isRequire) {
+            let data = dt;
+            if (isRequire != undefined) {
+                let myNode = document.getElementById(id);
+                if (myNode != null) {
+                    myNode.innerHTML = '';
+                    let stringContent = '';
+                    if (data && data.length > 0) {
+                        for (let i = 0; i < data.length; i++) {
+                            let item = data[i];
+                            let icon = '<i class="fa fa-bed me-1"></i>';
+                            let tr =
+                                '<div class="item" data-value=' + item.ID + '>' + icon + item.RoomName + '</div>'
+                            stringContent = stringContent + tr;
+                        }
+                    }
+                    document.getElementById(id).innerHTML = stringContent;
+                }
+            }
+    }
 </script>

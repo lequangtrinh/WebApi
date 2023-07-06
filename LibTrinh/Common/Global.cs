@@ -110,7 +110,7 @@ namespace LibTrinh.Common
                     var token = authHeader.Substring("Bearer".Length).Trim();
 
                     var jwtToken = new JwtSecurityToken(token);
-                    if (jwtToken.ValidTo > DateTime.UtcNow)
+                    if (jwtToken.ValidTo <= DateTime.UtcNow)
                     {
                         return AuthenticateResult.Fail("Token Time Out");
                     };
@@ -127,7 +127,7 @@ namespace LibTrinh.Common
                             ValidAudience = _config["Jwt:Issuer"],
                             IssuerSigningKey = rsaSecurityKey,
                         }, out SecurityToken validatedToken);
-                        return AuthenticateResult.Success(new AuthenticationTicket(new ClaimsPrincipal(principal.Identity), "Authorization"));
+                        return AuthenticateResult.Success(new AuthenticationTicket(new ClaimsPrincipal(new ClaimsIdentity(principal.Identity)), "Authorization"));
                     }
                     catch (Exception ex)
                     {
