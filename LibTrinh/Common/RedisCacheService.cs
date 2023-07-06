@@ -1,5 +1,6 @@
 ﻿using LibTrinh.Common;
 using Microsoft.Extensions.Caching.Distributed;
+using StackExchange.Redis;
 using System.Text.Json;
 
 namespace LibTrinh
@@ -10,7 +11,17 @@ namespace LibTrinh
     public class RedisCacheService: IRedisCacheService, IBusinessService
     {
         private readonly IDistributedCache _cache;
+        //private readonly IConnectionMultiplexer _redis;
 
+        //public RedisCacheService(IDistributedCache cache, IConnectionMultiplexer redis)
+        //{
+        //    _cache = cache;
+        //    _redis = redis;
+        //}
+        /// <summary>
+        /// RedisCacheService
+        /// </summary>
+        /// <param name="cache"></param>
         public RedisCacheService(IDistributedCache cache)
         {
             _cache = cache;
@@ -32,7 +43,6 @@ namespace LibTrinh
 
             return default;
         }
-
         /// <summary>
         /// Set DATA CACHE REDIS
         /// </summary>
@@ -63,7 +73,7 @@ namespace LibTrinh
         public async Task<bool> Remove<T>(string key)
         {
             var value = await _cache.GetStringAsync(key).ConfigureAwait(false);
-
+            
             if (value != null)
             {
                 await _cache.RemoveAsync(key).ConfigureAwait(false);
@@ -71,5 +81,34 @@ namespace LibTrinh
             }
             return false;
         }
+        #region get set cache IConnectionMultiplexer
+        ///// <summary>
+        ///// GET DATA CACHE REDIS Token hash
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="key"></param>
+        ///// <returns></returns>
+        //public string GetHash<T>(string keyName,string id)
+        //{
+        //    var db = _redis.GetDatabase();
+        //    var value =  db.HashGet(keyName, id);
+        //    return value;
+            
+        //}
+
+        ///// <summary>
+        ///// set DATA CACHE REDIS Token hash
+        ///// </summary>
+        ///// <typeparam name="T"></typeparam>
+        ///// <param name="key"></param>
+        ///// <returns></returns>
+        //public void SetHash<T>(string keyName, string id,string token)
+        //{
+            
+        //    var db = _redis.GetDatabase();
+        //    db.HashSet(keyName, new HashEntry[] { new HashEntry(id, token)});
+
+        //}
+        #endregion
     }
 }
