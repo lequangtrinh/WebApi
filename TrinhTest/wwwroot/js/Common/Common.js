@@ -15,7 +15,7 @@ function validateAuthor(role) {
 function ErrorPage(status) {
     let url = "";
     switch (status) {
-        case 401: url = "/Error/Error404"; break;
+        case 401: url = "/Error/Error401"; break;
         case 500: url = "/Error/Error500"; break;
     }
     return url;

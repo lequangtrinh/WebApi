@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<RazorCompileOnBuild>false</RazorCompileOnBuild>
-		<RazorCompileOnPublish>true</RazorCompileOnPublish>
+		<RazorCompileOnPublish>false</RazorCompileOnPublish>
 		<GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
 		<StaticWebAssetBasePath Condition="$(StaticWebAssetBasePath) == ''">/cl</StaticWebAssetBasePath>
 	</PropertyGroup>

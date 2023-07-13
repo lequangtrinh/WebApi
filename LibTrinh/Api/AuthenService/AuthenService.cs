@@ -365,7 +365,8 @@ namespace LibTrinh.Api.AuthenService
                                                         ,_config["EmailSettings:Password"].ToString()),
                     EnableSsl = true,
             };
-                smtpClient.Send(mailMessage);
+                smtpClient.SendAsync(mailMessage, "success");
+                mailMessage.DeliveryNotificationOptions = DeliveryNotificationOptions.OnSuccess;
                 return true;
             }
             catch (Exception ex)

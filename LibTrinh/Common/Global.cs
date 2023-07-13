@@ -43,7 +43,7 @@ namespace LibTrinh.Common
                 //Global.sys_DB_SOURCE = Encrypt.DecryptString(_config.GetValue<string>("DBStringConn:RSOURCE").ToString(), Global.ROOTCODE);
                 sys_DB_Name = Encrypt.DecryptString(_config.GetValue<string>("DBStringConn:RNAME").ToString(), ROOTCODE);
                 sys_DB_User = Encrypt.DecryptString(_config.GetValue<string>("DBStringConn:RUSER").ToString(), ROOTCODE);
-                sys_DB_Pass = Encrypt.DecryptString(_config.GetValue<string>("DBStringConn:RPASSWORD").ToString(),ROOTCODE);
+                sys_DB_Pass = Encrypt.DecryptString(_config.GetValue<string>("DBStringConn:RPASSWORD").ToString(), ROOTCODE);
             }
         }
         #endregion
@@ -92,7 +92,7 @@ namespace LibTrinh.Common
                 if (!string.IsNullOrEmpty(Request.Headers?["Authorization"].ToString()))
                 {
                     var authHeader = Request.Headers?["Authorization"].ToString();
-                    string userID = Request.Cookies?["X-UserID"].ToString();
+                    string userID = Request.Cookies?["X-UserID"];
                     if (string.IsNullOrEmpty(authHeader))
                     {
                         return AuthenticateResult.Fail("Invalid Authorization Header");
@@ -136,25 +136,25 @@ namespace LibTrinh.Common
                 }
                 else
                 {
-                    var claims = new List<Claim> { new Claim("user", "o2o") };
+                    var claims = new List<Claim>{new Claim(string.Empty, string.Empty) };
                     return AuthenticateResult.Success(new AuthenticationTicket(new ClaimsPrincipal(new ClaimsIdentity(claims)), "Authorization"));
-                }
             }
         }
-        #endregion
-        #region read Key token
-        /// <summary>
-        /// ReadKeyToken
-        /// </summary>
-        /// <param name="userID"></param>
-        /// <param name="nameKey"></param>
-        /// <returns></returns>
-        public static RSA ReadKeyToken(string userID, string nameKey)
-        {
-            var rsa = RSA.Create();
-            rsa.FromXmlString(System.IO.File.ReadAllText(Path.Combine(_pathConsKey, userID) + "\\" + userID.Trim() + "_" + nameKey.Trim()).ToString());
-            return rsa;
-        }
-        #endregion
     }
+    #endregion
+    #region read Key token
+    /// <summary>
+    /// ReadKeyToken
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <param name="nameKey"></param>
+    /// <returns></returns>
+    public static RSA ReadKeyToken(string userID, string nameKey)
+    {
+        var rsa = RSA.Create();
+        rsa.FromXmlString(System.IO.File.ReadAllText(Path.Combine(_pathConsKey, userID) + "\\" + userID.Trim() + "_" + nameKey.Trim()).ToString());
+        return rsa;
+    }
+    #endregion
+}
 }

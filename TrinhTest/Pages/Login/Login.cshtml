@@ -234,6 +234,7 @@
             }),
             contentType: 'application/json; charset=utf-8',
             success: function (data, textStatus, xhr) {
+                console.log(data)
                     if(data!== "[]" && data !== undefined){
                        window.location.href="/Dash/Dash_Master";
                     }
@@ -262,6 +263,7 @@
             }),
             contentType: 'application/json; charset=utf-8',
             success: function (data, textStatus, xhr) {
+                console.log(data)
                         if(data!== "[]" && data !== undefined){
                             $('#loader').show();
                             var res=JSON.parse(data);
