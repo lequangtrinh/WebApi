@@ -355,6 +355,8 @@ namespace LibTrinh.Api.AuthenService
                     IsBodyHtml = true,
                 };
                 mailMessage.To.Add(email);
+                //Attachment data = new Attachment("C:\\New folder\\CV-LE-Quang-Trinh.pdf", MediaTypeNames.Application.Pdf);
+                //mailMessage.Attachments.Add(data);
                 // send email
                 var smtpClient = new SmtpClient(_config["EmailSettings:Host"].ToString())
                 {

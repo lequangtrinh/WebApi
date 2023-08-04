@@ -1,9 +1,5 @@
 ﻿using LibTrinh;
-using System.Text;
 using LibTrinh.Common;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using AspNetCoreRateLimit;
 using WebMarkupMin.AspNetCore6;
 using Microsoft.AspNetCore.Builder;
@@ -13,9 +9,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Razor;
 using static LibTrinh.Common.GlobalBase;
 using Microsoft.AspNetCore.Authentication;
 

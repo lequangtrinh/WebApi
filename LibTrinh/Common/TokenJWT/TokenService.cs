@@ -34,6 +34,7 @@ namespace LibTrinh.Common
             };
                 var rsaSecurityKey = new RsaSecurityKey(GlobalBase.ReadKeyToken(user.UserID, Constant.Constant.PRIVATEKEY));
                 rsaSecurityKey.KeyId = user.UserName;
+                
                 var credentials = new SigningCredentials(rsaSecurityKey, SecurityAlgorithms.RsaSha256);
                 var tokenDescriptor = new JwtSecurityToken(issuer
                                                            ,issuer
@@ -61,26 +62,29 @@ namespace LibTrinh.Common
         {
             var jwtToken = new JwtSecurityToken(token);
             #region rsa validtoken
-            if (jwtToken.ValidTo > DateTime.UtcNow)
+            if (jwtToken.Header.Alg.Equals("RS256"))
             {
-                var rsaSecurityKey = new RsaSecurityKey(GlobalBase.ReadKeyToken(UserID, Constant.Constant.PUBLICKEY));
-                var tokenHandler = new JwtSecurityTokenHandler();
-                try
+                if (jwtToken.ValidTo > DateTime.UtcNow)
                 {
-                    tokenHandler.ValidateToken(token, new TokenValidationParameters
+                    var rsaSecurityKey = new RsaSecurityKey(GlobalBase.ReadKeyToken(UserID, Constant.Constant.PUBLICKEY));
+                    var tokenHandler = new JwtSecurityTokenHandler();
+                    try
                     {
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuer = true,
-                        ValidIssuer = issuer,
-                        ValidAudience = issuer,
-                        IssuerSigningKey = rsaSecurityKey,
-                    }, out SecurityToken validatedToken);
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    return false;
+                        tokenHandler.ValidateToken(token, new TokenValidationParameters
+                        {
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuer = true,
+                            ValidIssuer = issuer,
+                            ValidAudience = issuer,
+                            IssuerSigningKey = rsaSecurityKey,
+                        }, out SecurityToken validatedToken);
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        return false;
+                    }
                 }
             }
             return false;
