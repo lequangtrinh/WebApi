@@ -1,21 +1,25 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper.Configuration;
+using LibTrinh;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrinhTest.Controllers
 {
-    public class SettingsController : Controller
+    [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
+    public class SettingsController : ControllerBase
     {
-        
-        [Route("PriceServices")]
-        public IActionResult PriceServices()
+        private readonly IConfiguration _config;
+        private readonly IRedisCacheService _IRedisCache;
+        /// <summary>
+        /// Custrustor
+        /// </summary>
+        /// <param name="config"></param>
+        public SettingsController(IConfiguration config, IRedisCacheService IRedisCache)
         {
-           return View("~/Views/Pages/Setting/PriceServices/SettingPriceServices.cshtml");
-        }
-        [Authorize]
-        [Route("Languages")]
-        public IActionResult Languages()
-        {
-            return View("~/Views/Pages/Setting/Languages.cshtml");
+            _config = config;
+            _IRedisCache = IRedisCache;
         }
     }
 }

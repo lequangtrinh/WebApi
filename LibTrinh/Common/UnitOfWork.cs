@@ -19,7 +19,6 @@ namespace LibTrinh.Common
         private SqlConnection _conn;
         private readonly RetryOptions _retryOptions;
         private IDbTransaction _transaction;
-        private readonly IMemoryCache _cache;
 
         /// <summary>
         /// custrustor 
@@ -29,11 +28,10 @@ namespace LibTrinh.Common
         /// <param name="transactional"></param>
         /// <param name="isolationLevel"></param>
         /// <param name="retryOptions"></param>
-        internal UnitOfWork(SqlConnection connection,IMemoryCache cache,bool transactional = false
+        internal UnitOfWork(SqlConnection connection,bool transactional = false
                             ,IsolationLevel isolationLevel = IsolationLevel.ReadCommitted,RetryOptions retryOptions = null)
         {
             _conn = connection;
-            _cache = cache;
             _retryOptions = retryOptions;
             if (transactional)
                 _transaction = connection.BeginTransaction(isolationLevel);
@@ -87,7 +85,8 @@ namespace LibTrinh.Common
                 SqlDataReader rdr = null;
                 SqlCommand com = new SqlCommand(sql, (SqlConnection)_conn);
                 com.CommandType = commandType;
-                com.CommandTimeout = 10000;
+                com.CommandTimeout = 5;
+                com.Transaction = (SqlTransaction)_transaction;
                 for (int i = 0; i < pars.Length; i += 3)
                 {
                     SqlParameter par = new SqlParameter(pars[i].ToString(), pars[i + 1]);
@@ -106,6 +105,10 @@ namespace LibTrinh.Common
                 Console.WriteLine(e);
                 throw;
             }
+            finally
+            {
+                _conn.Close();
+            }
 
         }
         /// <summary>
@@ -122,7 +125,7 @@ namespace LibTrinh.Common
             if (_conn.State == ConnectionState.Closed) _conn.Open();
             SqlCommand com = new SqlCommand(sql, (SqlConnection)_conn);
             com.CommandType = commandType;
-            com.CommandTimeout = 10000;
+            com.CommandTimeout = 5;
             for (int i = 0; i < pars.Length; i += 3)
             {
                 SqlParameter par = new SqlParameter(pars[i].ToString(), pars[i + 1]);

@@ -1,15 +1,25 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper.Configuration;
+using LibTrinh;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace TrinhTest.Controllers
 {
-    public class ProductsController : Controller
+    [Authorize]
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ProductsController : ControllerBase
     {
-        [Authorize]
-        [Route("Product")]
-        public IActionResult Product()
+        private readonly IConfiguration _config;
+        private readonly IRedisCacheService _IRedisCache;
+        /// <summary>
+        /// Custrustor
+        /// </summary>
+        /// <param name="config"></param>
+        public ProductsController(IConfiguration config, IRedisCacheService IRedisCache)
         {
-            return View("~/Views/Pages/Products/Products.cshtml");
+            _config = config;
+            _IRedisCache = IRedisCache;
         }
     }
 }

@@ -24,7 +24,6 @@ namespace LibTrinh.Common
             #region // Root
             public static string ROOTCODE;
             #endregion
-
             #region // Option
             public static int sys_DB_ID;
             public static string sys_DB_SOURCE;
@@ -47,7 +46,6 @@ namespace LibTrinh.Common
             }
         }
         #endregion
-
         #region
         public static List<T> ConvertDataTable<T>(DataTable dt)
         {
@@ -89,31 +87,20 @@ namespace LibTrinh.Common
 
             protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
             {
-                if (!string.IsNullOrEmpty(Request.Headers?["Authorization"].ToString()))
+                var authHeader = Request.Headers?["Authorization"].ToString();
+                if (!string.IsNullOrEmpty(authHeader))
                 {
-                    var authHeader = Request.Headers?["Authorization"].ToString();
-                    string userID = Request.Cookies?["X-UserID"];
-                    if (string.IsNullOrEmpty(authHeader))
-                    {
-                        return AuthenticateResult.Fail("Invalid Authorization Header");
-                    }
-
-                    if (!authHeader.StartsWith("Bearer", StringComparison.OrdinalIgnoreCase))
-                    {
-                        return AuthenticateResult.Fail("Invalid Authorization Header");
-                    }
-                    if (userID is null)
+                    string userID = Request.Headers?["UserID"].ToString();
+                    if (string.IsNullOrEmpty(authHeader))return AuthenticateResult.Fail("Invalid Authorization Header");
+                    if (!authHeader.StartsWith("Bearer", StringComparison.OrdinalIgnoreCase))return AuthenticateResult.Fail("Invalid Authorization Header");
+                    if (string.IsNullOrEmpty(userID))
                     {
                         Response.StatusCode = 401;
                         return AuthenticateResult.Fail("Invalid Authorization Cookies");
                     }
                     var token = authHeader.Substring("Bearer".Length).Trim();
-
                     var jwtToken = new JwtSecurityToken(token);
-                    if (jwtToken.ValidTo <= DateTime.UtcNow)
-                    {
-                        return AuthenticateResult.Fail("Token Time Out");
-                    };
+                    if (jwtToken.ValidTo <= DateTime.UtcNow)return AuthenticateResult.Fail("Token Time Out");
                     try
                     {
                         var rsaSecurityKey = new RsaSecurityKey(ReadKeyToken(userID, "PUBLICKEY"));
@@ -141,20 +128,19 @@ namespace LibTrinh.Common
             }
         }
     }
-    #endregion
-    #region read Key token
-    /// <summary>
-    /// ReadKeyToken
-    /// </summary>
-    /// <param name="userID"></param>
-    /// <param name="nameKey"></param>
-    /// <returns></returns>
-    public static RSA ReadKeyToken(string userID, string nameKey)
-    {
-        var rsa = RSA.Create();
-        rsa.FromXmlString(System.IO.File.ReadAllText(Path.Combine(_pathConsKey, userID) + "\\" + userID.Trim() + "_" + nameKey.Trim()).ToString());
-        return rsa;
+        #endregion
+        #region read Key token
+        /// <summary>
+        /// ReadKeyToken
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="nameKey"></param>
+        public static RSA ReadKeyToken(string userID, string nameKey)
+        {
+            var rsa = RSA.Create();
+            rsa.FromXmlString(System.IO.File.ReadAllText(Path.Combine(_pathConsKey, userID) + "\\" + userID.Trim() + "_" + nameKey.Trim()).ToString());
+            return rsa;
+        }
+        #endregion
     }
-    #endregion
-}
 }

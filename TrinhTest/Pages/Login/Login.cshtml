@@ -11,36 +11,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-    <link href="/Assets/css/nucleo-icons.css" rel="stylesheet" />
-    <link href="/Assets/css/nucleo-svg.css" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-    <link href="/Assets/css/nucleo-svg.css" rel="stylesheet" />
-    <link id="pagestyle" href="/Assets/css/soft-ui-dashboard.css?v=1.0.4" rel="stylesheet" />
     <style>
         .sercu {
             -webkit-text-security: disc;
         }
-
         #loader {
             position: absolute;
             left: 15px;
             display: none;
         }
-
         input.active {
             background-image: linear-gradient( 310deg, #7928ca12 0%, #ff008021 100%);
         }
-
         input.disabled {
             background-image: linear-gradient( 310deg, #e9ecef 0%, #ffffff 100%);
             pointer-events: none;
             cursor: none;
         }
-
         button.disabed {
             pointer-events: none;
         }
-
         .bntAuthor:hover {
             color: #fff;
             transform: translateY(-7px);
@@ -141,7 +131,6 @@
                                 <canvas width="500" height="400" class="w-lg-100 h-lg-100 w-75 h-75 me-lg-0 me-n10 mt-lg-5"></canvas>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -191,7 +180,6 @@
                 e.preventDefault();
             }
         });
-
     });
     // login
     function ClickLogin () {
@@ -201,7 +189,6 @@
         else{
             if ($('#username').val() == '') $('#username').addClass('active').removeClass('disabled');
                 if ($('#password').val() == '') $('#password').addClass('active').removeClass('disabled');
-
         }
     };
      // login oathor2 google
@@ -230,13 +217,12 @@
                 data: JSON.stringify({
                     'UserID':userId
                    ,'Token':Token
-                   ,'PublicKey':"trytry"
+                   ,'PublicKey':""
             }),
             contentType: 'application/json; charset=utf-8',
             success: function (data, textStatus, xhr) {
-                console.log(data)
                     if(data!== "[]" && data !== undefined){
-                       window.location.href="/Dash/Dash_Master";
+                        window.location.href="/Dash/Dash_Master";
                     }
                     else{validateLogin();};
                 },
@@ -263,7 +249,6 @@
             }),
             contentType: 'application/json; charset=utf-8',
             success: function (data, textStatus, xhr) {
-                console.log(data)
                         if(data!== "[]" && data !== undefined){
                             $('#loader').show();
                             var res=JSON.parse(data);

@@ -55,7 +55,7 @@ namespace LibTrinh.Common
              _conn = new SqlConnection(_connectionString);
             _conn.Open();
 
-            return new UnitOfWork(_conn, _cache, pTransactional, pIsolationLevel, pRetryOptions);
+            return new UnitOfWork(_conn, pTransactional, pIsolationLevel, pRetryOptions);
         }
 
         public async Task<IUnitOfWork> CreateAsync(bool pTransactional = false, IsolationLevel pIsolationLevel = IsolationLevel.ReadCommitted, RetryOptions pRetryOptions = null, CancellationToken pCancellationToken = default)
@@ -64,7 +64,7 @@ namespace LibTrinh.Common
             //_conn.Close();
             await _conn.OpenAsync(pCancellationToken);
 
-            return new UnitOfWork(_conn, _cache, pTransactional, pIsolationLevel, pRetryOptions);
+            return new UnitOfWork(_conn, pTransactional, pIsolationLevel, pRetryOptions);
         }
        
     }

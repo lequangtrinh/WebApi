@@ -11,7 +11,7 @@
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         async: async,
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            if (error != undefined && error != null && error.length != 0) error();
+            window.location.href =ErrorPage(XMLHttpRequest.status);;
         },
         success: function (result) {
             if (result != undefined)
@@ -20,6 +20,8 @@
         beforeSend: function (xhr) {
             xhr.setRequestHeader("XSRF-TOKEN",
                 $('input:hidden[name="__RequestVerificationToken"]').val());
+            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("X-Access-Token"));
+            xhr.setRequestHeader("UserID", localStorage.getItem("X-UserID"));
             if (before != undefined && before != null && before.length != 0) before();
             if (sender != undefined && sender != null && sender.length != 0)
                 sender.css('pointer-events', 'none');
@@ -33,21 +35,26 @@
 }
 function AjaxJWT (url, data, async, success) {
     $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
         url: url,
         type: "POST",
         data: data,
         contentType: 'application/json; charset=utf-8',
         async: async,
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-            window.location.href = ErrorPage(XMLHttpRequest.status);
+            window.location.href =ErrorPage(XMLHttpRequest.status);
+        }
+        , beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("X-Access-Token"));
+            xhr.setRequestHeader("UserID",localStorage.getItem("X-UserID"));
         },
         success: function (result) {
             if (result != undefined)
                 if (success != undefined && success != null && success.length != 0)
                     success(result);
-        }
-        , beforeSend: function (xhr) {
-            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("X-Access-Token"));
         },
     });
 }
@@ -97,7 +104,8 @@ function AjaxUpload (url, inputid, success, error) {
                             success(result);
                 },
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("WebToken"));
+                    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("X-Access-Token"));
+                    xhr.setRequestHeader("UserID", localStorage.getItem("X-UserID"));
                 }
             }
         );
@@ -137,7 +145,8 @@ function AjaxUpload_MultiExe (url, file, namefile, success, error, before) {
                     resolve(true);
                 },
                 beforeSend: function (xhr, e) {
-                    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("WebToken"));
+                    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("X-Access-Token"));
+                    xhr.setRequestHeader("UserID", localStorage.getItem("X-UserID"));
                     if (before != undefined && before != null && before.length != 0)
                         before(namefile);
                 }

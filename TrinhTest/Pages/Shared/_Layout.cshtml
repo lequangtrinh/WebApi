@@ -11,7 +11,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TrinhTest</title>
-    <link href='/css/site.css' rel="stylesheet" />
+    <link href='/css/site.min.css' rel="stylesheet" />
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -190,7 +190,7 @@
     </main>
     <div class="position-fixed bottom-1 end-1 z-index-2" id="MS_Notification">
     </div>
-    <div class="position-absolute top-0 start-50 translate-middle-x z-index-2" id="MS_NotificationTop">
+    <div class="position-absolute top-0 start-50 translate-middle-x z-index-2 d-none" id="MS_NotificationTop">
         <div id="CallCenter_Area" class="toast fade show p-2 mt-2 bg-gradient-info d-none" role="alert" aria-live="assertive" aria-atomic="true">
             <audio id="audio_callcenter" autoplay="autoplay" loop></audio>
             <div class="toast-header bg-transparent border-0">
@@ -261,9 +261,7 @@
         document.getElementById("LogOutUser").addEventListener("click",ClickLogOutUser);
         localStorage.setItem("Languages",'en');
         function ClickLogOutUser(){
-            localStorage.removeItem("X-UserID");
-            localStorage.removeItem("X-Access-Token");
-            localStorage.removeItem("X-PublicKey");
+            localStorage.clear();
             var urlPath=window.location.href.replace(window.location.pathname,("/Login/Login" + "?first=1&ver=" + (new Date().getTime())));
             window.history.pushState('urlPath','Title', urlPath);
             window.location.reload();
@@ -334,31 +332,31 @@
                 })
             });
             $('#sidenav-collapse-main').on('click', '.Settingitem__item', function (e) {
-                    e.preventDefault();
-                    $('#sidenav-collapse-main .Settingitem__item').removeClass('active');
-                    let namechild = '', namegroup = '';
-                    namechild = $(this).attr("data-name");
-                    $(this).addClass('active');
-                    let objparent = $(this).parent().parent();
-                    if (objparent != undefined) {
-                        objparent.addClass('active');
-                        namegroup = objparent.attr("data-name");
-                    }
-                    let href = $(this).attr('href');
-                    let hreflayoutnone = href + '?layout=none' + '&ver=' + versionofWebApplication;
-                    MS_UrlRoot = namegroup;
-                    MS_UrlChild = namechild;
-                    if (href != '#') {
-                        $.ajax({
-                            url: hreflayoutnone,
-                            success: function (data) {
-                                $("#MainRenderBody").empty();
-                                $("#MainRenderBody_Manual").html(data);
-                                window.history.pushState(href, 'Title', hreflayoutnone);
-                               // MS_SetHeaderNavi();
-                            }
-                        })
-                    }
+                e.preventDefault();
+                $('#sidenav-collapse-main .Settingitem__item').removeClass('active');
+                let namechild = '', namegroup = '';
+                namechild = $(this).attr("data-name");
+                $(this).addClass('active');
+                let objparent = $(this).parent().parent();
+                if (objparent != undefined) {
+                    objparent.addClass('active');
+                    namegroup = objparent.attr("data-name");
+                }
+                let href = $(this).attr('href');
+                let hreflayoutnone = href + '?layout=none' + '&ver=' + versionofWebApplication;
+                MS_UrlRoot = namegroup;
+                MS_UrlChild = namechild;
+                if (href != '#') {
+                    $.ajax({
+                        url: hreflayoutnone,
+                        success: function (data) {
+                            $("#MainRenderBody").empty();
+                            $("#MainRenderBody_Manual").html(data);
+                            window.history.pushState(href, 'Title', hreflayoutnone);
+                            // MS_SetHeaderNavi();
+                        }
+                    })
+                }
         });
         }
         function DashMasterCountUpNumber(id,valueCount){
@@ -381,7 +379,7 @@
         function LoadDataMenu(){
              AjaxLoad(url = "/api/Mater/LoadDataMenu"
                 , data = {
-                }, async = true
+                }, async = false
                , error = function () { notiError_SW(); }
                 , success = function (result) {
                     if (result != "") {

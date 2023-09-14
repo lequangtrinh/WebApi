@@ -4,8 +4,8 @@
 }
 @Html.AntiForgeryToken()
 <script src="/js/Common/initialize_setting.js"></script>
-<div class="container-fluid py-3 px-0">
-    <div class="row">
+<div class="container-fluid py-3 px-0 ">
+    <div class="row PageTransform">
         <div class="col-12">
             <div class="card ">
                 <div class="card-header pb-0 p-3">
@@ -50,6 +50,7 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $('.PageTransform').toggleClass('ShowPageransform');
         LoadataPriceServices();
         if(window.location.pathname==="/DashBoards"){
             $("#btnNewSetPriSer").addClass('d-none');
@@ -59,16 +60,16 @@
         }
     });
     function LoadataPriceServices(){
-         $('#SettingPricePagin').addClass('d-none');
-         $.ajax({url: '/api/Services/LoadPriceServices',
-                type: 'POST',
-                data: JSON.stringify({
+         $('#SettingPricePagin').addClass('d-none');      
+            AjaxLoad(url= '/api/Services/LoadPriceServices'
+                , data = JSON.stringify({
                 'UserUpdate':""
-            }),
-            contentType: 'application/json; charset=utf-8',
-            success: function (data, textStatus, xhr) {
-                        if(data!== "[]" && data !== undefined){
-                            var res=JSON.parse(data);
+            }), async = false
+               , error = function () { notiError_SW(); }
+                , success = function (result) {
+                    if(result!== "[]" && result !== undefined){
+                        console.log(result)
+                            var res=JSON.parse(result);
                             $('#SettingPricePagin').pagination({
                             dataSource:res,
                             pageSize: @ViewData["NumberPage"],
@@ -84,18 +85,10 @@
                             }
                         });
                     }
-                },
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                    //if (before != undefined && before != null && before.length != 0);
-                    //if (sender != undefined && sender != null && sender.length != 0)
-                    //    sender.css('pointer-events', 'none');
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    notiError_SW();
-                }
-            });       
+                    else{
+                        notiError_SW();
+                    }
+                });
        };
     function Render_Dash_Master_Price_Services(id,data){
         let myNode = document.getElementById(id);

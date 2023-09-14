@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using LibTrinh.Models;
@@ -18,15 +17,14 @@ namespace LibTrinh.Api.AuthenService
     public class AuthenService : BusinessService, IAuthenService
     {
         protected IConfiguration _config { get; }
-        private string _generatedToken = null;
+        private string _generatedToken ;
         private readonly ITokenService _tokenService;
         private string _PathImg;
         private int _NumBerOTP;
         private readonly IRedisCacheService _RedisCacheService;
 
         //protected JwtService _jwtService;
-        public AuthenService(IConfiguration pConfiguration, IBaseDbContext pContext
-                            , IMapper pMapper, IHttpContextAccessor pHttpContext
+        public AuthenService(IConfiguration pConfiguration, IBaseDbContext pContext, IMapper pMapper, IHttpContextAccessor pHttpContext
                             , ITokenService tokenService, IRedisCacheService RedisCacheService) : base(pContext, pMapper, pHttpContext)
         {
             _config = pConfiguration;
@@ -48,14 +46,12 @@ namespace LibTrinh.Api.AuthenService
                 {
                     case "0":
                         {
-                            return await LoginUserAsync(pUserLoginInf);
-                            break;
+                            return await LoginUserAsync(pUserLoginInf);  
                         }
                     case "1":
                         {
                             return  LoginGoolgeAsync();
                             //return await LoginGoolgeAsync(pUserLoginInf);
-                            break;
                         }
                     case "2":
                         {
@@ -66,7 +62,6 @@ namespace LibTrinh.Api.AuthenService
             catch (Exception ex)
             {
                 _fileLogger.Error(ex.Message);
-
             }
             return null;
         }
@@ -133,7 +128,7 @@ namespace LibTrinh.Api.AuthenService
                 sbUri.Append("&scope=" + Constant.Constant.Scopes);
                 sbUri.Append("&access_type=" + "offline");
                 //sbUri.AppendLine("&Access-Control-Allow-Headers=" + "*");
-                //sbUri.Append("&Access-Control-Allow-Origin=" + "*");
+                sbUri.Append("&Access-Control-Allow-Origin=" + "*");
                 //sbUri.Append("&state=" + extraParam);
                 sbUri.Append("&state=" + "");
                 sbUri.Append("&approval_prompt=" + "force");
@@ -182,20 +177,6 @@ namespace LibTrinh.Api.AuthenService
             return token;
         }
         #endregion
-        /// <summary>
-        /// verifyPass
-        /// </summary>
-        /// <param name="currPass"></param>
-        /// <param name="pass"></param>
-        /// <returns></returns>
-        public bool verifyPass(string currPass, string pass)
-        {
-            if (!currPass.Equals(pass))
-            {
-                return false;
-            }
-            return true;
-        }
         /// <summary>
         /// ValidateToken
         /// </summary>

@@ -86,7 +86,6 @@
          };
           function Manu_OnChange_Load_Room_List() {
                 Current_Branch = Number($('#ManuBranchID').dropdown('get value')) ? Number($('#ManuBranchID').dropdown('get value')) : 0;
-                console.log(Current_Branch)
                 ManuLoadTreeNode(Current_Branch);
                 //Manufecture_LoadDetail_Item(0);
         };
@@ -138,7 +137,6 @@
                 if (data1 && data1.length > 0) {
                     for (let i = 0; i < data1.length; i++) {
                         let item_room = data1[i];
-                        console.log(dataBedApp[0].filter(word => word["Bed_ID"] == data1[i].ID))
                         let chairByroom = dataBedApp[0].filter(word => word["Bed_ID"] == data1[i].ID);
                         let tr = '<div class="timeline-block mb-3 mx-2">'
                             + '<span class="timeline-step">'

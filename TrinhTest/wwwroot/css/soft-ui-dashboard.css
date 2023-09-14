@@ -34835,7 +34835,16 @@ ul li.editMode label {
 .leaflet-tooltip-left {
     margin-left: -6px;
 }
+.PageTransform {
+    transform: scale(0, 1) translate3d(0,0,0);
+    transform-origin: 0 0;
+    transition: transform 0.8s ease-in-out;
+}
 
+.ShowPageransform {
+    transform: scale(1, 1) translate3d(0,0,0);
+    transform-origin: 0 0;
+}
 .leaflet-tooltip-right {
     margin-left: 6px;
 }
@@ -34937,7 +34946,6 @@ ul li.editMode label {
 .multisteps-form__form {
     position: relative;
 }
-
 .multisteps-form__panel {
     position: absolute;
     top: 0;

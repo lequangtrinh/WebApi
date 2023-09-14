@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System.Data;
 
-
 namespace LibTrinh.Api.Cmm
 {
     public class DashBoard : BusinessService, IDashBoard
