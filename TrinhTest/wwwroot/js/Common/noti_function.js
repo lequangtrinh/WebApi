@@ -112,7 +112,7 @@ function notif_timmersend (_id) {
 //#endregion
 
 function notiError_SW () {
-    notif_initialize('danger', 'Something Wrongs');
+    notif_initialize('danger', 'Something Wrongs', 2000);
 }
 function notiSuccess () {
     notif_initialize('dark', '', 2000);

@@ -47,7 +47,6 @@ namespace TrinhTest.Controllers
             {
                 Response.Cookies.Append("X-UserID", objUser.userID, new CookieOptions() { HttpOnly = false, SameSite = SameSiteMode.Strict });
             }
-
             //_IRedisCache.Set<object>(objUser.userID+"_"+DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss"), res.ToString());
             return Ok(Newtonsoft.Json.JsonConvert.SerializeObject(res));
         }
@@ -91,9 +90,10 @@ namespace TrinhTest.Controllers
         {
             if (value.Token != null)
             {
-                var res = await _AuthenService.ValidateToken(value.Token, value.UserID, value.PublicKey);
-                //Response.Cookies.Append("X-Access-Token", res, new CookieOptions() { HttpOnly = false, SameSite = SameSiteMode.Strict });
-                return Ok(Newtonsoft.Json.JsonConvert.SerializeObject(res));
+                var res = await _AuthenService.ValidateToken(value);
+                if(string.IsNullOrEmpty(res)) return Ok(Newtonsoft.Json.JsonConvert.SerializeObject(value));
+                value.Token = res.Trim();
+                return Ok(Newtonsoft.Json.JsonConvert.SerializeObject(value));
             }
             return null;
         }

@@ -11,6 +11,14 @@ function validateAuthor(role) {
     }
     return count;
 }
+//load page loading 
+function ShowLoader() {
+    $("#DetailModal_Content").html('');
+    $("#DetailModal_Content").load("/Setting/LoaderPage");
+    $("#DetailModal_Content").removeClass('modal-content');
+    $('#DetailModal').modal('show');
+    return false;
+};
 // check reload page error
 function ErrorPage(status) {
     let url = "";

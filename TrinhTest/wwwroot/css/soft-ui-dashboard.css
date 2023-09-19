@@ -301,7 +301,12 @@ kbd {
 figure {
     margin: 0 0 1rem;
 }
-
+.buttonGrid {
+    background-color: #ffffff00;
+    border: none;
+    display: block;
+    margin: auto;
+}
 img,
 svg {
     vertical-align: middle;
@@ -6526,6 +6531,8 @@ fieldset:disabled .btn {
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    transform: scaleY(.01) scaleX(0);
+    animation: unfoldIn 1s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
     outline: 0;
 }
 
@@ -6548,7 +6555,8 @@ fieldset:disabled .btn {
 }
 
 .modal.show .modal-dialog {
-    transform: none;
+    transform:scale(0);
+        animation: zoomIn .5s .8s cubic-bezier(0.165, 0.840, 0.440, 1.000) forwards;
 }
 
 .modal.modal-static .modal-dialog {
@@ -6586,7 +6594,54 @@ fieldset:disabled .btn {
     border-radius: 0.75rem;
     outline: 0;
 }
+@keyframes unfoldIn {
+    0% {
+        transform: scaleY(.005) scaleX(0);
+    }
 
+    50% {
+        transform: scaleY(.005) scaleX(1);
+    }
+
+    100% {
+        transform: scaleY(1) scaleX(1);
+    }
+}
+
+@keyframes unfoldOut {
+    0% {
+        transform: scaleY(1) scaleX(1);
+    }
+
+    50% {
+        transform: scaleY(.005) scaleX(1);
+    }
+
+    100% {
+        transform: scaleY(.005) scaleX(0);
+    }
+}
+
+@keyframes zoomIn {
+    0% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes zoomOut {
+    0% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0);
+    }
+}
+  
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -34838,7 +34893,7 @@ ul li.editMode label {
 .PageTransform {
     transform: scale(0, 1) translate3d(0,0,0);
     transform-origin: 0 0;
-    transition: transform 0.8s ease-in-out;
+    transition: transform 1s ease-in-out;
 }
 
 .ShowPageransform {
@@ -34978,6 +35033,23 @@ ul li.editMode label {
     100% {
         transform: scale(2.5);
         opacity: 0;
+    }
+}
+  .skeleton {
+        background: linear-gradient(
+        120deg,
+        #e5e5e5 30%,
+        #f2f2f2 38%,
+        #f2f2f2 40%,
+        #e5e5e5 48%
+    );
+   background-size: 200% 100%;
+    background-position: 100% 0;
+    animation: load 2s infinite;
+    }
+    @keyframes load{
+    100%{
+        background-position: -100% 0;
     }
 }
 /*# sourceMappingURL=soft-ui-dashboard.css.map */

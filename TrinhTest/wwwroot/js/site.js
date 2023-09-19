@@ -11,6 +11,14 @@ function validateAuthor(role) {
     }
     return count;
 }
+//load page loading 
+function ShowLoader() {
+    $("#DetailModal_Content").html('');
+    $("#DetailModal_Content").load("/Setting/LoaderPage");
+    $("#DetailModal_Content").removeClass('modal-content');
+    $('#DetailModal').modal('show');
+    return false;
+};
 // check reload page error
 function ErrorPage(status) {
     let url = "";
@@ -1555,7 +1563,7 @@ function notif_timmersend (_id) {
 //#endregion
 
 function notiError_SW () {
-    notif_initialize('danger', 'Something Wrongs');
+    notif_initialize('danger', 'Something Wrongs', 2000);
 }
 function notiSuccess () {
     notif_initialize('dark', '', 2000);

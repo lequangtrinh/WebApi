@@ -20,7 +20,7 @@
         beforeSend: function (xhr) {
             xhr.setRequestHeader("XSRF-TOKEN",
                 $('input:hidden[name="__RequestVerificationToken"]').val());
-            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("X-Access-Token"));
+            xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("X-Access-Token").trim());
             xhr.setRequestHeader("UserID", localStorage.getItem("X-UserID"));
             if (before != undefined && before != null && before.length != 0) before();
             if (sender != undefined && sender != null && sender.length != 0)
@@ -104,7 +104,7 @@ function AjaxUpload (url, inputid, success, error) {
                             success(result);
                 },
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("X-Access-Token"));
+                    xhr.setRequestHeader("Authorization", "Bearer " + localStorage.getItem("X-Access-Token").trim());
                     xhr.setRequestHeader("UserID", localStorage.getItem("X-UserID"));
                 }
             }

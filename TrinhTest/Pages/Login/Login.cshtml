@@ -82,8 +82,8 @@
                                                 <input class="form-check-input" type="checkbox" id="rememberMe" checked="">
                                                 <label class="form-check-label text-gradient bg-gradient-dark"  style="font-size: 14px" for="rememberMe">Remember me</label>
                                             </div>
-                                        <p class="mb-2 mx-auto cursor-pointer text-end col-sm-5" id="LoginResetPass">
-                                            <a href="#" class="pe-none bg-dark text-gradient font-weight-bold" style="font-size: 14px">Forgot Password ?</a>
+                                        <p class="mb-2 mx-auto text-end col-sm-5" id="LoginResetPass">
+                                            <a href="#" class="pe-none bg-dark text-gradient font-weight-bold" style="font-size: 14px ;border-bottom:1px solid black">Forgot Password ?</a>
                                         </p>
                                         </div>
                                         
@@ -116,10 +116,10 @@
 
                                         </div>
                                     </form>
-                                    <div class="card-footer text-center pt-2 px-sm-4 px-1">
-                                        <p class="mx-auto bg-gradient-dark text-gradient" id="SignInAccount">
+                                    <div class="card-footer text-center pt-2 px-sm-4 px-1" >
+                                        <p class="mx-auto bg-gradient-dark text-gradient" id="SignInAccount" style="font-size: 14px">
                                             Already have an account?
-                                            <a class="text-primary text-gradient font-weight-bold"> Sign in</a>
+                                            <a class="text-dark text-gradient font-weight-bold cursor-pointer" style="font-size: 14px ;border-bottom:1px solid black"> Sign in</a>
                                         </p>
                                     </div>
                                     <div id="textMessage" name="Content" style="text-align: center;height: 52px;padding-top: 24px;color: #dc3545;"></div>
@@ -184,6 +184,7 @@
     // login
     function ClickLogin () {
         if($('#username').val() !=null && $('#password').val() !=null){
+            localStorage.setItem("Flag-Login","0");
            Login_LoadInforUser();
         }
         else{
@@ -193,9 +194,10 @@
     };
      // login oathor2 google
     function loginGoogle(){
+        localStorage.setItem("Flag-Login","1");
         var url="";
           AjaxApi(url = "/api/Author/loginGoogle"
-            ,data= JSON.stringify({})
+            ,data= JSON.stringify({'flags': "1"})
             ,async = false
             , error = function () { notiError_SW() }
             , success = function (result) {
@@ -215,14 +217,24 @@
          $.ajax({url: '/api/Author/ValidateToken',
                 type: 'POST',
                 data: JSON.stringify({
-                    'UserID':userId
-                   ,'Token':Token
+                    'UserID':userId.trim()
+                   ,'Token':Token.trim()
                    ,'PublicKey':""
+                   ,'flags': localStorage.getItem("Flag-Login").trim()
             }),
             contentType: 'application/json; charset=utf-8',
             success: function (data, textStatus, xhr) {
                     if(data!== "[]" && data !== undefined){
-                        window.location.href="/Dash/Dash_Master";
+                        var res=JSON.parse(data);
+                        ShowLoader();
+                       localStorage.setItem("X-Access-Token",res.Token.trim());
+                       setTimeout(()=>{
+                           $("#DetailModal_Content").addClass('modal-content');
+                              $('#DetailModal').modal('hide');
+                        },3000);
+                         window.location.href="/Dash/Dash_Master";  
+                        //localStorage.setItem("X-PublicKey",res.PublicKey);
+                        //localStorage.setItem("X-UserID",$('#username').val());
                     }
                     else{validateLogin();};
                 },
@@ -253,8 +265,14 @@
                             $('#loader').show();
                             var res=JSON.parse(data);
                             localStorage.setItem("X-PublicKey",res.PublicKey);
-                            localStorage.setItem("X-UserID",$('#username').val());
-                            localStorage.setItem("X-Access-Token",res.token);
+                            localStorage.setItem("X-UserID",$('#username').val().trim());
+                            localStorage.setItem("X-Access-Token",res.token.trim());
+                            ShowLoader();
+                           setTimeout(()=>{
+                               $("#DetailModal_Content").addClass('modal-content');
+                                  $('#DetailModal').modal('hide');
+                                
+                            },3000);
                             window.location.href="/Dash/Dash_Master";
                         } else {notiError_SW()};
                 },
@@ -293,11 +311,11 @@
            $("#DetailModal_Content").load("/Login/ChangePassword");
            $('#DetailModal').modal('show');
             return false;
-        };
-        function RemoveClassDisabedBnt(){
-             $('#loginbtn').removeClass('disabed');
-            $('#loginbtnGoogle').removeClass('disabed');
-            $('#loginbtnFB').removeClass('disabed');
-        }
+    };
+    function RemoveClassDisabedBnt(){
+         $('#loginbtn').removeClass('disabed');
+        $('#loginbtnGoogle').removeClass('disabed');
+        $('#loginbtnFB').removeClass('disabed');
+    };
 </script>
 </html>

@@ -31,8 +31,8 @@
     <script src="/Assests/dist/ColorPicker/spectrum.js"></script>
     <link href="/Assests/dist/ColorPicker/spectrum.css" rel="stylesheet" />
 </head>
-<body class="g-sidenav-show bg-gray-100 " id="BodyMain">
-    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 ps ps--active-y ps--collapsing-y" id="sidenav-main">
+<body class="g-sidenav-show bg-gray-100" id="BodyMain">
+    <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 ps ps--active-y ps--collapsing-y skeleton" id="sidenav-main">
         <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href="https://add.pics/images/2020/08/09/12.jpg " target="_blank">
@@ -48,15 +48,15 @@
         </div>
         <div class="sidenav-footer mx-3 mt-3 pt-3">
             <div class="card card-background shadow-none card-background-mask-secondary" id="sidenavCard">
-                <div class="full-background" style="background-image: url('/Assets/img/curved-images/white-curved.jpeg')"></div>
+                <div class="full-background" style="background-image: url('/Assets/img/hero-bg.jpg')"></div>
                 <div class="card-body text-start p-3 w-100">
-                    <div class="icon icon-shape icon-sm bg-white shadow text-center mb-3 d-flex align-items-center justify-content-center border-radius-md">
+                    <div class="icon icon-shape icon-sm bg-white shadow text-center mb-3 d-flex align-items-center justify-content-center border-radius-md skeleton">
                         <i class="fa fa-star text-info text-gradient-info text-lg top-0" aria-hidden="true" id="sidenavCardIcon"></i>
                     </div>
                     <div class="docs-info">
                         <h6 class="text-white up mb-0">Need help?</h6>
                         <p class="text-xs font-weight-bold">Please check our docs</p>
-                        <a href="https://www.creative-tim.com/learning-lab/bootstrap/overview/soft-ui-dashboard" target="_blank" class="btn btn-white btn-sm w-100 mb-0">Trinh 020</a>
+                        <a href="#" target="_blank" class="btn btn-white btn-sm w-100 mb-0 skeleton">Trinh 020</a>
                     </div>
                 </div>
             </div>
@@ -181,11 +181,11 @@
         <div id="DetailModalTodoDetail" style="display: none"></div>
         <div id="DetailModalTodoChangeStatus" style="display: none"></div>
         <div id="DetailModalLaboChangeStatus" style="display: none"></div>
-        <div id="MainRenderBody" class="pusher  mx-3 border-radius-lg  px-0">
+        <div id="MainRenderBody" class="pusher mx-3 border-radius-lg px-0 PageTransform">
             @Html.AntiForgeryToken()
             @RenderBody()
         </div>
-        <div id="MainRenderBody_Manual" class="pusher  mx-3 border-radius-lg  px-0">
+        <div id="MainRenderBody_Manual" class="pusher mx-3 border-radius-lg px-0">
         </div>
     </main>
     <div class="position-fixed bottom-1 end-1 z-index-2" id="MS_Notification">
@@ -198,6 +198,7 @@
                 <span id="CallCenter_Header" class="me-auto text-white font-weight-bold">Incomming Call</span>
 
             </div>
+            <hr class="horizontal light m-0">
             <hr class="horizontal light m-0">
             <div class="toast-body text-white">
                 <div class="d-flex align-items-center">
@@ -285,7 +286,9 @@
         let className = 'g-sidenav-pinned';
         $(document).ready(function (){
             PromisesDash();
+            $('.PageTransform').toggleClass('ShowPageransform');
             CCF_OutcomCall("0354709903", 0, 0, 0);
+
         });
         //Load head dashboard
         function LoadDataUser(){
@@ -296,11 +299,13 @@
                 , success = function (result) {
                     if (result != "") {
                         let data=JSON.parse(result);
+                        setTimeout(()=>{
                         DashMasterCountUpNumber("Dash_User_Doctor",data[0].APPOINTMENT_COUNT);
                         DashMasterCountUpNumber("Dash_Price_Patient",data[0].DOCTOR_COUNT);
                         DashMasterCountUpNumber("Dash_User_Prescription",data[0].PATIENT_COUNT);
                         DashMasterCountUpNumber("Dash_User_Appointment",data[0].PRESCRIPTION_COUNT);
                         notiSuccess();
+                        },1000);
                     }
                     else{
                         notiError_SW();
@@ -347,16 +352,18 @@
                 MS_UrlRoot = namegroup;
                 MS_UrlChild = namechild;
                 if (href != '#') {
+                    //$("#MainRenderBody_Manual").removeClass('ShowPageransform');
                     $.ajax({
                         url: hreflayoutnone,
                         success: function (data) {
                             $("#MainRenderBody").empty();
                             $("#MainRenderBody_Manual").html(data);
                             window.history.pushState(href, 'Title', hreflayoutnone);
+                            //$('.PageTransform').toggleClass('ShowPageransform');
                             // MS_SetHeaderNavi();
                         }
-                    })
-                }
+                    });
+                };
         });
         }
         function DashMasterCountUpNumber(id,valueCount){
@@ -403,6 +410,7 @@
                 promises.push(LoadTempMedicineReport());
                 Promise.all(promises).then((values) => {
                 });
+                
         };
         ///
         function RenderDataMenuMater(data,id){

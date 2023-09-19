@@ -20,6 +20,7 @@ namespace LibTrinh.Models
         public string UserID { get; set; }
         public string Token { get; set; }
         public string PublicKey { get; set; }
+        public string flags { get; set; }
 
     }
 }

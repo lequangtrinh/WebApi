@@ -90,20 +90,13 @@ namespace LibTrinh.Common
                 var authHeader = Request.Headers?["Authorization"].ToString();
                 if (!string.IsNullOrEmpty(authHeader))
                 {
-                    string userID = Request.Headers?["UserID"].ToString();
-                    if (string.IsNullOrEmpty(authHeader))return AuthenticateResult.Fail("Invalid Authorization Header");
-                    if (!authHeader.StartsWith("Bearer", StringComparison.OrdinalIgnoreCase))return AuthenticateResult.Fail("Invalid Authorization Header");
-                    if (string.IsNullOrEmpty(userID))
-                    {
-                        Response.StatusCode = 401;
-                        return AuthenticateResult.Fail("Invalid Authorization Cookies");
-                    }
+                    if (!authHeader.StartsWith("Bearer", StringComparison.OrdinalIgnoreCase)) return AuthenticateResult.Fail("Invalid Authorization Header");
                     var token = authHeader.Substring("Bearer".Length).Trim();
                     var jwtToken = new JwtSecurityToken(token);
                     if (jwtToken.ValidTo <= DateTime.UtcNow)return AuthenticateResult.Fail("Token Time Out");
                     try
                     {
-                        var rsaSecurityKey = new RsaSecurityKey(ReadKeyToken(userID, "PUBLICKEY"));
+                        var rsaSecurityKey = new RsaSecurityKey(ReadKeyToken(Request.Headers?["UserID"].ToString(),"PUBLICKEY"));
                         var tokenHandler = new JwtSecurityTokenHandler();
                         ClaimsPrincipal principal = tokenHandler.ValidateToken(token, new TokenValidationParameters
                         {

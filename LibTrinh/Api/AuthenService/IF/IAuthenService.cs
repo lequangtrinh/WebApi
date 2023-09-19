@@ -39,10 +39,8 @@ namespace LibTrinh
         /// <summary>
         /// ValidateToken
         /// </summary>
-        /// <param name="token"></param>
-        /// <param name="userId"></param>
-        /// <param name="publicKey"></param>
-        Task<string> ValidateToken(string token, string userId,string publicKey);
+        /// <param name="CFaAuthorValidateToken value"></param>
+        Task<string> ValidateToken(CFaAuthorValidateToken value);
         /// <summary>
         /// RegisUser
         /// </summary>

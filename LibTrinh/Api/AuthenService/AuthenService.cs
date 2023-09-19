@@ -90,13 +90,8 @@ namespace LibTrinh.Api.AuthenService
                         return null;
                     }
                     _generatedToken = _tokenService.BuildToken(dataUser, _config["JWT:Issuer"].ToString());
-                    token.token = _generatedToken;
+                    token.token = _generatedToken.Trim();
                     token.PublicKey= GlobalBase.ReadKeyToken(dataUser.UserID,Constant.Constant.PUBLICKEY).ToString();
-                    //DataTable dt = new DataTable();
-                    //dt = await uow.ExecuteDataTable("[YYY_sp_LoadDashboard]", CommandType.StoredProcedure,
-                    //    "@UserID", SqlDbType.NVarChar, "00001"
-                    //);
-                    //var res = _mapper.Map<CFaUserDTO>(object);
                     uow.Commit();
                     return token;
                 }
@@ -181,46 +176,51 @@ namespace LibTrinh.Api.AuthenService
         /// ValidateToken
         /// </summary>
         /// <param name="token"></param>
-        public async Task<string> ValidateToken(string token, string userId, string publicKey)
+        public async Task<string> ValidateToken(CFaAuthorValidateToken value)
         {
             try
             {
                 using (var uow = await _context.CreateAsync())
                 {
-                    if (!_tokenService.IsTokenValid(token, userId, _config["JWT:Issuer"].ToString()))
+                    if (value.flags.Equals("0"))
                     {
-                        // refersh token
-                        var CheckUser = await uow.ExecuteDataTable("[YYY_sp_CheckLoginUser]", CommandType.StoredProcedure,
-                            "@UserID", SqlDbType.NVarChar, userId.Trim()
-                        );
-                        var dataUser = GlobalBase.ConvertDataTable<UserDTO>(CheckUser)[0];
-               
-                        _generatedToken = _tokenService.BuildToken(dataUser, _config["JWT:Issuer"].ToString());
-                    }
-                    #region validate token google,FaceBook
-                    //-----------------------google---------------------------------------
-                    var postData = new
-                    {
-                        code = token,// refesh_token in google
-                        client_id = Constant.Constant.ClientId,
-                        client_secret = Constant.Constant.ClientSecret,
-                        redirect_uri = Constant.Constant.RedirectUri,
-                        grant_type = "refresh_token"
-                    };
-                    using (var httpClient = new HttpClient())
-                    {
-                        StringContent content = new StringContent(JsonConvert.SerializeObject(postData), Encoding.UTF8, "application/json");
-
-                        using (var response = await httpClient.PostAsync(Constant.Constant.TokenUri, content))
+                        if (!_tokenService.IsTokenValid(value.Token, value.UserID, _config["JWT:Issuer"].ToString()))
                         {
-                            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                            // refersh token
+                            var CheckUser = await uow.ExecuteDataTable("[YYY_sp_CheckLoginUser]", CommandType.StoredProcedure,
+                                "@UserID", SqlDbType.NVarChar, value.UserID.Trim()
+                            );
+                            var dataUser = GlobalBase.ConvertDataTable<UserDTO>(CheckUser)[0];
+
+                            _generatedToken = _tokenService.BuildToken(dataUser, _config["JWT:Issuer"].ToString());
+                        }
+                    }
+                    else
+                    {
+                        #region validate token google,FaceBook
+                        //-----------------------google---------------------------------------
+                        var postData = new
+                        {
+                            code = value.Token,// refesh_token in google
+                            client_id = Constant.Constant.ClientId,
+                            client_secret = Constant.Constant.ClientSecret,
+                            redirect_uri = Constant.Constant.RedirectUri,
+                            grant_type = "refresh_token"
+                        };
+                        using (var httpClient = new HttpClient())
+                        {
+                            StringContent content = new StringContent(JsonConvert.SerializeObject(postData), Encoding.UTF8, "application/json");
+
+                            using (var response = await httpClient.PostAsync(Constant.Constant.TokenUri, content))
                             {
-                                string responseString = await response.Content.ReadAsStringAsync();
-                                _generatedToken = JsonConvert.DeserializeObject<CFaGoogleTokenDTO>(responseString).ToString();
+                                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                                {
+                                    string responseString = await response.Content.ReadAsStringAsync();
+                                    _generatedToken = JsonConvert.DeserializeObject<CFaGoogleTokenDTO>(responseString).ToString();
+                                }
                             }
                         }
                     }
-
                     //-----------------------FaceBook---------------------------------------
                     #endregion
 
