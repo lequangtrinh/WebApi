@@ -19,17 +19,15 @@
     <link href='https://fonts.googleapis.com/css?family=Noto Sans' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/rsvp@4/dist/rsvp.min.js"></script>
     <script src="/Assests/js/ajax.min.js" type="text/javascript"></script>
-    <script src="/Assets/js/core/bootstrap.js"></script>
     <script src="/js/site.js"></script>
+    <script src="/js/Common/main.js"></script>
+    <link href="/css/master1.css" rel="stylesheet" />
     <script src="/js/Preload/basket.min.min.js"></script>
-    <script src="/lib/jquery-validation/dist/semantic.min.js"></script>
-    <script src="/Assets/js/plugins/datatables.js"></script>
+    <script src="/lib/jquery-validation/dist/semantic.min.js"></script> 
     <script src='/Assests/dist/Paginationjs/paginationjs.min.js'></script>
     <script src="/Assets/js/plugins/chartjs.min.js"></script>
-    <script src="/Assests/dist/components/visibility.js"></script>
     <script src="/Assests/dist/components/visibility.min.js"></script>
     <script src="/Assests/dist/ColorPicker/spectrum.js"></script>
-    <link href="/Assests/dist/ColorPicker/spectrum.css" rel="stylesheet" />
 </head>
 <body class="g-sidenav-show bg-gray-100" id="BodyMain">
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 ps ps--active-y ps--collapsing-y skeleton" id="sidenav-main">
@@ -250,13 +248,10 @@
     <script>
         var Incommingaudio = new Audio('/Assets/img/Call/incommingCall.mp3');
          var Messagegaudio = new Audio('/Assets/img/Call/message.mp3');
-         js_require("/js/Common/main.js");
            js_require("/Assests/Library/jquery-ui.js");
            js_require_notasync('/Assests/dist/HightLight/dist/jquery.mark.js');
            js_require_notasync('/Assests/Library/jquery.signalR-2.4.1.min.js');
            js_require_notasync('/Assests/dist/signalr/dist/browser/signalr.js');
-           js_require_notasync('/js/Common/KeepAlive.js');
-           js_require_notasync('/js/Common/Callcenter.js', true);
            js_require('/Assests/dist/jssip/jssip-3.0.7-custom.js');
            js_require('/Assests/dist/jssip/callexecute.js');
         document.getElementById("LogOutUser").addEventListener("click",ClickLogOutUser);
@@ -278,7 +273,6 @@
         });
     </script>
     <script type="text/javascript">
-
         const iconNavbarSidenav = document.getElementById('iconNavbarSidenav');
         const iconSidenav = document.getElementById('iconSidenav');
         const sidenav = document.getElementById('sidenav-main');
@@ -288,7 +282,6 @@
             PromisesDash();
             $('.PageTransform').toggleClass('ShowPageransform');
             CCF_OutcomCall("0354709903", 0, 0, 0);
-
         });
         //Load head dashboard
         function LoadDataUser(){
@@ -364,7 +357,7 @@
                         }
                     });
                 };
-        });
+            });
         }
         function DashMasterCountUpNumber(id,valueCount){
             if (document.getElementById(id).hasAttribute("countTo")) {
@@ -399,7 +392,7 @@
                     else{
                         notiError_SW();
                     }
-                });
+               });
         }
         function PromisesDash(){
             var promises = [];
@@ -480,10 +473,10 @@
                 sidenav.classList.remove('bg-white');
             }, 100);
             sidenav.classList.remove('bg-transparent');
-
             } else {
             body.classList.add(className);
             sidenav.classList.add('bg-white');
+            body.classList.add('nav-active');
             sidenav.classList.remove('bg-transparent');
             iconSidenav.classList.remove('d-none');
             }

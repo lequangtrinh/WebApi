@@ -70,6 +70,21 @@ namespace LibTrinh.Common
 
             _blnDisposed = true;
         }
+        public Task ExecuteAsync(IAsyncCommand pCommand, CancellationToken pCancellationToken = default)
+        {
+            if (pCommand._blnRequiresTransaction && _transaction == null)
+                throw new ArgumentNullException($"The command {pCommand.GetType()} requires a transaction");
+
+            return Retry.DoAsync(() => pCommand.ExecuteAsync(_conn, _transaction, pCancellationToken), _retryOptions);
+        }
+        public interface IAsyncCommand
+        {
+            bool _blnRequiresTransaction { get; }
+            bool _blnRequiresCache { get; }
+
+            Task ExecuteAsync(IDbConnection connection, IDbTransaction transaction, CancellationToken cancellationToken = default);
+        }
+
         #region
         /// <summary>
         /// ExecuteDataTable

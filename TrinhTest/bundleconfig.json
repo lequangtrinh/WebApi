@@ -6,6 +6,7 @@
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
       "wwwroot/css/root_element_grid.css",
+      "wwwroot/Assests/dist/ColorPicker/spectrum.css",
       "wwwroot/css/root_element_color.css",
       "wwwroot/css/main.custom.css",
       "wwwroot/css/text_editor.css",
@@ -36,6 +37,14 @@
     "sourceMap": false
   },
   {
+    "outputFileName": "wwwroot/js/Common/Combo_v2.min.js",
+    // An array of relative input file paths. Globbing patterns supported
+    "inputFiles": [
+      "wwwroot/js/Common/Combo_v2.js"
+    ],
+    "sourceMap": false
+  },
+  {
     "outputFileName": "wwwroot/js/site.js",
     // An array of relative input file paths. Globbing patterns supported
     "inputFiles": [
@@ -44,12 +53,16 @@
       "wwwroot/js/Common/initialize_setting.js",
       "wwwroot/js/Common/LoadLanguages_Packege.js",
       "wwwroot/js/Common/noti_function.js",
+      "wwwroot/js/Common/Combo_v2.js",
       "wwwroot/js/Common/Popup.js",
+      "wwwroot/js/Common/Callcenter.js",
       "wwwroot/js/Common/countup.min.js",
       "wwwroot/js/Common/tablesort.js",
       "wwwroot/js/Preload/preload.js",
       "wwwroot/js/Preload/basket.min.js",
       "wwwroot/js/Common/KeepAlive.js",
+      "wwwroot/Assets/js/core/bootstrap.js",
+      "wwwroot/Assets/js/plugins/datatables.js",
       "wwwroot/js/Common/Detect_Calendar_Type"
     ],
     "sourceMap": false

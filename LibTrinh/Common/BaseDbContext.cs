@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Caching.Memory;
 using System.Data;
 using System.Data.SqlClient;
+using static LibTrinh.Constant.Constant;
 
 namespace LibTrinh.Common
 {
@@ -52,7 +53,10 @@ namespace LibTrinh.Common
         }
         public IUnitOfWork Create(bool pTransactional = false, IsolationLevel pIsolationLevel = IsolationLevel.ReadCommitted, RetryOptions pRetryOptions = null)
         {
-             _conn = new SqlConnection(_connectionString);
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(_connectionString);
+            builder.ConnectRetryCount = ConnectCount;
+            builder.ConnectRetryInterval = RetryInterval;
+            _conn = new SqlConnection(builder.ConnectionString);
             _conn.Open();
 
             return new UnitOfWork(_conn, pTransactional, pIsolationLevel, pRetryOptions);

@@ -62,7 +62,7 @@
           if (document.getElementById('status1')) {
           const countUp = new CountUp('status1', document.getElementById("status1").getAttribute("countTo"));
           if (!countUp.error) {countUp.start();} 
-        }
+        };
      });
     function LoadDataUser() {
         $.ajax({url: '/api/User/LoadUser',

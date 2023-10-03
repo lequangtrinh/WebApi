@@ -17,6 +17,7 @@
 //#endregion
 
 $(function () {
+    console.log("KeepAlive");
     heartBeat();
     setInterval("heartBeat()", 1000 * 1000);
 }); 

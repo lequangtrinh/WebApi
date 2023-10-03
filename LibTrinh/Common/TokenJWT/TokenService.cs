@@ -32,7 +32,7 @@ namespace LibTrinh.Common
                 new Claim(ClaimTypes.Role, user.Role),
                 new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
             };
-                var rsaSecurityKey = new RsaSecurityKey(GlobalBase.ReadKeyToken(user.UserID, Constant.Constant.PRIVATEKEY));
+                var rsaSecurityKey = new RsaSecurityKey(GlobalBase.ReadKeyToken(user.UserID, Constant.Constant.PrivateKey));
                 rsaSecurityKey.KeyId = user.UserName;
                 
                 var credentials = new SigningCredentials(rsaSecurityKey, SecurityAlgorithms.RsaSha256);
@@ -66,7 +66,7 @@ namespace LibTrinh.Common
             {
                 if (jwtToken.ValidTo > DateTime.UtcNow)
                 {
-                    var rsaSecurityKey = new RsaSecurityKey(GlobalBase.ReadKeyToken(UserID, Constant.Constant.PUBLICKEY));
+                    var rsaSecurityKey = new RsaSecurityKey(GlobalBase.ReadKeyToken(UserID, Constant.Constant.PublicKey));
                     var tokenHandler = new JwtSecurityTokenHandler();
                     try
                     {
@@ -109,8 +109,8 @@ namespace LibTrinh.Common
                 var rsa = RSA.Create();
                 string privateKeyXml = rsa.ToXmlString(true);
                 string publicKeyXml = rsa.ToXmlString(false);
-                using var privateFile = File.Create(path + "\\"+ userID + "_" + Constant.Constant.PRIVATEKEY);
-                using var publicFile = File.Create(path + "\\" + userID + "_" + Constant.Constant.PUBLICKEY);
+                using var privateFile = File.Create(path + "\\"+ userID + "_" + Constant.Constant.PrivateKey);
+                using var publicFile = File.Create(path + "\\" + userID + "_" + Constant.Constant.PublicKey);
                 privateFile.Write(Encoding.UTF8.GetBytes(privateKeyXml));
                 publicFile.Write(Encoding.UTF8.GetBytes(publicKeyXml));
                 return true;

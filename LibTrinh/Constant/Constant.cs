@@ -7,8 +7,10 @@
     {
         public const string ForderToken = "Token";
         public const int Token_Required_Time = 120;
-        public const string PRIVATEKEY = "privateKey";
-        public const string PUBLICKEY = "publicKey";
+        public const int ConnectCount = 5;
+        public const int RetryInterval = 3;
+        public const string PrivateKey = "privateKey";
+        public const string PublicKey = "publicKey";
         #region google
 
         public static string ApplicationName = "Google Api DotNetCore Web Client";

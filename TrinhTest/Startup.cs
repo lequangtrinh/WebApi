@@ -145,15 +145,15 @@ namespace TrinhTest
             if (bool.Parse(Configuration["IsProductEnviroment"]))
             {
                 app.UseResponseCompression();
-                app.UseWebMarkupMin();
             }
             app.UseIpRateLimiting();
             if (env.IsDevelopment()){app.UseDeveloperExceptionPage();}
             else{app.UseExceptionHandler("/Error");app.UseHsts();};
-            //pLoggerFactory.AddLog4Net();
+            pLoggerFactory.AddLog4Net();
             app.UseDefaultFiles();// mặc định là file index.hmtl luôn đặt trước staticFiles().
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseWebMarkupMin();
             app.UseRouting();
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseAuthentication();

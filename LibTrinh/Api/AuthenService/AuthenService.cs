@@ -91,7 +91,7 @@ namespace LibTrinh.Api.AuthenService
                     }
                     _generatedToken = _tokenService.BuildToken(dataUser, _config["JWT:Issuer"].ToString());
                     token.token = _generatedToken.Trim();
-                    token.PublicKey= GlobalBase.ReadKeyToken(dataUser.UserID,Constant.Constant.PUBLICKEY).ToString();
+                    token.PublicKey= GlobalBase.ReadKeyToken(dataUser.UserID,Constant.Constant.PublicKey).ToString();
                     uow.Commit();
                     return token;
                 }

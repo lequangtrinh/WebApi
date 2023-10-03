@@ -231,8 +231,9 @@
                        setTimeout(()=>{
                            $("#DetailModal_Content").addClass('modal-content');
                               $('#DetailModal').modal('hide');
+                              window.location.href="/Dash/Dash_Master";  
                         },3000);
-                         window.location.href="/Dash/Dash_Master";  
+                         
                         //localStorage.setItem("X-PublicKey",res.PublicKey);
                         //localStorage.setItem("X-UserID",$('#username').val());
                     }
@@ -271,9 +272,8 @@
                            setTimeout(()=>{
                                $("#DetailModal_Content").addClass('modal-content');
                                   $('#DetailModal').modal('hide');
-                                
+                                window.location.href="/Dash/Dash_Master";
                             },3000);
-                            window.location.href="/Dash/Dash_Master";
                         } else {notiError_SW()};
                 },
                 error: function (xhr, textStatus, errorThrown) {
