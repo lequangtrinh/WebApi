@@ -17,17 +17,23 @@ var channel = connection.CreateModel();
 //               autoDelete: false,
 //               arguments: null);
 //declare the queue after mentioning name and a few property related to that
-channel.QueueDeclare("T-Message", durable: true,
+
+channel.QueueDeclare("T-Message", durable: true,// queue ko bi mất khi reset lại 
                 exclusive: true,// tự động hàm đợi khi ko sub xóa thông qua exe 
                 autoDelete: false,
                 arguments: null);
 //Set Event object which listen message from chanel which is sent by producer
+
 var consumer = new EventingBasicConsumer(channel);
 consumer.Received += (model, eventArgs) => {
     var body = eventArgs.Body.ToArray();
     var message = Encoding.UTF8.GetString(body);
     Console.WriteLine($"T-Message message received: {message}");
 };
+var props = channel.CreateBasicProperties();
+props.Persistent = true; // or props.DeliveryMode = 2;
+//NoACK:(true)tự đông thực thi queue tiếp theo thi cusumer chạy xong or bị lỗi đang xử lý(load balan)
+//persistent : được lưu queue  vào ổ đĩa hoặc cache nếu ổ đĩa có vấn đề sẽ lấy từ cache(ngược lại) để chạy liên tục
 //read the message
 channel.BasicConsume(queue: "T-Message", autoAck: true, consumer: consumer);
 Console.ReadKey();
